@@ -157,9 +157,9 @@ const Cart = () => {
                   {cartItems.map((item) => (
                     <div
                       key={item.id}
-                      className="py-5 md:py-6 grid grid-cols-1 md:grid-cols-[2fr_1fr_1.5fr_1fr] gap-4 md:items-center md:gap-4"
+                      className="py-5 md:py-6 flex flex-col md:grid md:grid-cols-[2fr_1fr_1.5fr_1fr] gap-5 md:gap-4 md:items-center"
                     >
-                      {/* Product Column - left aligned */}
+                      {/* Product Column - image + details (left aligned on all screens) */}
                       <div className="flex gap-4">
                         <div className="w-24 h-24 rounded-xl overflow-hidden bg-muted shrink-0">
                           <img
@@ -168,11 +168,13 @@ const Cart = () => {
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <div className="flex flex-col justify-center min-w-0">
+                        <div className="flex flex-col justify-center min-w-0 flex-1">
                           <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">
                             {item.brand}
                           </p>
-                          <h3 className="font-semibold text-sm mb-2">{item.name}</h3>
+                          <h3 className="font-semibold text-sm mb-2 uppercase md:normal-case">
+                            {item.name}
+                          </h3>
                           <div className="flex items-center gap-2 mb-2">
                             {item.variant.colorHex && (
                               <div className="flex items-center gap-1.5">
@@ -200,17 +202,18 @@ const Cart = () => {
                         </div>
                       </div>
 
-                      {/* Price Column - centered under PRICE */}
-                      <div className="flex md:flex-col md:items-center md:justify-center text-left md:text-center gap-0">
-                        <p className="font-bold text-base">EGP {item.price.toFixed(2)}</p>
-                        <p className="text-xs text-muted-foreground line-through">
-                          EGP {(item.price * 1.2).toFixed(2)}
-                        </p>
+                      {/* Price - mobile: one line (current + strikethrough); desktop: centered column */}
+                      <div className="flex flex-col md:items-center md:justify-center gap-0 items-start">
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          <p className="font-bold text-base">EGP {item.price.toFixed(2)}</p>
+                          <p className="text-xs text-muted-foreground line-through">
+                            EGP {(item.price * 1.2).toFixed(2)}
+                          </p>
+                        </div>
                       </div>
 
-                      {/* Quantity Column - centered: pill control only */}
+                      {/* Quantity - mobile: left-aligned pill; desktop: centered */}
                       <div className="flex flex-col items-start md:items-center gap-2">
-                        {/* Pill-shaped quantity control - rounded outer edges */}
                         <div className="inline-flex items-stretch rounded-lg overflow-hidden border border-border bg-white shadow-sm">
                           <button
                             onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
@@ -232,8 +235,8 @@ const Cart = () => {
                         </div>
                       </div>
 
-                      {/* Total Column - centered under TOTAL */}
-                      <div className="flex md:flex-col md:items-center md:justify-center text-left md:text-center">
+                      {/* Total - mobile: left-aligned; desktop: centered */}
+                      <div className="flex flex-col items-start md:items-center md:justify-center">
                         <p className="font-bold text-lg">
                           EGP {(item.price * item.quantity).toFixed(2)}
                         </p>
