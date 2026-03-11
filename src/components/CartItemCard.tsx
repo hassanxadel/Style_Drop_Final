@@ -86,7 +86,7 @@ const CartItemCard = ({
 
         {/* Mobile Price (shown below info on small screens) */}
         <div className="mt-2 flex items-center justify-between md:hidden">
-          <span className="font-display text-xl">${itemTotal.toFixed(2)}</span>
+          <span className="font-display text-xl">EGP {itemTotal.toFixed(2)}</span>
           <button
             onClick={() => onRemove(id)}
             className="text-destructive hover:text-destructive-foreground transition-colors"
@@ -142,7 +142,7 @@ const CartItemCard = ({
       {/* Price - Desktop */}
       <div className="hidden md:flex items-center gap-4 shrink-0">
         <span className="font-display text-xl min-w-[80px] text-right">
-          ${itemTotal.toFixed(2)}
+          EGP {itemTotal.toFixed(2)}
         </span>
         <button
           onClick={() => onRemove(id)}

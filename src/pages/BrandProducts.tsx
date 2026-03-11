@@ -58,21 +58,19 @@ const BrandProducts = () => {
 
   return (
     <MainLayout>
-      {/* Breadcrumb + Back Button */}
-      <div className="bg-[#F5F0EB] border-b border-[#0D0D0D]/10">
-        <div className="container py-4">
+      {/* Brand Hero Header - Dark with image */}
+      <div className="relative overflow-hidden bg-[#0B0B0B]">
+        {/* All Products button - top-left over image */}
+        <div className="container relative z-10 pt-4">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/95 text-xs font-semibold text-[#111111] shadow-sm hover:shadow-md hover:bg-white transition-shadow"
           >
             <ChevronLeft size={14} />
-            All Products
+            <span>All Products</span>
           </Link>
         </div>
-      </div>
 
-      {/* Brand Hero Header - Dark */}
-      <div className="relative overflow-hidden bg-[#111111]">
         {/* Background image / wash */}
         {isZara ? (
           <>
@@ -80,35 +78,42 @@ const BrandProducts = () => {
             <img
               src={brandHero}
               alt={`${brand.name} hero`}
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-center"
             />
-            {/* Dark gradient overlay to keep text readable */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#111111]/90 via-[#111111]/70 to-transparent" />
+            {/* Dark gradient overlay to keep text readable, with lighter bottom fade */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent" />
           </>
         ) : (
           <div
-            className="absolute inset-0 opacity-70 mix-blend-screen"
+            className="absolute inset-0 opacity-80"
             style={{
               backgroundColor: brand.color,
               backgroundImage:
-                'radial-gradient(circle at 10% 0%, rgba(255,255,255,0.28) 0%, transparent 45%), radial-gradient(circle at 80% 60%, rgba(255,255,255,0.18) 0%, transparent 55%)',
+                'linear-gradient(to top, rgba(5,5,5,0.95), rgba(5,5,5,0.8)), radial-gradient(circle at 10% 0%, rgba(255,255,255,0.24) 0%, transparent 45%)',
             }}
           />
         )}
 
-        <div className="container relative py-16 md:py-20 text-white">
-          {/* Brand Badge */}
-          <div className="inline-block mb-5 px-3 py-1.5 bg-[#F5C800] rounded font-condensed text-[11px] font-extrabold uppercase tracking-[1.54px] text-[#0D0D0D]">
-            ● OFFICIAL BRAND PAGE
+        {/* Content over image: badge + brand name — bottom-left */}
+        <div className="container relative min-h-[320px] md:min-h-[440px] pt-12 pb-26 md:pt-16 md:pb-0 text-white flex flex-col justify-end items-start">
+          {/* Brand Badge - smaller pill, left aligned */}
+          
+          <div className="inline-flex items-center mb-3 px-2 py-1 bg-[#F5C800] rounded font-condensed text-[9px] font-extrabold uppercase tracking-[1.5px] text-[#0D0D0D] w-auto">
+            ● BRAND PAGE
           </div>
 
           {/* Brand Name */}
-          <h1 className="font-display text-6xl md:text-8xl mb-4 tracking-[0.08em]">
+          <h1 className="font-display text-5xl md:text-7xl mb-0 tracking-[0.08em]">
             {brand.name}
           </h1>
+        </div>
+      </div>
 
+      {/* Brand Info Strip - black section under hero */}
+      <div className="bg-[#050505] text-white">
+        <div className="container py-6 md:py-7 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
           {/* Brand Stats */}
-          <div className="flex flex-wrap items-center gap-6 mb-5 text-sm">
+          <div className="flex flex-wrap items-center gap-5 text-sm">
             {/* Rating */}
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">
@@ -129,20 +134,24 @@ const BrandProducts = () => {
 
             {/* Product Count */}
             <div className="flex items-center gap-2">
-              <span className="font-semibold">{brandStats.productCount}</span>
-              <span className="text-white/70">products in stock</span>
+              <span className="inline-flex items-center gap-1 text-white/80">
+                <span className="inline-block w-2 h-2 rounded-full bg-[#22C55E]" />
+                <span className="font-semibold">
+                  {brandStats.productCount} products in stock
+                </span>
+              </span>
             </div>
 
             {/* Categories */}
             <div className="flex items-center gap-2">
-              <span className="text-white/70">
-                {brandStats.categories.join(', ')}
+              <span className="uppercase tracking-[0.16em] text-[11px] text-white/60">
+                {brandStats.categories.join(' • ')}
               </span>
             </div>
           </div>
 
           {/* Brand Description */}
-          <p className="max-w-3xl text-sm text-white/80 leading-relaxed">
+          <p className="max-w-2xl text-xs md:text-sm text-white/80 leading-relaxed">
             {brand.tagline && `${brand.name} delivers ${brand.tagline.toLowerCase()}. `}
             {brand.name} pioneered fast-fashion and continues to set the pace of global style. From
             statement-making silhouettes to everyday essentials, {brand.name} invites trend-forward

@@ -62,14 +62,14 @@ const CollectionFilters = () => {
           <div className="flex-1">
             <label className="text-[10px] text-white/50">Min price</label>
             <div className="flex items-center border border-white/10 bg-[#111111] rounded-xl px-2 py-1.5 mt-1">
-              <span className="text-xs text-white/50 mr-1">$</span>
+              <span className="text-xs text-white/50 mr-1">EGP</span>
               <input type="number" defaultValue={0} className="w-full text-sm bg-transparent outline-none text-white" />
             </div>
           </div>
           <div className="flex-1">
             <label className="text-[10px] text-white/50">Max price</label>
             <div className="flex items-center border border-white/10 bg-[#111111] rounded-xl px-2 py-1.5 mt-1">
-              <span className="text-xs text-white/50 mr-1">$</span>
+              <span className="text-xs text-white/50 mr-1">EGP</span>
               <input type="number" defaultValue={500} className="w-full text-sm bg-transparent outline-none text-white" />
             </div>
           </div>

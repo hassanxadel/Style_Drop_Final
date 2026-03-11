@@ -35,7 +35,7 @@ const OrderSummary = ({ subtotal, shipping, itemCount }: OrderSummaryProps) => {
       {!isFreeShipping && amountUntilFreeShipping > 0 && (
         <div className="mb-6 p-3 bg-accent/5 border border-accent/20 rounded">
           <p className="text-xs text-accent font-semibold">
-            Add ${amountUntilFreeShipping.toFixed(2)} more for free shipping!
+            Add EGP {amountUntilFreeShipping.toFixed(2)} more for free shipping!
           </p>
         </div>
       )}
@@ -47,7 +47,7 @@ const OrderSummary = ({ subtotal, shipping, itemCount }: OrderSummaryProps) => {
           <span className="text-muted-foreground">
             Subtotal ({itemCount} {itemCount === 1 ? 'item' : 'items'})
           </span>
-          <span className="font-semibold">${subtotal.toFixed(2)}</span>
+          <span className="font-semibold">EGP {subtotal.toFixed(2)}</span>
         </div>
 
         {/* Shipping */}
@@ -57,7 +57,7 @@ const OrderSummary = ({ subtotal, shipping, itemCount }: OrderSummaryProps) => {
             {isFreeShipping ? (
               <span className="text-accent">FREE</span>
             ) : (
-              `$${shipping.toFixed(2)}`
+              `EGP ${shipping.toFixed(2)}`
             )}
           </span>
         </div>
@@ -75,7 +75,7 @@ const OrderSummary = ({ subtotal, shipping, itemCount }: OrderSummaryProps) => {
       <div className="flex justify-between items-center mb-6">
         <span className="font-display text-xl">TOTAL</span>
         <span className="font-display text-3xl">
-          ${(isFreeShipping ? subtotal : total).toFixed(2)}
+          EGP {(isFreeShipping ? subtotal : total).toFixed(2)}
         </span>
       </div>
 
@@ -103,7 +103,7 @@ const OrderSummary = ({ subtotal, shipping, itemCount }: OrderSummaryProps) => {
           <div>
             <p className="text-xs font-semibold">Free Shipping</p>
             <p className="text-[10px] text-muted-foreground">
-              On orders over ${freeShippingThreshold}
+              On orders over EGP {freeShippingThreshold}
             </p>
           </div>
         </div>

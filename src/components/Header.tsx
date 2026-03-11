@@ -27,10 +27,10 @@ const Header = () => {
   ];
 
   const promoMessages = [
-    '🚚 Free delivery on orders over $75',
+    '🚚 Free delivery on orders over EGP 975',
     '💖 New drops every Friday - don\'t miss out',
     '🔥 Up to 40% off Sale items · Limited time',
-    '🚚 Free delivery on orders over $75',
+    '🚚 Free delivery on orders over EGP 975',
     '💖 New drops every Friday - don\'t miss out',
     '🔥 Up to 40% off Sale items · Limited time',
   ];
@@ -78,14 +78,19 @@ const Header = () => {
           <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" aria-label="Wishlist">
             <Heart size={18} strokeWidth={1.5} />
           </button>
+
           <Link to="/cart" className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5 relative" aria-label="Cart">
+          <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5 relative" aria-label="Cart">
+
             <ShoppingBag size={18} strokeWidth={1.5} />
             {cartItemCount > 0 && (
               <span className="absolute -top-0.5 -right-0.5 bg-[#DC2626] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                 {cartItemCount}
               </span>
             )}
+           </button>
           </Link>
+
           <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" aria-label="Account">
             <User size={18} strokeWidth={1.5} />
           </button>

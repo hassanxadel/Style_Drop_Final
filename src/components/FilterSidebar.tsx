@@ -149,7 +149,7 @@ const FilterSidebar = () => {
               bg-[#111111]
               px-2 py-1.5 mt-1
             ">
-              <span className="text-xs text-white/50 mr-1">$</span>
+              <span className="text-xs text-white/50 mr-1">EGP</span>
               <input
                 type="number"
                 defaultValue={0}
@@ -172,7 +172,7 @@ const FilterSidebar = () => {
               bg-[#111111]
               px-2 py-1.5 mt-1
             ">
-              <span className="text-xs text-white/50 mr-1">$</span>
+              <span className="text-xs text-white/50 mr-1">EGP</span>
               <input
                 type="number"
                 defaultValue={500}

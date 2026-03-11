@@ -124,7 +124,7 @@ const HeroSection = () => {
                   Trench Coat
                 </p>
                 <div className="flex flex-row justify-between items-center gap-2 mt-3">
-                  <span className="font-sans text-[13px] font-bold leading-5 text-[#0D0D0D]">$124.00</span>
+                  <span className="font-sans text-[13px] font-bold leading-5 text-[#0D0D0D]">EGP 1124.00</span>
                   <span className="font-sans text-[9px] font-bold leading-[14px] tracking-[0.45px] text-[#0D0D0D] px-[6px] py-[1.8px] rounded-full bg-[#F5F0EB] uppercase">
                     FREE RTN
                   </span>

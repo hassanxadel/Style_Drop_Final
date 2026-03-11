@@ -78,7 +78,7 @@ const Cart = () => {
   const [orderNotes, setOrderNotes] = useState('');
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const freeShippingThreshold = 300; // $300 for free shipping
+  const freeShippingThreshold = 975; // EGP 975 for free shipping
   const shippingProgress = Math.min((subtotal / freeShippingThreshold) * 100, 100);
   const amountUntilFreeShipping = Math.max(freeShippingThreshold - subtotal, 0);
   const isFreeShipping = subtotal >= freeShippingThreshold;
@@ -144,12 +144,12 @@ const Cart = () => {
             <div className="space-y-6">
               {/* Card 1: Cart Items Table */}
               <div className="bg-white rounded-2xl border border-[#0D0D0D]/10 p-4 sm:p-6">
-                {/* Table Header (desktop only) */}
+                {/* Table Header (desktop) - align to grid */}
                 <div className="hidden md:grid grid-cols-[2fr_1fr_1.5fr_1fr] gap-4 pb-4 border-b border-border text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                  <div>PRODUCT</div>
-                  <div>PRICE</div>
-                  <div>QUANTITY</div>
-                  <div className="text-right">TOTAL</div>
+                  <div className="text-left">PRODUCT</div>
+                  <div className="text-center">PRICE</div>
+                  <div className="text-center">QUANTITY</div>
+                  <div className="text-center">TOTAL</div>
                 </div>
 
                 {/* Cart Items */}
@@ -157,18 +157,18 @@ const Cart = () => {
                   {cartItems.map((item) => (
                     <div
                       key={item.id}
-                      className="py-5 md:py-6 grid md:grid-cols-[2fr_1fr_1.5fr_1fr] gap-4 md:items-center"
+                      className="py-5 md:py-6 grid grid-cols-1 md:grid-cols-[2fr_1fr_1.5fr_1fr] gap-4 md:items-center md:gap-4"
                     >
-                      {/* Product Column */}
+                      {/* Product Column - left aligned */}
                       <div className="flex gap-4">
-                        <div className="w-24 h-24 rounded-lg overflow-hidden bg-muted shrink-0">
+                        <div className="w-24 h-24 rounded-xl overflow-hidden bg-muted shrink-0">
                           <img
                             src={item.image}
                             alt={item.name}
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <div className="flex flex-col justify-center">
+                        <div className="flex flex-col justify-center min-w-0">
                           <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">
                             {item.brand}
                           </p>
@@ -177,7 +177,7 @@ const Cart = () => {
                             {item.variant.colorHex && (
                               <div className="flex items-center gap-1.5">
                                 <div
-                                  className="w-4 h-4 rounded-full border border-border"
+                                  className="w-4 h-4 rounded-full border border-border shrink-0"
                                   style={{ backgroundColor: item.variant.colorHex }}
                                 />
                                 <span className="text-xs text-muted-foreground">
@@ -187,54 +187,56 @@ const Cart = () => {
                             )}
                           </div>
                           {item.fastDrop && (
-                            <span className="inline-flex items-center gap-1 w-fit px-2 py-0.5 bg-[#F5C800] rounded text-[9px] font-bold text-[#0D0D0D] uppercase">
+                            <span className="inline-flex items-center gap-1 w-fit px-2 py-0.5 bg-[#F5C800] rounded-full text-[9px] font-bold text-[#0D0D0D] uppercase">
                               ⚡ FAST DROP
                             </span>
                           )}
                           <button
                             onClick={() => handleRemove(item.id)}
-                            className="text-xs text-accent hover:underline mt-2 text-left w-fit"
+                            className="text-xs text-accent hover:underline mt-2 text-left w-fit flex items-center gap-1"
                           >
-                            🗑 Remove
+                            <span className="text-muted-foreground">|</span> Remove
                           </button>
                         </div>
                       </div>
 
-                      {/* Price / Quantity / Total */}
-                      <div className="flex md:block justify-between items-end gap-4 mt-4 md:mt-0">
-                        {/* Price Column */}
-                        <div>
-                          <p className="font-bold">${item.price.toFixed(2)}</p>
-                          <p className="text-xs text-muted-foreground line-through">
-                            ${(item.price * 1.2).toFixed(2)}
-                          </p>
-                        </div>
+                      {/* Price Column - centered under PRICE */}
+                      <div className="flex md:flex-col md:items-center md:justify-center text-left md:text-center gap-0">
+                        <p className="font-bold text-base">EGP {item.price.toFixed(2)}</p>
+                        <p className="text-xs text-muted-foreground line-through">
+                          EGP {(item.price * 1.2).toFixed(2)}
+                        </p>
+                      </div>
 
-                        {/* Quantity Column */}
-                        <div className="flex items-center gap-2">
+                      {/* Quantity Column - centered: pill control only */}
+                      <div className="flex flex-col items-start md:items-center gap-2">
+                        {/* Pill-shaped quantity control - rounded outer edges */}
+                        <div className="inline-flex items-stretch rounded-lg overflow-hidden border border-border bg-white shadow-sm">
                           <button
                             onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                            className="w-8 h-8 rounded border border-border hover:bg-muted flex items-center justify-center"
+                            className="w-9 h-9 flex items-center justify-center bg-muted hover:bg-gray-200 text-foreground rounded-l-lg transition-colors"
+                            aria-label="Decrease quantity"
                           >
-                            <Minus size={14} />
+                            <Minus size={14} strokeWidth={2.5} />
                           </button>
-                          <span className="w-8 text-center font-semibold">
+                          <span className="min-w-[2.25rem] flex items-center justify-center font-bold text-sm text-foreground bg-white px-1">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                            className="w-8 h-8 rounded bg-[#0D0D0D] text-white hover:bg-black flex items-center justify-center"
+                            className="w-9 h-9 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black rounded-r-lg transition-colors"
+                            aria-label="Increase quantity"
                           >
-                            <Plus size={14} />
+                            <Plus size={14} strokeWidth={2.5} />
                           </button>
                         </div>
+                      </div>
 
-                        {/* Total Column */}
-                        <div className="text-right">
-                          <p className="font-bold text-lg">
-                            ${(item.price * item.quantity).toFixed(2)}
-                          </p>
-                        </div>
+                      {/* Total Column - centered under TOTAL */}
+                      <div className="flex md:flex-col md:items-center md:justify-center text-left md:text-center">
+                        <p className="font-bold text-lg">
+                          EGP {(item.price * item.quantity).toFixed(2)}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -289,7 +291,7 @@ const Cart = () => {
                     </p>
                   ) : (
                     <p className="text-sm font-semibold mb-3">
-                      You're ${amountUntilFreeShipping.toFixed(2)} away from Free Shipping!
+                      You're EGP {amountUntilFreeShipping.toFixed(2)} away from Free Shipping!
                     </p>
                   )}
                   
@@ -315,7 +317,7 @@ const Cart = () => {
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm uppercase tracking-wider">SUBTOTAL</span>
                     <span className="text-2xl font-bold text-[#F5C800]">
-                      ${subtotal.toFixed(2)} USD
+                        EGP {subtotal.toFixed(2)}
                     </span>
                   </div>
                   <p className="text-xs text-white/50">

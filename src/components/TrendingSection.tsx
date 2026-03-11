@@ -4,10 +4,10 @@ import trending3 from "@/assets/trending-3.jpg";
 import categoryWomen from "@/assets/category-women.jpg";
 
 const products = [
-  { img: trending1, brand: "ZARA", name: "Classic Trench Coat", price: "$124.00", tag: "Bestseller" },
-  { img: categoryWomen, name: "Leather Biker Jacket", brand: "COS", price: "$189.00", tag: "New" },
-  { img: trending2, brand: "H&M", name: "Chelsea Boots", price: "$89.00" },
-  { img: trending3, brand: "WEEKDAY", name: "Gold Accessories Set", price: "$59.00" },
+  { img: trending1, brand: "ZARA", name: "Classic Trench Coat", price: "EGP 1124.00", tag: "Bestseller" },
+  { img: categoryWomen, name: "Leather Biker Jacket", brand: "COS", price: "EGP 1189.00", tag: "New" },
+  { img: trending2, brand: "H&M", name: "Chelsea Boots", price: "EGP 1189.00" },
+  { img: trending3, brand: "WEEKDAY", name: "Gold Accessories Set", price: "EGP 1159.00" },
 ];
 
 const TrendingSection = () => {

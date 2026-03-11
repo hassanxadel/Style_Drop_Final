@@ -7,10 +7,10 @@ const Navbar = () => {
       {/* Top banner */}
       <div className="bg-accent text-accent-foreground text-xs py-1.5 overflow-hidden">
         <div className="animate-marquee whitespace-nowrap flex gap-16">
-          <span>🚚 Free delivery on orders over $75</span>
+          <span>🚚 Free delivery on orders over EGP 975</span>
           <span>💖 New drops every Friday - don't miss out</span>
           <span>🔥 Up to 40% off Sale items · Limited time</span>
-          <span>🚚 Free delivery on orders over $75</span>
+          <span>🚚 Free delivery on orders over EGP 975</span>
           <span>💖 New drops every Friday - don't miss out</span>
           <span>🔥 Up to 40% off Sale items · Limited time</span>
         </div>

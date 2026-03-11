@@ -36,8 +36,8 @@ const ProductDetails = () => {
     id: id || '1',
     brand: 'ARITZIA',
     name: 'Leather Biker Jacket',
-    price: '$148.00',
-    originalPrice: '$198.00',
+    price: 'EGP 1148.00',
+    originalPrice: 'EGP 1198',
     rating: 4.5,
     reviews: 1381,
     
@@ -59,7 +59,7 @@ const ProductDetails = () => {
 
   const accordionSections = [
     { id: 'size', title: 'Size Guide', content: 'Size guide content will be displayed here. Measurements for each size available.' },
-    { id: 'shipping', title: 'Shipping Information', content: 'Free shipping on orders over $75. Same-day delivery available in select areas.' },
+    { id: 'shipping', title: 'Shipping Information', content: 'Free shipping on orders over EGP 975. Same-day delivery available in select areas.' },
     { id: 'fabric', title: 'Fabric & Care', content: 'Material: 100% premium faux leather. Care: Wipe clean with a damp cloth. Avoid direct sunlight.' },
     { id: 'faq', title: 'FAQ', content: 'Common questions about this product will be answered here.' },
     { id: 'returns', title: 'Return Policy', content: 'Free 30-day returns. Items must be unworn with tags attached.' },
@@ -347,7 +347,7 @@ const ProductDetails = () => {
                 <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
                   <Truck size={16} className="text-accent" />
                 </div>
-                <span>Free shipping over $75</span>
+                  <span>Free shipping over EGP 975</span>
               </div>
               <div className="flex items-center gap-2 text-xs">
                 <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">

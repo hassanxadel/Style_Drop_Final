@@ -22,11 +22,11 @@ interface CategoryCardProps {
 }
 
 const CategoryCard = ({ category }: CategoryCardProps) => {
-  const { name, img, span, link = '/collection' } = category;
+  const { name, img, span } = category;
 
   return (
     <Link
-      to={link}
+      to={'/collection'}
       className={`
         relative rounded-lg overflow-hidden 
         cursor-pointer group

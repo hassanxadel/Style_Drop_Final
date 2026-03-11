@@ -25,57 +25,40 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   const { name, text, rating, avatar } = testimonial;
 
   return (
-    <div className="
-      bg-white rounded-2xl 
-      p-6 
-      hover:shadow-lg transition-shadow
-    ">
+    <div className="bg-card rounded-lg p-6 border border-border">
       {/* Star Rating */}
-      <div className="flex gap-0.5 mb-4">
+      <div className="flex gap-0.5 mb-3">
         {Array.from({ length: 5 }).map((_, index) => (
-          <span
+          <Star
             key={index}
+            size={14}
             className={
               index < rating
-                ? 'text-[#F5C800]'
-                : 'text-gray-300'
+                ? 'fill-accent text-accent'
+                : 'text-muted'
             }
-          >
-            ★
-          </span>
+          />
         ))}
       </div>
 
       {/* Testimonial Text */}
-      <p className="
-        text-sm text-[#0D0D0D] 
-        leading-relaxed mb-6
-      ">
+      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
         "{text}"
       </p>
 
       {/* Customer Info */}
       <div className="flex items-center gap-3">
-        {/* Avatar */}
-        {avatar ? (
+        {/* Avatar (if available) */}
+        {avatar && (
           <img
             src={avatar}
             alt={name}
             className="w-10 h-10 rounded-full object-cover"
           />
-        ) : (
-          <div className="
-            w-10 h-10 rounded-full 
-            bg-accent text-white 
-            flex items-center justify-center 
-            font-bold text-sm
-          ">
-            {name.charAt(0)}
-          </div>
         )}
 
         {/* Customer Name */}
-        <p className="text-sm font-semibold text-[#0D0D0D]">
+        <p className="text-sm font-semibold">
           {name}
         </p>
       </div>
