@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 25% 96%;
+    --foreground: 0 0% 8%;
+
+    --card: 30 20% 98%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+
+    --primary: 0 0% 8%;
+    --primary-foreground: 30 25% 96%;
+
+    --secondary: 30 20% 92%;
+    --secondary-foreground: 0 0% 8%;
+
+    --muted: 30 10% 90%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 0 85% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 10% 85%;
+    --input: 30 10% 85%;
+    --ring: 0 85% 50%;
+
+    --radius: 0.5rem;
+    --figma-black: #0D0D0D;
+    --figma-red: #DC2626;
+    --figma-yellow: #F5C800;
+    --figma-cream: #F5F0EB;
+
+    --surface-dark: 0 0% 8%;
+    --surface-dark-foreground: 0 0% 95%;
+    --surface-dark-muted: 0 0% 60%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 30 25% 96%;
+    --card: 0 0% 12%;
+    --card-foreground: 30 25% 96%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 30 25% 96%;
+    --primary: 30 25% 96%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 30 25% 96%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 85% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 85% 50%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@layer components {
+  /* Vertical stretch: letters appear taller/narrower (stretched up), not letter-spacing */
+  .heading-stretch-up {
+    transform: scaleY(1.45);
+    transform-origin: top left;
+  }
+  .sub-heading-stretch-up {
+    transform: scaleY(1.2);
+    transform-origin: top left;
+  }
+  .section-dark {
+    @apply bg-surface-dark text-surface-dark-foreground;
+  }
+  .badge-accent {
+    @apply bg-[#DC2626] text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-[0.88px];
+  }
+  .btn-accent {
+    @apply bg-[#DC2626] text-white font-bold px-6 py-3 rounded-full hover:opacity-90 transition-opacity uppercase tracking-[1.92px] text-base;
+  }
+  .btn-outline-light {
+    @apply border border-surface-dark-foreground text-surface-dark-foreground font-semibold px-6 py-3 rounded-sm hover:bg-surface-dark-foreground hover:text-surface-dark transition-colors;
+  }
+}

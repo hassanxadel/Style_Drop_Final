@@ -1,0 +1,238 @@
+# StyleDrop React E-Commerce - Architecture & Guidelines
+
+## Project Overview
+Modern e-commerce React application built with Vite, React Router, TypeScript, Tailwind CSS, and shadcn/ui. Designed for Shopify Liquid conversion.
+
+## Tech Stack
+- **Framework:** React 18 + TypeScript
+- **Build Tool:** Vite
+- **Routing:** React Router DOM v6
+- **Styling:** Tailwind CSS + shadcn/ui + CSS custom properties
+- **State:** Local component state (useState), TanStack React Query configured
+- **Fonts:** Bebas Neue (display), Inter (body), Barlow Condensed (labels)
+
+## Project Structure
+
+### Folder Organization
+```
+src/
+├── pages/              # Route-level pages (Index, Collection, ProductDetails, BrandProducts, NotFound)
+├── layouts/            # Layout wrappers (MainLayout with Header/Footer)
+├── sections/           # Large page sections (Hero, Trending, Categories, etc.)
+├── components/         # Reusable UI components (ProductCard, ProductGrid, etc.)
+│   └── ui/             # shadcn/ui library (40+ components)
+├── data/               # Mock data (products, brands, testimonials)
+├── types/              # TypeScript type definitions
+├── hooks/              # Custom React hooks
+└── assets/             # Images and static files
+```
+
+### Current Routes
+- `/` → Index (Home page)
+- `/collection` → Collection (Product catalog)
+- `/product/:id` → ProductDetails (Single product page)
+- `/brand/:brandName` → BrandProducts (Brand-specific products)
+- `*` → NotFound (404)
+
+## Pages
+
+### 1. Index (Home) - `/`
+**Sections (in order):**
+- HeroSection - Hero banner with trust features, CTA buttons
+- BrandsSection - Brand showcase carousel (clickable to brand pages)
+- TrendingSection - Trending products (clickable to product details)
+- CategoryGridSection - Category navigation
+- SaleBanner - Promotional banner
+- LifestyleBanners - Lifestyle images
+- TestimonialsSection - Customer reviews
+- NewsletterSection - Email signup
+
+### 2. Collection - `/collection`
+Product catalog with filtering, sorting, pagination.
+- Breadcrumb navigation
+- Collection header (title, sort, view toggle)
+- FilterSidebar (left) - Categories, price, size, colors, brands
+- ProductGrid (right) - Responsive product cards
+- Load more functionality
+
+### 3. ProductDetails - `/product/:id`
+Single product page with full details.
+- Breadcrumb navigation (Home > Brand > Product)
+- Image gallery with thumbnails (4 images)
+- Product info panel (title, rating, price, description)
+- Color swatches, size selector, quantity
+- Add to cart button
+- Feature icons (shipping, returns, stock)
+- Collapsible accordions (Size Guide, Shipping, Fabric & Care, FAQ, Return Policy)
+- Related products section
+
+### 4. BrandProducts - `/brand/:brandName`
+Brand-specific product collection.
+- Brand hero header with background, badge, name
+- Brand stats (rating, reviews, product count)
+- Brand description
+- FilterSidebar and ProductGrid (same as Collection)
+- Sort and view options
+
+## Reusable Components
+
+### Core Layout
+**MainLayout** - Wraps all pages
+- Props: `children: ReactNode`
+- Includes: Header (promo bar, nav, cart) + Footer (links, brand info)
+
+### Product Components
+**ProductCard** - Single product display (clickable to ProductDetails)
+- Props: `product: Product`
+- Features: Image, badges, wishlist, add-to-cart, color swatches, pricing
+
+**ProductGrid** - Responsive product grid
+- Props: `products: Product[]`, `columns?: 2 | 3 | 4`
+- Default: 3 columns (2 mobile, 3 desktop)
+
+**FilterSidebar** - Complete filtering UI
+- Features: Categories, price range, sizes, colors, availability, brands
+- All sections collapsible
+
+**CategoryCard** - Category navigation card (clickable to /collection)
+- Props: `category: Category`
+- Features: Background image, overlay, hover zoom
+
+### Section Components
+- **HeroSection** - Hero banner with CTA buttons (linked to /collection)
+- **BrandsSection** - Brand carousel (cards link to /brand/:brandName)
+- **TrendingSection** - Featured products (cards link to /product/:id)
+- **CategoryGridSection** - Category grid
+- **SaleBanner** - Promotional banner (CTA links to /collection)
+- **LifestyleBanners** - Lifestyle image grid
+- **TestimonialsSection** - Customer testimonials
+- **NewsletterSection** - Email signup
+
+### UI Components (shadcn/ui)
+Available at `@/components/ui/`: Button, Card, Input, Checkbox, Select, Dialog, Sheet, Accordion, Tabs, Carousel, Badge, Separator, Alert, Avatar, Calendar, Command, Dropdown, Form, Hover Card, Label, Menubar, Navigation Menu, Pagination, Popover, Progress, Radio Group, Scroll Area, Skeleton, Slider, Switch, Table, Textarea, Toast, Toggle, Tooltip
+
+## Styling System
+
+### Approach
+Tailwind CSS with custom design tokens via CSS variables (HSL-based).
+
+### Custom Utility Classes
+- `.heading-stretch-up` - Vertical text stretch (scaleY 1.45)
+- `.section-dark` - Dark section styling
+- `.badge-accent` - Red accent badge
+- `.btn-accent` - Red accent button
+- `.btn-outline-light` - Outlined button for dark backgrounds
+
+### Brand Colors
+- **Primary:** `#0D0D0D` (black)
+- **Accent:** `#DC2626` (red)
+- **Yellow:** `#F5C800` (badges)
+- **Cream:** `#F5F0EB` (backgrounds)
+
+### Typography
+- **Display (Headings):** Bebas Neue
+- **Body:** Inter
+- **Labels/Badges:** Barlow Condensed
+
+### Container
+- Max-width: 1141px (Figma design)
+- Centered with 2rem padding
+
+## Data & Types
+
+### Mock Data (`src/data/`)
+- **products.ts** - `collectionProducts` array
+- **brands.ts** - `featuredBrands` array
+- **testimonials.ts** - Customer reviews
+
+### Type Definitions (`src/types/index.ts`)
+```typescript
+Product: { id?, img, brand, name, price, originalPrice?, colors, badge?, badgeType?, rating?, reviewCount? }
+Brand: { name, color, logo?, tagline? }
+Category: { name, img, span?, link? }
+Testimonial: { name, text, rating, avatar?, date? }
+FilterOption: { name, count?, active? }
+TrustFeature: { icon, title, description }
+```
+
+## Navigation Flow
+
+### Homepage Links
+- **Hero "Shop What's Trending"** → `/collection`
+- **Hero "Explore New Arrivals"** → `/collection`
+- **Brand Cards** → `/brand/:brandName`
+- **Trending Product Cards** → `/product/:id`
+- **Category Cards** → `/collection`
+- **Sale Banner CTA** → `/collection`
+- **All section "View all" links** → `/collection`
+
+### Product Pages
+- **ProductCard (anywhere)** → `/product/:id` (or `/product/:slug`)
+- **Brand name in ProductDetails** → `/brand/:brandName`
+
+### Brand Pages
+- **Brand cards in BrandsSection** → `/brand/:brandName`
+- Filters products by brand name
+
+## Best Practices
+
+### Component Reuse
+1. **Always use MainLayout** for consistent header/footer
+2. **Import and reuse** existing components before creating new ones
+3. **Use shadcn/ui components** for forms, modals, tabs, etc.
+4. **Use Link from react-router-dom** instead of `<a>` tags for internal navigation
+
+### Styling
+1. **Follow Tailwind utility-first** approach
+2. **Use font-display class** for headings (Bebas Neue)
+3. **Use container class** for max-width constraints
+4. **Use custom utility classes** (.btn-accent, .badge-accent, .heading-stretch-up)
+
+### TypeScript
+1. **Import types** from `@/types` for type safety
+2. **Define component props** with TypeScript interfaces
+3. **Use optional props** with default values
+
+### Shopify Liquid Readiness
+1. **Keep HTML structure clean** - avoid complex React state for UI toggles when CSS classes can handle it
+2. **Use simple conditional rendering** - easier to convert to Liquid conditionals
+3. **Avoid inline arrow functions** in JSX where possible for cleaner Liquid conversion
+4. **Comment component purpose** at the top of each file with Shopify mapping
+
+### State Management
+- **Local state only** - use `useState` for component-level state
+- **No global state** - keep it simple (no Redux/Zustand)
+- **React Query available** but not actively used (configured for future API calls)
+
+## Quick Start Template
+
+### New Page Component
+```typescript
+import MainLayout from '@/layouts/MainLayout';
+import { Link } from 'react-router-dom';
+
+const NewPage = () => {
+  return (
+    <MainLayout>
+      <div className="container py-8">
+        <h1 className="font-display text-5xl">PAGE TITLE</h1>
+        {/* Content here */}
+      </div>
+    </MainLayout>
+  );
+};
+
+export default NewPage;
+```
+
+### Adding New Route
+1. Create page component in `src/pages/`
+2. Import in `App.tsx`
+3. Add `<Route path="/new-path" element={<NewPage />} />` in `<Routes>`
+
+## Component Priority
+1. **Layout:** MainLayout → Header/Footer
+2. **Products:** ProductGrid → ProductCard
+3. **Sections:** Import from `@/sections/`
+4. **UI:** Use shadcn/ui from `@/components/ui/`
+5. **Custom:** Create only when needed
