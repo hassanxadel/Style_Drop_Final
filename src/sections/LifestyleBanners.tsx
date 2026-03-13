@@ -13,15 +13,18 @@
 
 import streetwear from '@/assets/streetwear-banner.jpg';
 import comfort from '@/assets/comfort-banner.jpg';
+import { Link } from 'react-router-dom';
 
 const LifestyleBanners = () => {
   return (
     <section className="bg-background py-14">
       <div className="container grid md:grid-cols-2 gap-6">
         {/* Streetwear Banner */}
-        <div className="
+        <Link 
+          to="/collection"
+          className="
           relative rounded-2xl overflow-hidden 
-          group cursor-pointer h-[400px]
+          group cursor-pointer h-[400px] block
         ">
           {/* Background Image */}
           <img
@@ -80,12 +83,14 @@ const LifestyleBanners = () => {
               SHOP MEN'S →
             </button>
           </div>
-        </div>
+        </Link>
 
         {/* Comfort Redefined Banner */}
-        <div className="
+        <Link
+          to="/collection"
+          className="
           relative rounded-2xl overflow-hidden 
-          group cursor-pointer h-[400px] bg-black
+          group cursor-pointer h-[400px] bg-black block
         ">
           {/* Background Image */}
           <img
@@ -161,7 +166,7 @@ const LifestyleBanners = () => {
               </button>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
     </section>
   );

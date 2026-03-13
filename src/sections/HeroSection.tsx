@@ -84,15 +84,15 @@ const HeroSection = () => {
               </p>
 
               {/* CTAs - Figma: 52px height row; extra spacing below */}
-              <div className="flex flex-wrap gap-4 md:gap-6 items-center mb-10">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center mb-10">
                 <Link to="/collection">
                   <button className="btn-accent font-condensed text-sm md:text-base font-bold uppercase tracking-[1.68px] md:tracking-[1.92px] h-[44px] md:h-[52px] px-5 md:px-7 rounded-full">
                     Shop What&apos;s Trending
                   </button>
                 </Link>
-                <Link to="/collection" className="font-sans text-xs md:text-sm font-semibold text-[#0D0D0D] border-b border-[#0D0D0D] pb-0.5 hover:opacity-80 inline-flex items-center gap-1">
+                <Link to="/collection" className="font-sans text-xs md:text-sm font-semibold text-[#0D0D0D] border-b border-[#0D0D0D] pb-0.5 hover:opacity-80 inline-flex items-center gap-2">
                   Explore New Arrivals
-                  <span aria-hidden className="inline-block w-3 md:w-3.5 h-3 md:h-3.5 border border-[#0D0D0D] rounded-sm rotate-45 border-t-0 border-l-0" />
+                  <span aria-hidden>→</span>
                 </Link>
               </div>
             </div>

@@ -40,7 +40,7 @@ const BrandsSection = ({ brands = featuredBrands }: BrandsSectionProps) => {
             </h2>
           </div>
           <Link
-            to="/collection"
+            to="/brands"
             className="font-sans text-[14px] font-semibold tracking-[0.18em] uppercase text-[#0D0D0D]/70 hover:text-[#0D0D0D] flex items-center gap-1"
           >
             All brands
