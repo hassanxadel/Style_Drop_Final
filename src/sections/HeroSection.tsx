@@ -64,35 +64,35 @@ const HeroSection = () => {
             {/* Left column - text block ~480px */}
             <div className="flex flex-col max-w-[480px]">
               {/* SAME-DAY DELIVERY - Figma: 28.5px height, red pill */}
-              <span className="badge-accent h-[28.5px] inline-flex items-center gap-2 rounded-full w-fit px-3 mb-0">
-                <svg className="w-[11px] h-[11px] fill-white shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+              <span className="badge-accent h-[22px] md:h-[28.5px] inline-flex items-center gap-1.5 md:gap-2 rounded-full w-fit px-2 md:px-3 mb-0">
+                <svg className="w-[9px] h-[9px] md:w-[11px] md:h-[11px] fill-white shrink-0" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
                 </svg>
-                <span className="font-sans text-[11px] font-bold leading-4 tracking-[0.88px] text-white uppercase">SAME-DAY DELIVERY</span>
+                <span className="font-sans text-[9px] md:text-[11px] font-bold leading-4 tracking-[0.72px] md:tracking-[0.88px] text-white uppercase">SAME-DAY DELIVERY</span>
               </span>
 
               {/* Heading - Bebas Neue 60px, line-height 57px, letter-spacing 3.6px (wider for bold look) */}
-              <h1 className="font-display font-normal text-[99px] leading-[87px] tracking-[3.6px] text-[#0D0D0D] mt-6 mb-8" style={{ fontFamily: '"Bebas Neue", sans-serif', fontWeight: 400 }}>
+              <h1 className="font-display font-normal text-[56px] md:text-[99px] leading-[50px] md:leading-[87px] tracking-[2.8px] md:tracking-[3.6px] text-[#0D0D0D] mt-4 md:mt-6 mb-5 md:mb-8" style={{ fontFamily: '"Bebas Neue", sans-serif', fontWeight: 400 }}>
                 <span className="block">WEAR WHAT</span>
                 <span className="block text-[#DC2626]">DROPS</span>
                 <span className="block">TODAY.</span>
               </h1>
 
               {/* Paragraph - Figma: top 345px from section = ~80px after heading, 15px/24px, opacity 0.55 */}
-              <p className="font-sans text-[15px] leading-6 text-[#0D0D0D]/55 max-w-[320px] mb-8">
+              <p className="font-sans text-[13px] md:text-[15px] leading-5 md:leading-6 text-[#0D0D0D]/55 max-w-[320px] mb-6 md:mb-8">
                 Multi-brand fashion delivered fast. Discover trending styles from the brands you love — with full transparency on pricing and returns.
               </p>
 
               {/* CTAs - Figma: 52px height row; extra spacing below */}
-              <div className="flex flex-wrap gap-6 items-center mb-10">
+              <div className="flex flex-wrap gap-4 md:gap-6 items-center mb-10">
                 <Link to="/collection">
-                  <button className="btn-accent font-condensed text-base font-bold uppercase tracking-[1.92px] h-[52px] px-7 rounded-full">
+                  <button className="btn-accent font-condensed text-sm md:text-base font-bold uppercase tracking-[1.68px] md:tracking-[1.92px] h-[44px] md:h-[52px] px-5 md:px-7 rounded-full">
                     Shop What&apos;s Trending
                   </button>
                 </Link>
-                <Link to="/collection" className="font-sans text-sm font-semibold text-[#0D0D0D] border-b border-[#0D0D0D] pb-0.5 hover:opacity-80 inline-flex items-center gap-1">
+                <Link to="/collection" className="font-sans text-xs md:text-sm font-semibold text-[#0D0D0D] border-b border-[#0D0D0D] pb-0.5 hover:opacity-80 inline-flex items-center gap-1">
                   Explore New Arrivals
-                  <span aria-hidden className="inline-block w-3.5 h-3.5 border border-[#0D0D0D] rounded-sm rotate-45 border-t-0 border-l-0" />
+                  <span aria-hidden className="inline-block w-3 md:w-3.5 h-3 md:h-3.5 border border-[#0D0D0D] rounded-sm rotate-45 border-t-0 border-l-0" />
                 </Link>
               </div>
             </div>

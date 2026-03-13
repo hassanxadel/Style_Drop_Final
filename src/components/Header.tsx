@@ -78,19 +78,12 @@ const Header = () => {
 
         {/* Action Icons - 34px circles */}
         <div className="flex items-center gap-2">
-          {/* Mobile Menu Button - Only visible on mobile */}
-          <button 
-            onClick={() => setIsSidebarOpen(true)}
-            className="md:hidden w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" 
-            aria-label="Menu"
-          >
-            <Menu size={20} strokeWidth={1.5} />
-          </button>
-
           <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" aria-label="Search">
             <Search size={18} strokeWidth={1.5} />
           </button>
-          <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" aria-label="Wishlist">
+          
+          {/* Wishlist - Hidden on mobile */}
+          <button className="hidden md:flex w-[34px] h-[34px] items-center justify-center rounded-full hover:bg-black/5" aria-label="Wishlist">
             <Heart size={18} strokeWidth={1.5} />
           </button>
 
@@ -103,8 +96,18 @@ const Header = () => {
             )}
           </Link>
 
-          <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" aria-label="Account">
+          {/* User Account - Hidden on mobile, visible on desktop */}
+          <button className="hidden md:flex w-[34px] h-[34px] items-center justify-center rounded-full hover:bg-black/5" aria-label="Account">
             <User size={18} strokeWidth={1.5} />
+          </button>
+
+          {/* Mobile Menu Button - First on the right (last in order) on mobile */}
+          <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="md:hidden w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" 
+            aria-label="Menu"
+          >
+            <Menu size={20} strokeWidth={1.5} />
           </button>
         </div>
       </nav>
