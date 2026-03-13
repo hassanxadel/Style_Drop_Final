@@ -11,11 +11,14 @@
  * - Search, wishlist, and user account icons
  */
 
-import { Search, Heart, ShoppingBag, User } from 'lucide-react';
+import { Search, Heart, ShoppingBag, User, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import MobileSidebar from './MobileSidebar';
 
 const Header = () => {
   const cartItemCount = 4;
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const navigationLinks = [
     { label: 'New In', path: '/', highlight: false },
@@ -36,25 +39,28 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white text-[#0D0D0D]">
-      {/* Promo bar - Figma: 38px, #0D0D0D, Inter 12px, white 0.9 */}
-      <div className="bg-[#0D0D0D] h-[38px] flex items-center justify-center overflow-hidden">
-        <div className="animate-marquee whitespace-nowrap flex gap-8 text-white/90 text-xs font-normal tracking-[0.6px] leading-[18px]">
-          {promoMessages.map((message, index) => (
-            <span key={index}>{message}</span>
-          ))}
+    <>
+      <MobileSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      
+      <header className="sticky top-0 z-50 bg-white text-[#0D0D0D]">
+        {/* Promo bar - Figma: 38px, #0D0D0D, Inter 12px, white 0.9 */}
+        <div className="bg-[#0D0D0D] h-[38px] flex items-center justify-center overflow-hidden">
+          <div className="animate-marquee whitespace-nowrap flex gap-8 text-white/90 text-xs font-normal tracking-[0.6px] leading-[18px]">
+            {promoMessages.map((message, index) => (
+              <span key={index}>{message}</span>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Main Nav - Figma: 72px, padding 0 20px */}
-      <nav className="container flex items-center justify-between h-[72px] px-5">
-        {/* Logo */}
-        <Link 
-          to="/" 
-          className="font-display text-3xl tracking-tight hover:opacity-90 transition-opacity"
-        >
-          Style<span className="text-[#DC2626]">Drop</span>
-        </Link>
+        {/* Main Nav - Figma: 72px, padding 0 20px */}
+        <nav className="container flex items-center justify-between h-[72px] px-5">
+          {/* Logo */}
+          <Link 
+            to="/" 
+            className="font-display text-3xl tracking-tight hover:opacity-90 transition-opacity"
+          >
+            Style<span className="text-[#DC2626]">Drop</span>
+          </Link>
 
         {/* Desktop Nav - Inter 13px 500, letter-spacing 0.52px */}
         <ul className="hidden md:flex items-center gap-8 text-[13px] font-medium tracking-[0.52px] text-[#0D0D0D]">
@@ -72,6 +78,15 @@ const Header = () => {
 
         {/* Action Icons - 34px circles */}
         <div className="flex items-center gap-2">
+          {/* Mobile Menu Button - Only visible on mobile */}
+          <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="md:hidden w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" 
+            aria-label="Menu"
+          >
+            <Menu size={20} strokeWidth={1.5} />
+          </button>
+
           <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" aria-label="Search">
             <Search size={18} strokeWidth={1.5} />
           </button>
@@ -80,15 +95,12 @@ const Header = () => {
           </button>
 
           <Link to="/cart" className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5 relative" aria-label="Cart">
-          <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5 relative" aria-label="Cart">
-
             <ShoppingBag size={18} strokeWidth={1.5} />
             {cartItemCount > 0 && (
               <span className="absolute -top-0.5 -right-0.5 bg-[#DC2626] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                 {cartItemCount}
               </span>
             )}
-           </button>
           </Link>
 
           <button className="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5" aria-label="Account">
@@ -97,6 +109,7 @@ const Header = () => {
         </div>
       </nav>
     </header>
+    </>
   );
 };
 
