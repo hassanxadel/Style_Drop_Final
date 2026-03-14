@@ -15,6 +15,7 @@ import { Search, Heart, ShoppingBag, User, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import MobileSidebar from './MobileSidebar';
+import logo from '@/assets/logo for web .jpeg';
 
 const Header = () => {
   const cartItemCount = 4;
@@ -57,9 +58,13 @@ const Header = () => {
           {/* Logo */}
           <Link 
             to="/" 
-            className="font-display text-3xl tracking-tight hover:opacity-90 transition-opacity"
+            className="flex items-center hover:opacity-90 transition-opacity"
           >
-            Style<span className="text-[#DC2626]">Drop</span>
+            <img 
+              src={logo} 
+              alt="StyleDrop Logo" 
+              className="h-12 w-auto object-contain"
+            />
           </Link>
 
         {/* Desktop Nav - Inter 13px 500, letter-spacing 0.52px */}

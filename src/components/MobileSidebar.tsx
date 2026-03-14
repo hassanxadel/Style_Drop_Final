@@ -8,6 +8,7 @@
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import logo from '@/assets/logo for web .jpeg';
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -56,10 +57,14 @@ const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
         <div className="flex items-center justify-between p-5 border-b border-gray-200">
           <Link 
             to="/" 
-            className="font-display text-2xl tracking-tight"
+            className="flex items-center"
             onClick={onClose}
           >
-            Style<span className="text-[#DC2626]">Drop</span>
+            <img 
+              src={logo} 
+              alt="StyleDrop Logo" 
+              className="h-10 w-auto object-contain"
+            />
           </Link>
           <button
             onClick={onClose}
