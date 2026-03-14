@@ -15,9 +15,10 @@
 
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ChevronLeft, Heart, Minus, Plus, Truck, RotateCcw, AlertCircle, ChevronDown } from 'lucide-react';
+import { ChevronLeft, Heart, Minus, Plus, Truck, RotateCcw, AlertCircle, ChevronDown, Zap } from 'lucide-react';
 import MainLayout from '@/layouts/MainLayout';
 import ProductCard from '@/components/ProductCard';
+import SizePredictor from '@/components/SizePredictor';
 import { collectionProducts } from '@/data/products';
 
 // Mock product images - in real app these would come from product data
@@ -30,6 +31,7 @@ const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [isSizePredictorOpen, setIsSizePredictorOpen] = useState(false);
 
   // Mock product data - in real app this would be fetched based on ID
   const product = {
@@ -283,7 +285,17 @@ const ProductDetails = () => {
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <label className="text-sm font-semibold">Size:</label>
-                <button className="text-xs text-accent hover:underline">Size Guide</button>
+                <div className="flex items-center gap-2">
+                  <button className="text-xs text-accent hover:underline">Size Guide</button>
+                  <span className="text-xs text-muted-foreground">|</span>
+                  <button
+                    onClick={() => setIsSizePredictorOpen(true)}
+                    className="text-xs text-accent hover:underline flex items-center gap-1"
+                  >
+                    <Zap size={12} />
+                    Find Your Best Size
+                  </button>
+                </div>
               </div>
               <div className="flex gap-3">
                 {sizes.map((size) => (
@@ -388,6 +400,16 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* Size Predictor Modal */}
+      <SizePredictor
+        isOpen={isSizePredictorOpen}
+        onClose={() => setIsSizePredictorOpen(false)}
+        currentProduct={{
+          category: 'tops', // Can be dynamic based on product type
+          availableSizes: sizes,
+        }}
+      />
       </div>
 
       {/* Related Products Section - Cream Background */}
