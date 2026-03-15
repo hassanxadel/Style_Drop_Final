@@ -63,7 +63,7 @@ const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
             <img 
               src={logo} 
               alt="StyleDrop Logo" 
-              className="h-12 w-auto object-contain"
+              className="h-14 w-auto object-contain"
             />
           </Link>
           <button

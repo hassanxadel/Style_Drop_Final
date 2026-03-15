@@ -15,7 +15,7 @@
 
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ChevronLeft, Heart, Minus, Plus, Truck, RotateCcw, AlertCircle, ChevronDown, Zap } from 'lucide-react';
+import { ChevronLeft, Heart, Minus, Plus, Truck, RotateCcw, AlertCircle, ChevronDown, Zap, ShoppingBag, ShieldAlert, ShieldPlus } from 'lucide-react';
 import MainLayout from '@/layouts/MainLayout';
 import ProductCard from '@/components/ProductCard';
 import SizePredictor from '@/components/SizePredictor';
@@ -342,7 +342,8 @@ const ProductDetails = () => {
               {/* Add to Cart Button + Wishlist */}
               <div className="flex flex-1 items-center gap-3">
                 <button className="flex-1 h-12 bg-accent text-white rounded-full font-condensed text-sm tracking-[0.18em] uppercase flex items-center justify-center gap-2 shadow-md hover:bg-accent/90 transition-colors">
-                  ● ADD TO CART
+                  <ShoppingBag size={18} strokeWidth={2} />
+                  ADD TO CART
                 </button>
                 <button
                   className="w-11 h-11 border border-border rounded-full flex items-center justify-center hover:border-[#0D0D0D] hover:text-[#0D0D0D]"
@@ -353,25 +354,25 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            {/* Features */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-6 pb-6 border-b border-border">
-              <div className="flex items-center gap-2 text-xs">
-                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
-                  <Truck size={16} className="text-accent" />
+            {/* Features - Square Card Layout */}
+            <div className="grid grid-cols-3 gap-3 mb-6 pb-6 border-b border-border">
+              <div className="flex flex-col items-center justify-center gap-3 px-3 py-4 bg-white rounded-2xl border border-border shadow-sm text-center">
+                <div className="">
+                  <Truck size={18} className="text-accent" />
                 </div>
-                  <span>Free shipping over EGP 975</span>
+                <span className="text-xs leading-tight">Free shipping over<br />EGP100</span>
               </div>
-              <div className="flex items-center gap-2 text-xs">
-                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
-                  <RotateCcw size={16} className="text-accent" />
+              <div className="flex flex-col items-center justify-center gap-3 px-3 py-4 bg-white rounded-2xl border border-border shadow-sm text-center">
+                <div className="">
+                  <RotateCcw size={18} className="text-accent" />
                 </div>
-                <span>Free 30-day returns</span>
+                <span className="text-xs leading-tight">Free returns,<br />30 days</span>
               </div>
-              <div className="flex items-center gap-2 text-xs">
-                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
-                  <AlertCircle size={16} className="text-accent" />
+              <div className="flex flex-col items-center justify-center gap-3 px-3 py-4 bg-white rounded-2xl border border-border shadow-sm text-center">
+                <div className="">
+                  <ShieldPlus size={18} className="text-accent" />
                 </div>
-                <span>Only {product.stockLeft} left in stock</span>
+                <span className="text-xs leading-tight">Secure<br />checkout</span>
               </div>
             </div>
 
@@ -415,8 +416,8 @@ const ProductDetails = () => {
       {/* Related Products Section - Cream Background */}
       <div className="bg-[#F5F0EB] py-16">
         <div className="container">
-          {/* Black Card Wrapper */}
-          <div className="bg-[#0D0D0D] rounded-3xl px-6 md:px-10 lg:px-12 py-10 md:py-12 shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+          {/* Black Rounded Container */}
+          <div className="bg-[#0D0D0D] rounded-3xl px-6 md:px-10 lg:px-12 py-10 md:py-12">
             <div className="flex items-center justify-between mb-8">
               <div>
                 {/* Badge - Yellow */}
@@ -430,10 +431,8 @@ const ProductDetails = () => {
                 </span>
                 
                 {/* Heading */}
-                <h2 className="font-display text-5xl md:text-6xl font-normal text-white">
-                  EVERYDAY STYLES
-                  <br />
-                  <span className="text-accent">YOU'LL LOVE</span>
+                <h2 className="font-display text-4xl md:text-5xl font-normal text-white">
+                  COMPLETE <span className="text-accent">THE</span> LOOK
                 </h2>
               </div>
               
@@ -447,7 +446,7 @@ const ProductDetails = () => {
               </Link>
             </div>
 
-            {/* Related Products Grid - Each product in its own card */}
+            {/* Related Products Grid - Black Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {relatedProducts.map((product, index) => (
               <Link
@@ -455,7 +454,7 @@ const ProductDetails = () => {
                 to={`/product/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
                 className="group"
               >
-                <div className="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="bg-[#0D0D0D] rounded-2xl overflow-hidden hover:shadow-xl transition-shadow border border-white/10">
                   {/* Product Image Container */}
                   <div className="relative aspect-[3/4] overflow-hidden bg-muted">
                     <img
@@ -487,7 +486,7 @@ const ProductDetails = () => {
                           flex items-center gap-1
                           ${
                             product.badgeType === 'sale'
-                              ? 'bg-accent text-white'
+                              ? 'bg-[#0D0D0D] text-white'
                               : product.badgeType === 'new'
                               ? 'bg-[#0D0D0D] text-white'
                               : 'bg-[#0D0D0D] text-white'
@@ -500,33 +499,45 @@ const ProductDetails = () => {
                     )}
                   </div>
 
-                  {/* Product Info - Inside Card */}
+                  {/* Product Info - Inside Black Card */}
                   <div className="p-4">
                     {/* Brand */}
                     <p className="
                       font-condensed text-[10px] font-bold 
                       tracking-[1.4px] uppercase 
-                      text-[#0D0D0D]/50 mb-1
+                      text-white/50 mb-1
                     ">
                       {product.brand}
                     </p>
 
                     {/* Product Name */}
-                    <h3 className="font-sans text-sm font-semibold text-[#0D0D0D] mb-2">
+                    <h3 className="font-sans text-sm font-semibold text-white mb-2">
                       {product.name}
                     </h3>
 
                     {/* Price & Original Price */}
-                    <div className="flex items-center gap-2">
-                      <span className="font-sans text-base font-bold text-[#0D0D0D]">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="font-sans text-base font-bold text-white">
                         {product.price}
                       </span>
                       {product.originalPrice && (
-                        <span className="font-sans text-sm text-[#0D0D0D]/40 line-through">
+                        <span className="font-sans text-sm text-white/40 line-through">
                           {product.originalPrice}
                         </span>
                       )}
                     </div>
+
+                    {/* Add to Cart Button - Red */}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
+                      className="w-full bg-accent text-white rounded-full py-2.5 px-4 font-condensed text-xs tracking-[0.15em] uppercase flex items-center justify-center gap-2 hover:bg-accent/90 transition-colors"
+                    >
+                      <ShoppingBag size={14} strokeWidth={2} />
+                      ADD TO CART
+                    </button>
                   </div>
                 </div>
               </Link>
