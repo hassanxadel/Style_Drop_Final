@@ -16,6 +16,7 @@
  */
 
 import { Link } from 'react-router-dom';
+import logo from '@/assets/logo for web .png';
 
 interface FooterColumn {
   title: string;
@@ -46,9 +47,13 @@ const Footer = () => {
           {/* Brand Column */}
           <div>
             {/* Logo */}
-            <h3 className="font-display text-2xl mb-4">
-              Style<span className="text-accent">Drop</span>
-            </h3>
+            <Link to="/" className="inline-block mb-4">
+              <img 
+                src={logo} 
+                alt="StyleDrop Logo" 
+                className="h-12 w-auto object-contain"
+              />
+            </Link>
 
             {/* Brand Description */}
             <p className="

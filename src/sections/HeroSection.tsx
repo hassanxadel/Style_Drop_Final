@@ -47,7 +47,7 @@ const HeroSection = () => {
       <div className="bg-[#F5F0EB] min-h-[702px] flex flex-col">
         <div className="container px-8 flex flex-col flex-1">
           {/* Top row: MOVE FREELY | LIVE BOLDLY | FEEL ICONIC - Figma: 82px height, space-between */}
-          <div className="flex flex-row justify-between items-center h-[82px] shrink-0">
+          <div className="hidden md:flex flex-row justify-between items-center h-[82px] shrink-0">
             <p className="font-condensed text-[12px] font-bold leading-[18px] tracking-[2.4px] text-[#0D0D0D]/40 uppercase">
               MOVE FREELY
             </p>
@@ -115,7 +115,7 @@ const HeroSection = () => {
               </div>
 
               {/* Product card - Figma: 160x192.5, left 340 top 367.5; card padding 12px, image 136x100, text left 12px */}
-              <div className="absolute left-[340px] top-[367.5px] w-[160px] min-h-[192px] bg-white rounded-2xl p-3 shadow-[0px_20px_60px_rgba(0,0,0,0.15)] z-10 flex flex-col max-md:left-auto max-md:right-4 max-md:top-auto max-md:bottom-4">
+              <div className="hidden md:block absolute left-[340px] top-[367.5px] w-[160px] min-h-[192px] bg-white rounded-2xl p-3 shadow-[0px_20px_60px_rgba(0,0,0,0.15)] z-10 flex flex-col">
                 <img src={productTrench} alt="Trench Coat" className="w-[136px] h-[100px] rounded-[10px] object-cover self-start" />
                 <p className="font-condensed text-[10px] font-bold leading-[15px] tracking-[1px] text-[#0D0D0D]/50 uppercase mt-2">
                   ARITZIA

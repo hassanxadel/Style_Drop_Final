@@ -87,12 +87,13 @@ const TrendingSection = ({
         </div>
 
         {/* Figma: cards 270x378, white, rounded 16px, shadow 0px 2px 12px rgba(0,0,0,0.05) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {/* Mobile: Horizontal scroll with 2 visible, Desktop: 4 column grid */}
+        <div className="md:grid md:grid-cols-4 md:gap-3 flex md:flex-none overflow-x-auto md:overflow-visible gap-3 snap-x snap-mandatory scrollbar-hide pb-2">
           {products.map((product, index) => (
             <Link 
               key={index} 
               to={`/product/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-              className="group cursor-pointer flex flex-col w-full bg-white rounded-[16px] overflow-hidden shadow-[0px_2px_12px_rgba(0,0,0,0.05)] hover:shadow-[0px_4px_20px_rgba(0,0,0,0.12)] transition-shadow"
+              className="group cursor-pointer flex flex-col w-[calc(50%-6px)] md:w-full flex-shrink-0 bg-white rounded-[16px] overflow-hidden shadow-[0px_2px_12px_rgba(0,0,0,0.05)] hover:shadow-[0px_4px_20px_rgba(0,0,0,0.12)] transition-shadow snap-start"
             >
               <div className="relative w-full aspect-[270/280]">
                 <img

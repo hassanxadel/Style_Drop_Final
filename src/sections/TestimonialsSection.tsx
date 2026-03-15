@@ -60,13 +60,14 @@ const TestimonialsSection = ({
           </div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
+        {/* Testimonials Grid - Mobile: horizontal scroll, Desktop: 3 columns */}
+        <div className="md:grid md:grid-cols-3 md:gap-6 flex md:flex-none overflow-x-auto md:overflow-visible gap-6 snap-x snap-mandatory scrollbar-hide pb-2">
           {testimonials.map((testimonial) => (
-            <TestimonialCard
-              key={testimonial.name}
-              testimonial={testimonial}
-            />
+            <div key={testimonial.name} className="w-full flex-shrink-0 snap-start md:w-auto">
+              <TestimonialCard
+                testimonial={testimonial}
+              />
+            </div>
           ))}
         </div>
       </div>
