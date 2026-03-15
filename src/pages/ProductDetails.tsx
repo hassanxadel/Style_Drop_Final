@@ -446,13 +446,13 @@ const ProductDetails = () => {
               </Link>
             </div>
 
-            {/* Related Products Grid - Black Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {/* Related Products Grid - Mobile: horizontal scroll, Desktop: 4 columns */}
+            <div className="md:grid md:grid-cols-4 md:gap-5 flex md:flex-none overflow-x-auto md:overflow-visible gap-5 snap-x snap-mandatory scrollbar-hide pb-2">
             {relatedProducts.map((product, index) => (
               <Link
                 key={index}
                 to={`/product/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-                className="group"
+                className="group w-[85%] md:w-auto flex-shrink-0 snap-start"
               >
                 <div className="bg-[#0D0D0D] rounded-2xl overflow-hidden hover:shadow-xl transition-shadow border border-white/10">
                   {/* Product Image Container */}
@@ -542,6 +542,24 @@ const ProductDetails = () => {
                 </div>
               </Link>
             ))}
+            </div>
+
+            {/* Swipe Indicator - Mobile Only */}
+            <div className="md:hidden flex items-center justify-center gap-2 mt-6">
+              <span className="text-white/60 text-xs">Swipe for more</span>
+              <svg 
+                className="w-5 h-5 text-white/60 animate-pulse" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
             </div>
           </div>
         </div>

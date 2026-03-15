@@ -51,7 +51,7 @@ const Footer = () => {
               <img 
                 src={logo} 
                 alt="StyleDrop Logo" 
-                className="h-12 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             </Link>
 
