@@ -8,7 +8,7 @@
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import logo from '@/assets/logo for web .jpeg';
+import logo from '@/assets/logo for web .png';
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -63,7 +63,7 @@ const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
             <img 
               src={logo} 
               alt="StyleDrop Logo" 
-              className="h-10 w-auto object-contain"
+              className="h-12 w-auto object-contain"
             />
           </Link>
           <button

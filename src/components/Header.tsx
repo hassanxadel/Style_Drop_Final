@@ -15,7 +15,7 @@ import { Search, Heart, ShoppingBag, User, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import MobileSidebar from './MobileSidebar';
-import logo from '@/assets/logo for web .jpeg';
+import logo from '@/assets/logo for web .png';
 
 const Header = () => {
   const cartItemCount = 4;
@@ -63,7 +63,7 @@ const Header = () => {
             <img 
               src={logo} 
               alt="StyleDrop Logo" 
-              className="h-12 w-auto object-contain"
+              className="h-16 w-auto object-contain"
             />
           </Link>
 

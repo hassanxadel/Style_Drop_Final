@@ -142,104 +142,106 @@ const Cart = () => {
           <div className="grid lg:grid-cols-[1fr_420px] gap-6 lg:gap-8">
             {/* Left: Cart Items - Separate Cards */}
             <div className="space-y-6">
-              {/* Card 1: Cart Items Table */}
-              <div className="bg-white rounded-2xl border border-[#0D0D0D]/10 p-4 sm:p-6">
-                {/* Table Header (desktop) - align to grid */}
-                <div className="hidden md:grid grid-cols-[2fr_1fr_1.5fr_1fr] gap-4 pb-4 border-b border-border text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                  <div className="text-left">PRODUCT</div>
-                  <div className="text-center">PRICE</div>
-                  <div className="text-center">QUANTITY</div>
-                  <div className="text-center">TOTAL</div>
-                </div>
-
+              {/* Card 1: Cart Items - Compact Card Style */}
+              <div className="bg-white rounded-2xl border border-[#0D0D0D]/10 overflow-hidden">
                 {/* Cart Items */}
                 <div className="divide-y divide-border">
                   {cartItems.map((item) => (
                     <div
                       key={item.id}
-                      className="py-5 md:py-6 flex flex-col md:grid md:grid-cols-[2fr_1fr_1.5fr_1fr] gap-5 md:gap-4 md:items-center"
+                      className="p-4 sm:p-5"
                     >
-                      {/* Product Column - image + details (left aligned on all screens) */}
+                      {/* Compact Card Layout */}
                       <div className="flex gap-4">
-                        <div className="w-24 h-24 rounded-xl overflow-hidden bg-muted shrink-0">
+                        {/* Product Image */}
+                        <div className="w-24 h-28 sm:w-28 sm:h-32 rounded-xl overflow-hidden bg-muted shrink-0">
                           <img
                             src={item.image}
                             alt={item.name}
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <div className="flex flex-col justify-center min-w-0 flex-1">
-                          <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">
-                            {item.brand}
-                          </p>
-                          <h3 className="font-semibold text-sm mb-2 uppercase md:normal-case">
-                            {item.name}
-                          </h3>
-                          <div className="flex items-center gap-2 mb-2">
-                            {item.variant.colorHex && (
-                              <div className="flex items-center gap-1.5">
-                                <div
-                                  className="w-4 h-4 rounded-full border border-border shrink-0"
-                                  style={{ backgroundColor: item.variant.colorHex }}
-                                />
-                                <span className="text-xs text-muted-foreground">
-                                  {item.variant.color} / {item.variant.size}
-                                </span>
-                              </div>
-                            )}
+
+                        {/* Product Details */}
+                        <div className="flex-1 flex flex-col justify-between min-w-0">
+                          {/* Top Section: Brand, Name, Color */}
+                          <div>
+                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 font-semibold">
+                              {item.brand}
+                            </p>
+                            <h3 className="font-bold text-base mb-2">
+                              {item.name}
+                            </h3>
+                            <div className="flex items-center gap-2 mb-2">
+                              {item.variant.colorHex && (
+                                <div className="flex items-center gap-1.5">
+                                  <div
+                                    className="w-4 h-4 rounded-full border border-border shrink-0"
+                                    style={{ backgroundColor: item.variant.colorHex }}
+                                  />
+                                  <span className="text-sm text-muted-foreground">
+                                    {item.variant.color} / {item.variant.size}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          {item.fastDrop && (
-                            <span className="inline-flex items-center gap-1 w-fit px-2 py-0.5 bg-[#F5C800] rounded-full text-[9px] font-bold text-[#0D0D0D] uppercase">
-                              ⚡ FAST DROP
-                            </span>
-                          )}
-                          <button
-                            onClick={() => handleRemove(item.id)}
-                            className="text-xs text-accent hover:underline mt-2 text-left w-fit flex items-center gap-1"
-                          >
-                            <span className="text-muted-foreground">|</span> Remove
-                          </button>
-                        </div>
-                      </div>
 
-                      {/* Price - mobile: one line (current + strikethrough); desktop: centered column */}
-                      <div className="flex flex-col md:items-center md:justify-center gap-0 items-start">
-                        <div className="flex items-baseline gap-2 flex-wrap">
-                          <p className="font-bold text-base">EGP {item.price.toFixed(2)}</p>
-                          <p className="text-xs text-muted-foreground line-through">
-                            EGP {(item.price * 1.2).toFixed(2)}
-                          </p>
-                        </div>
-                      </div>
+                          {/* Bottom Section: Price, Quantity, Total */}
+                          <div className="space-y-2">
+                            {/* Price Row */}
+                            <div className="flex items-baseline gap-2">
+                              <p className="font-bold text-lg">EGP {item.price.toFixed(2)}</p>
+                              <p className="text-sm text-muted-foreground line-through">
+                                EGP {(item.price * 1.2).toFixed(2)}
+                              </p>
+                            </div>
 
-                      {/* Quantity - mobile: left-aligned pill; desktop: centered */}
-                      <div className="flex flex-col items-start md:items-center gap-2">
-                        <div className="inline-flex items-stretch rounded-lg overflow-hidden border border-border bg-white shadow-sm">
-                          <button
-                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                            className="w-9 h-9 flex items-center justify-center bg-muted hover:bg-gray-200 text-foreground rounded-l-lg transition-colors"
-                            aria-label="Decrease quantity"
-                          >
-                            <Minus size={14} strokeWidth={2.5} />
-                          </button>
-                          <span className="min-w-[2.25rem] flex items-center justify-center font-bold text-sm text-foreground bg-white px-1">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                            className="w-9 h-9 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black rounded-r-lg transition-colors"
-                            aria-label="Increase quantity"
-                          >
-                            <Plus size={14} strokeWidth={2.5} />
-                          </button>
-                        </div>
-                      </div>
+                            {/* Quantity & Remove Row */}
+                            <div className="flex items-center justify-between gap-4">
+                              {/* Quantity Control */}
+                              <div className="inline-flex items-stretch rounded-lg overflow-hidden border border-border bg-white shadow-sm">
+                                <button
+                                  onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                  className="w-9 h-9 flex items-center justify-center bg-muted hover:bg-gray-200 text-foreground transition-colors"
+                                  aria-label="Decrease quantity"
+                                >
+                                  <Minus size={14} strokeWidth={2.5} />
+                                </button>
+                                <span className="w-10 flex items-center justify-center font-bold text-sm text-foreground bg-white">
+                                  {item.quantity}
+                                </span>
+                                <button
+                                  onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                                  className="w-9 h-9 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black transition-colors"
+                                  aria-label="Increase quantity"
+                                >
+                                  <Plus size={14} strokeWidth={2.5} />
+                                </button>
+                              </div>
 
-                      {/* Total - mobile: left-aligned; desktop: centered */}
-                      <div className="flex flex-col items-start md:items-center md:justify-center">
-                        <p className="font-bold text-lg">
-                          EGP {(item.price * item.quantity).toFixed(2)}
-                        </p>
+                              {/* Total Price */}
+                              <p className="font-bold text-xl">
+                                EGP {(item.price * item.quantity).toFixed(2)}
+                              </p>
+                            </div>
+
+                            {/* Fast Drop Badge & Remove */}
+                            <div className="flex items-center justify-between">
+                              {item.fastDrop && (
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#F5C800] rounded text-[9px] font-bold text-[#0D0D0D] uppercase">
+                                  ⚡ FAST DROP
+                                </span>
+                              )}
+                              <button
+                                onClick={() => handleRemove(item.id)}
+                                className="text-sm text-accent hover:underline flex items-center gap-1 ml-auto"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
