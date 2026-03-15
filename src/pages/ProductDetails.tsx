@@ -85,7 +85,7 @@ const ProductDetails = () => {
 
       {/* Product Content */}
       <div className="bg-[#F5F0EB] py-8 pb-16">
-        <div className="container">
+        <div className="container px-4 md:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left: Image Gallery */}
           <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-6 mb-8 lg:mb-0">

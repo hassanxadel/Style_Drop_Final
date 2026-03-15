@@ -111,29 +111,29 @@ const SizePredictor = ({ isOpen, onClose, currentProduct }: SizePredictorProps) 
       />
 
       {/* Modal */}
-      <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200">
+      <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90%] max-w-lg bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200 mx-4">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
-              <Zap size={20} className="text-accent" />
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/10 flex items-center justify-center">
+              <Zap size={16} className="text-accent sm:w-5 sm:h-5" />
             </div>
             <div>
-              <h2 className="font-display text-2xl text-[#0D0D0D]">Find Your Perfect Size</h2>
-              <p className="text-xs text-muted-foreground">Get personalized size recommendation</p>
+              <h2 className="font-display text-lg sm:text-2xl text-[#0D0D0D]">Find Your Perfect Size</h2>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Get personalized size recommendation</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full hover:bg-black/5 flex items-center justify-center transition-colors"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full hover:bg-black/5 flex items-center justify-center transition-colors"
             aria-label="Close"
           >
-            <X size={18} />
+            <X size={16} className="sm:w-[18px] sm:h-[18px]" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[60vh] sm:max-h-[70vh] overflow-y-auto">
           {/* Category Toggle */}
           <div>
             <label className="text-sm font-semibold mb-3 block">Product Category</label>
@@ -277,18 +277,18 @@ const SizePredictor = ({ isOpen, onClose, currentProduct }: SizePredictorProps) 
         </div>
 
         {/* Footer Actions */}
-        <div className="p-6 border-t border-border flex gap-3">
+        <div className="p-4 sm:p-6 border-t border-border flex gap-2 sm:gap-3">
           {recommendedSize ? (
             <>
               <button
                 onClick={handleReset}
-                className="flex-1 px-6 py-3 border border-border rounded-full text-sm font-semibold hover:border-[#0D0D0D] transition-colors"
+                className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 border border-border rounded-full text-xs sm:text-sm font-semibold hover:border-[#0D0D0D] transition-colors"
               >
                 Try Again
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 px-6 py-3 bg-accent text-white rounded-full text-sm font-semibold hover:bg-accent/90 transition-colors"
+                className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-accent text-white rounded-full text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-colors"
               >
                 Got It!
               </button>
@@ -297,15 +297,15 @@ const SizePredictor = ({ isOpen, onClose, currentProduct }: SizePredictorProps) 
             <>
               <button
                 onClick={onClose}
-                className="flex-1 px-6 py-3 border border-border rounded-full text-sm font-semibold hover:border-[#0D0D0D] transition-colors"
+                className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 border border-border rounded-full text-xs sm:text-sm font-semibold hover:border-[#0D0D0D] transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCalculate}
-                className="flex-1 px-6 py-3 bg-accent text-white rounded-full text-sm font-semibold hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
+                className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-accent text-white rounded-full text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
               >
-                <Zap size={16} />
+                <Zap size={14} className="sm:w-4 sm:h-4" />
                 Calculate Size
               </button>
             </>
