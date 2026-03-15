@@ -199,24 +199,24 @@ const Cart = () => {
 
                             {/* Quantity & Remove Row */}
                             <div className="flex items-center justify-between gap-4">
-                              {/* Quantity Control - Circular Buttons */}
-                              <div className="inline-flex items-center gap-3">
+                              {/* Quantity Control - Rounded Frame */}
+                              <div className="inline-flex items-center gap-2 bg-[#F5F0EB] rounded-full px-2 py-1">
                                 <button
                                   onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                  className="w-10 h-10 flex items-center justify-center bg-[#F5F0EB] hover:bg-[#E8E6E3] text-foreground rounded-full transition-colors border border-border"
+                                  className="w-8 h-8 flex items-center justify-center hover:bg-[#E8E6E3] text-foreground rounded-full transition-colors"
                                   aria-label="Decrease quantity"
                                 >
-                                  <Minus size={16} strokeWidth={2.5} />
+                                  <Minus size={14} strokeWidth={2.5} />
                                 </button>
-                                <span className="min-w-[2rem] flex items-center justify-center font-bold text-base text-foreground">
+                                <span className="min-w-[1.5rem] flex items-center justify-center font-bold text-sm text-foreground">
                                   {item.quantity}
                                 </span>
                                 <button
                                   onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                  className="w-10 h-10 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black rounded-full transition-colors"
+                                  className="w-8 h-8 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black rounded-full transition-colors"
                                   aria-label="Increase quantity"
                                 >
-                                  <Plus size={16} strokeWidth={2.5} />
+                                  <Plus size={14} strokeWidth={2.5} />
                                 </button>
                               </div>
 
