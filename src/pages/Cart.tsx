@@ -138,23 +138,31 @@ const Cart = () => {
 
       {/* Main Content - Cream Background */}
       <div className="bg-[#F5F0EB] pb-16">
-        <div className="container">
+        <div className="container px-4 md:px-8">
           <div className="grid lg:grid-cols-[1fr_420px] gap-6 lg:gap-8">
             {/* Left: Cart Items - Separate Cards */}
             <div className="space-y-6">
-              {/* Card 1: Cart Items - Compact Card Style */}
+              {/* Card 1: Cart Items - Mobile: Compact Card, Desktop: Table */}
               <div className="bg-white rounded-2xl border border-[#0D0D0D]/10 overflow-hidden">
+                {/* Desktop Table Header - Hidden on Mobile */}
+                <div className="hidden md:grid md:grid-cols-[2fr_1fr_1fr_1fr] gap-4 px-6 py-4 bg-[#F5F0EB] border-b border-[#0D0D0D]/10">
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">PRODUCT</div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">PRICE</div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">QUANTITY</div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground text-right">TOTAL</div>
+                </div>
+
                 {/* Cart Items */}
                 <div className="divide-y divide-border">
                   {cartItems.map((item) => (
                     <div
                       key={item.id}
-                      className="p-4 sm:p-5"
+                      className="p-4 sm:p-5 md:px-6 md:py-6"
                     >
-                      {/* Compact Card Layout */}
-                      <div className="flex gap-4">
+                      {/* Mobile: Compact Card Layout */}
+                      <div className="flex gap-4 md:hidden">
                         {/* Product Image */}
-                        <div className="w-24 h-28 sm:w-28 sm:h-32 rounded-xl overflow-hidden bg-muted shrink-0">
+                        <div className="w-24 h-28 rounded-xl overflow-hidden bg-muted shrink-0">
                           <img
                             src={item.image}
                             alt={item.name}
@@ -187,7 +195,7 @@ const Cart = () => {
                             </div>
                           </div>
 
-                          {/* Bottom Section: Price, Quantity, Total */}
+                          {/* Bottom Section: Price, Quantity */}
                           <div className="space-y-2">
                             {/* Price Row */}
                             <div className="flex items-baseline gap-2">
@@ -237,8 +245,42 @@ const Cart = () => {
                                 Remove
                               </button>
                             </div>
+                          </div>
+                        </div>
+                      </div>
 
-                            {/* Fast Drop Badge */}
+                      {/* Desktop: Table Row Layout */}
+                      <div className="hidden md:grid md:grid-cols-[2fr_1fr_1fr_1fr] gap-4 items-center">
+                        {/* Product Column */}
+                        <div className="flex gap-4 items-start">
+                          <div className="w-24 h-28 rounded-xl overflow-hidden bg-muted shrink-0">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 font-semibold">
+                              {item.brand}
+                            </p>
+                            <h3 className="font-bold text-base mb-2">
+                              {item.name}
+                            </h3>
+                            <div className="flex items-center gap-2 mb-2">
+                              {item.variant.colorHex && (
+                                <div className="flex items-center gap-1.5">
+                                  <div
+                                    className="w-4 h-4 rounded-full border border-border shrink-0"
+                                    style={{ backgroundColor: item.variant.colorHex }}
+                                  />
+                                  <span className="text-sm text-muted-foreground">
+                                    {item.variant.color} / {item.variant.size}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                            {/* Fast Drop Badge - Desktop Only */}
                             {item.fastDrop && (
                               <div className="mt-2">
                                 <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#F5C800] rounded text-[9px] font-bold text-[#0D0D0D] uppercase">
@@ -246,7 +288,59 @@ const Cart = () => {
                                 </span>
                               </div>
                             )}
+                            {/* Remove Button - Desktop */}
+                            <button
+                              onClick={() => handleRemove(item.id)}
+                              className="mt-3 text-sm text-accent hover:opacity-80 flex items-center gap-2 underline decoration-accent"
+                            >
+                              <svg 
+                                className="w-4 h-4" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                              Remove
+                            </button>
                           </div>
+                        </div>
+
+                        {/* Price Column */}
+                        <div className="flex flex-col">
+                          <p className="font-bold text-base">EGP {item.price.toFixed(2)}</p>
+                          <p className="text-sm text-muted-foreground line-through">
+                            EGP {(item.price * 1.2).toFixed(2)}
+                          </p>
+                        </div>
+
+                        {/* Quantity Column */}
+                        <div>
+                          <div className="inline-flex items-center gap-2 bg-[#F5F0EB] rounded-full px-2 py-1">
+                            <button
+                              onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                              className="w-8 h-8 flex items-center justify-center hover:bg-[#E8E6E3] text-foreground rounded-full transition-colors"
+                              aria-label="Decrease quantity"
+                            >
+                              <Minus size={14} strokeWidth={2.5} />
+                            </button>
+                            <span className="min-w-[1.5rem] flex items-center justify-center font-bold text-sm text-foreground">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                              className="w-8 h-8 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black rounded-full transition-colors"
+                              aria-label="Increase quantity"
+                            >
+                              <Plus size={14} strokeWidth={2.5} />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Total Column */}
+                        <div className="text-right">
+                          <p className="font-bold text-lg">EGP {(item.price * item.quantity).toFixed(2)}</p>
                         </div>
                       </div>
                     </div>
