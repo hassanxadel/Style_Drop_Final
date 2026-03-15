@@ -44,7 +44,7 @@ const HeroSection = () => {
   return (
     <section>
       {/* Hero - Figma: 1141x702, #F5F0EB, padding 0 32px */}
-      <div className="bg-[#F5F0EB] min-h-[702px] flex flex-col">
+      <div className="bg-[#F5F0EB] min-h-[702px] flex flex-col pt-6 md:pt-0">
         <div className="container px-8 flex flex-col flex-1">
           {/* Top row: MOVE FREELY | LIVE BOLDLY | FEEL ICONIC - Figma: 82px height, space-between */}
           <div className="hidden md:flex flex-row justify-between items-center h-[82px] shrink-0">
