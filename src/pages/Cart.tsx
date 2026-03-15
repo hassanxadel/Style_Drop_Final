@@ -199,47 +199,53 @@ const Cart = () => {
 
                             {/* Quantity & Remove Row */}
                             <div className="flex items-center justify-between gap-4">
-                              {/* Quantity Control */}
-                              <div className="inline-flex items-stretch rounded-lg overflow-hidden border border-border bg-white shadow-sm">
+                              {/* Quantity Control - Circular Buttons */}
+                              <div className="inline-flex items-center gap-3">
                                 <button
                                   onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                  className="w-9 h-9 flex items-center justify-center bg-muted hover:bg-gray-200 text-foreground transition-colors"
+                                  className="w-10 h-10 flex items-center justify-center bg-[#F5F0EB] hover:bg-[#E8E6E3] text-foreground rounded-full transition-colors border border-border"
                                   aria-label="Decrease quantity"
                                 >
-                                  <Minus size={14} strokeWidth={2.5} />
+                                  <Minus size={16} strokeWidth={2.5} />
                                 </button>
-                                <span className="w-10 flex items-center justify-center font-bold text-sm text-foreground bg-white">
+                                <span className="min-w-[2rem] flex items-center justify-center font-bold text-base text-foreground">
                                   {item.quantity}
                                 </span>
                                 <button
                                   onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                  className="w-9 h-9 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black transition-colors"
+                                  className="w-10 h-10 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black rounded-full transition-colors"
                                   aria-label="Increase quantity"
                                 >
-                                  <Plus size={14} strokeWidth={2.5} />
+                                  <Plus size={16} strokeWidth={2.5} />
                                 </button>
                               </div>
 
-                              {/* Total Price */}
-                              <p className="font-bold text-xl">
-                                EGP {(item.price * item.quantity).toFixed(2)}
-                              </p>
-                            </div>
-
-                            {/* Fast Drop Badge & Remove */}
-                            <div className="flex items-center justify-between">
-                              {item.fastDrop && (
-                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#F5C800] rounded text-[9px] font-bold text-[#0D0D0D] uppercase">
-                                  ⚡ FAST DROP
-                                </span>
-                              )}
+                              {/* Remove Button with Trash Icon */}
                               <button
                                 onClick={() => handleRemove(item.id)}
-                                className="text-sm text-accent hover:underline flex items-center gap-1 ml-auto"
+                                className="text-sm text-accent hover:opacity-80 flex items-center gap-2 underline decoration-accent"
                               >
+                                <svg 
+                                  className="w-4 h-4" 
+                                  fill="none" 
+                                  stroke="currentColor" 
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="2"
+                                >
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
                                 Remove
                               </button>
                             </div>
+
+                            {/* Fast Drop Badge */}
+                            {item.fastDrop && (
+                              <div className="mt-2">
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#F5C800] rounded text-[9px] font-bold text-[#0D0D0D] uppercase">
+                                  ⚡ FAST DROP
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
