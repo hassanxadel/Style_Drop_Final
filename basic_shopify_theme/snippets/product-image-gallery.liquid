@@ -1,0 +1,256 @@
+{% comment %}
+  Product Image Gallery with Thumbnails
+  
+  Converts React image gallery to Shopify Liquid
+  Source: ProductDetails.tsx (lines 91-217)
+  
+  Features:
+  - Thumbnail navigation (horizontal on mobile, vertical on desktop)
+  - Main image display with zoom capability
+  - Previous/Next navigation arrows
+  - Dot indicators
+  - Product badges (Best Seller, Fast Drop, etc.)
+  - Magnifier icon for zoom
+  
+  Usage:
+  {% render 'product-image-gallery', product: product %}
+{% endcomment %}
+
+{%- comment -%} Image Gallery Container {%- endcomment -%}
+<div class="flex flex-col-reverse md:flex-row gap-3 md:gap-6 mb-8 lg:mb-0">
+  
+  {%- comment -%} Thumbnails - Row on mobile, Column on desktop {%- endcomment -%}
+  <div class="flex md:flex-col gap-2 md:gap-3 md:w-auto w-full overflow-x-auto pb-1">
+    {%- for image in product.images limit: 6 -%}
+      <button
+        type="button"
+        class="thumbnail-btn rounded-lg overflow-hidden border-2 {% if forloop.first %}border-accent{% else %}border-border{% endif %} w-20 h-24 md:w-16 md:h-20 flex-shrink-0 hover:border-accent transition-colors"
+        data-image-index="{{ forloop.index0 }}"
+        aria-label="View image {{ forloop.index }}"
+      >
+        <img 
+          src="{{ image | img_url: '200x' }}" 
+          alt="{{ product.title }} - Image {{ forloop.index }}" 
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </button>
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%} Main Image Container {%- endcomment -%}
+  <div class="flex-1 relative min-w-0">
+    <div class="main-image-container w-full aspect-[3/4] rounded-lg overflow-hidden bg-muted relative group">
+      
+      {%- comment -%} Main Product Image {%- endcomment -%}
+      <img
+        id="mainProductImage"
+        src="{{ product.featured_image | img_url: '1200x' }}"
+        alt="{{ product.title }}"
+        class="w-full h-full object-cover"
+      />
+      
+      {%- comment -%} Badges - Top Left {%- endcomment -%}
+      <div class="absolute top-4 left-4 flex flex-col gap-2 z-10">
+        
+        {%- comment -%} Best Seller Badge - Check if product has 'bestseller' tag {%- endcomment -%}
+        {%- if product.tags contains 'bestseller' or product.tags contains 'best-seller' -%}
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-black/90 backdrop-blur rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-white"></span>
+            BEST SELLER
+          </span>
+        {%- endif -%}
+
+        {%- comment -%} Fast Drop Badge - Check if product has 'fast-drop' tag {%- endcomment -%}
+        {%- if product.tags contains 'fast-drop' or product.tags contains 'fastdrop' -%}
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#F5C800] rounded-full text-[10px] font-bold text-[#0D0D0D] uppercase tracking-wider">
+            <span>⚡</span>
+            FAST DROP
+          </span>
+        {%- endif -%}
+
+        {%- comment -%} New Badge - Check if product is new (created in last 30 days) {%- endcomment -%}
+        {%- assign days_since_creation = 'now' | date: '%s' | minus: product.created_at | date: '%s' | divided_by: 86400 -%}
+        {%- if days_since_creation < 30 or product.tags contains 'new' -%}
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#0D0D0D] rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-white"></span>
+            NEW
+          </span>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Magnifier Icon - Top Right (triggers zoom modal) {%- endcomment -%}
+      <button
+        type="button"
+        class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md z-10"
+        aria-label="Zoom image"
+        onclick="openImageZoom()"
+      >
+        <svg 
+          class="w-5 h-5 text-[#0D0D0D]" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <circle cx="11" cy="11" r="8" stroke-width="2"/>
+          <path d="m21 21-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      {%- comment -%} Navigation Arrows - Only show if multiple images {%- endcomment -%}
+      {%- if product.images.size > 1 -%}
+        {%- comment -%} Previous Image Button {%- endcomment -%}
+        <button
+          type="button"
+          class="prev-image-btn absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          aria-label="Previous image"
+        >
+          <svg class="w-5 h-5 text-[#0D0D0D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        {%- comment -%} Next Image Button {%- endcomment -%}
+        <button
+          type="button"
+          class="next-image-btn absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          aria-label="Next image"
+        >
+          <svg class="w-5 h-5 text-[#0D0D0D] rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        {%- comment -%} Dot Indicators - Bottom Center {%- endcomment -%}
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {%- for image in product.images limit: 6 -%}
+            <button
+              type="button"
+              class="dot-indicator w-2 h-2 rounded-full transition-all {% if forloop.first %}bg-accent w-6{% else %}bg-white/50{% endif %}"
+              data-image-index="{{ forloop.index0 }}"
+              aria-label="Go to image {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- comment -%}
+  JAVASCRIPT FOR IMAGE GALLERY INTERACTIVITY
+  Add this to your theme.js or as inline script
+{%- endcomment -%}
+
+<script>
+  (function() {
+    let currentImageIndex = 0;
+    const productImages = {{ product.images | json }};
+    
+    // Thumbnail click handler
+    document.querySelectorAll('.thumbnail-btn').forEach((btn, index) => {
+      btn.addEventListener('click', function() {
+        currentImageIndex = parseInt(this.dataset.imageIndex);
+        updateMainImage();
+        updateActiveStates();
+      });
+    });
+
+    // Dot indicator click handler
+    document.querySelectorAll('.dot-indicator').forEach((dot, index) => {
+      dot.addEventListener('click', function() {
+        currentImageIndex = parseInt(this.dataset.imageIndex);
+        updateMainImage();
+        updateActiveStates();
+      });
+    });
+
+    // Previous button
+    document.querySelector('.prev-image-btn')?.addEventListener('click', function() {
+      currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : productImages.length - 1;
+      updateMainImage();
+      updateActiveStates();
+    });
+
+    // Next button
+    document.querySelector('.next-image-btn')?.addEventListener('click', function() {
+      currentImageIndex = currentImageIndex < productImages.length - 1 ? currentImageIndex + 1 : 0;
+      updateMainImage();
+      updateActiveStates();
+    });
+
+    // Update main image
+    function updateMainImage() {
+      const mainImg = document.getElementById('mainProductImage');
+      if (mainImg && productImages[currentImageIndex]) {
+        // Use Shopify image filters for proper sizing
+        const imageUrl = productImages[currentImageIndex].replace(/\.(jpg|jpeg|png|gif|webp)/, '_1200x.$1');
+        mainImg.src = imageUrl;
+      }
+    }
+
+    // Update active states for thumbnails and dots
+    function updateActiveStates() {
+      // Update thumbnails
+      document.querySelectorAll('.thumbnail-btn').forEach((btn, index) => {
+        if (parseInt(btn.dataset.imageIndex) === currentImageIndex) {
+          btn.classList.remove('border-border');
+          btn.classList.add('border-accent');
+        } else {
+          btn.classList.remove('border-accent');
+          btn.classList.add('border-border');
+        }
+      });
+
+      // Update dots
+      document.querySelectorAll('.dot-indicator').forEach((dot, index) => {
+        if (parseInt(dot.dataset.imageIndex) === currentImageIndex) {
+          dot.classList.remove('bg-white/50', 'w-2');
+          dot.classList.add('bg-accent', 'w-6');
+        } else {
+          dot.classList.remove('bg-accent', 'w-6');
+          dot.classList.add('bg-white/50', 'w-2');
+        }
+      });
+    }
+
+    // Optional: Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        document.querySelector('.prev-image-btn')?.click();
+      } else if (e.key === 'ArrowRight') {
+        document.querySelector('.next-image-btn')?.click();
+      }
+    });
+  })();
+</script>
+
+{% comment %}
+  CONVERSION NOTES:
+  
+  React → Liquid Mappings:
+  - product.images.map() → {% for image in product.images %}
+  - selectedImage state → JavaScript currentImageIndex
+  - onClick handlers → addEventListener
+  - className conditions → {% if %} statements
+  - product.tags → for badge conditions
+  
+  Shopify Features Used:
+  - {{ product.images }} - Array of all product images
+  - {{ product.featured_image }} - Main product image
+  - {{ product.tags }} - Product tags for badge logic
+  - {{ product.created_at }} - Product creation date
+  - | img_url: '1200x' - Shopify image filter for sizing
+  - | json - Convert to JSON for JavaScript
+  
+  Badge Logic:
+  - Best Seller: Check for 'bestseller' or 'best-seller' tag
+  - Fast Drop: Check for 'fast-drop' or 'fastdrop' tag
+  - New: Check if created within 30 days OR has 'new' tag
+  
+  Optional Enhancements:
+  1. Add image zoom modal/lightbox
+  2. Add swipe gestures for mobile
+  3. Add lazy loading for thumbnails
+  4. Add image alt text from product metafields
+{% endcomment %}

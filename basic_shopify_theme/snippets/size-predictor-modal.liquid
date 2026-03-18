@@ -1,0 +1,359 @@
+{% comment %}
+  Size Predictor Modal
+  
+  Converts React SizePredictor to Shopify Liquid
+  Source: src/components/SizePredictor.tsx
+  
+  Features:
+  - Smart size recommendation based on measurements
+  - Category toggle (Tops / Pants)
+  - BMI-based calculation logic
+  - Responsive modal design
+  - Pure JavaScript (no dependencies)
+  
+  Usage:
+  Add to product template:
+  {% render 'size-predictor-modal' %}
+  
+  Trigger from anywhere:
+  <button onclick="openSizePredictor()">Find Your Best Size</button>
+{% endcomment %}
+
+{%- comment -%} Modal HTML Structure {%- endcomment -%}
+<div id="size-predictor-modal" class="hidden">
+  {%- comment -%} Backdrop {%- endcomment -%}
+  <div 
+    class="fixed inset-0 bg-black/50 z-50 animate-in fade-in duration-200" 
+    onclick="closeSizePredictor()"
+  ></div>
+
+  {%- comment -%} Modal Container {%- endcomment -%}
+  <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90%] sm:w-full max-w-lg bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200">
+    
+    {%- comment -%} Header {%- endcomment -%}
+    <div class="flex items-center justify-between p-4 sm:p-6 border-b border-border">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/10 flex items-center justify-center">
+          {%- comment -%} Zap Icon {%- endcomment -%}
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-accent" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-display text-lg sm:text-2xl text-[#0D0D0D]">Find Your Perfect Size</h2>
+          <p class="text-[10px] sm:text-xs text-muted-foreground">Get personalized size recommendation</p>
+        </div>
+      </div>
+      <button
+        onclick="closeSizePredictor()"
+        class="w-7 h-7 sm:w-8 sm:h-8 rounded-full hover:bg-black/5 flex items-center justify-center transition-colors"
+        aria-label="Close"
+      >
+        {%- comment -%} X Icon {%- endcomment -%}
+        <svg class="w-4 h-4 sm:w-[18px] sm:h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    {%- comment -%} Content {%- endcomment -%}
+    <div class="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[60vh] sm:max-h-[70vh] overflow-y-auto">
+      
+      {%- comment -%} Category Toggle {%- endcomment -%}
+      <div>
+        <label class="text-sm font-semibold mb-3 block">Product Category</label>
+        <div class="flex gap-2">
+          <button
+            id="category-tops"
+            onclick="switchCategory('tops')"
+            class="flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all bg-[#0D0D0D] text-white"
+          >
+            TOPS
+          </button>
+          <button
+            id="category-pants"
+            onclick="switchCategory('pants')"
+            class="flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all border border-border text-[#0D0D0D] hover:border-[#0D0D0D]"
+          >
+            PANTS
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Input Fields {%- endcomment -%}
+      <div class="space-y-4">
+        {%- comment -%} Height {%- endcomment -%}
+        <div>
+          <label for="sp-height" class="text-sm font-semibold mb-2 block">
+            Height <span class="text-accent">*</span>
+          </label>
+          <div class="relative">
+            <input
+              id="sp-height"
+              type="number"
+              placeholder="170"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:border-accent focus:outline-none text-sm"
+            />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">cm</span>
+          </div>
+        </div>
+
+        {%- comment -%} Weight {%- endcomment -%}
+        <div>
+          <label for="sp-weight" class="text-sm font-semibold mb-2 block">
+            Weight <span class="text-accent">*</span>
+          </label>
+          <div class="relative">
+            <input
+              id="sp-weight"
+              type="number"
+              placeholder="70"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:border-accent focus:outline-none text-sm"
+            />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">kg</span>
+          </div>
+        </div>
+
+        {%- comment -%} Shoulder Width (Tops only) {%- endcomment -%}
+        <div id="shoulder-field">
+          <label for="sp-shoulder" class="text-sm font-semibold mb-2 block">
+            Shoulder Width <span class="text-muted-foreground text-xs">(optional)</span>
+          </label>
+          <div class="relative">
+            <input
+              id="sp-shoulder"
+              type="number"
+              placeholder="44"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:border-accent focus:outline-none text-sm"
+            />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">cm</span>
+          </div>
+        </div>
+
+        {%- comment -%} Waist Size (Pants only) {%- endcomment -%}
+        <div id="waist-field" class="hidden">
+          <label for="sp-waist" class="text-sm font-semibold mb-2 block">
+            Waist Size <span class="text-muted-foreground text-xs">(optional)</span>
+          </label>
+          <div class="relative">
+            <input
+              id="sp-waist"
+              type="number"
+              placeholder="86"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:border-accent focus:outline-none text-sm"
+            />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">cm</span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Result Display {%- endcomment -%}
+      <div id="size-result" class="hidden bg-accent/10 rounded-xl p-5 border border-accent/20">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+            {%- comment -%} TrendingUp Icon {%- endcomment -%}
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs text-muted-foreground uppercase tracking-wider">Recommended Size</p>
+            <p id="recommended-size" class="font-display text-3xl text-[#0D0D0D]"></p>
+          </div>
+        </div>
+        <p class="text-xs text-muted-foreground leading-relaxed">
+          Based on your measurements, we recommend size <strong id="recommended-size-text"></strong>. 
+          This is an estimate - individual fit may vary by brand and style.
+        </p>
+      </div>
+    </div>
+
+    {%- comment -%} Footer Actions {%- endcomment -%}
+    <div class="p-4 sm:p-6 border-t border-border flex gap-2 sm:gap-3">
+      <div id="initial-buttons" class="flex gap-2 sm:gap-3 w-full">
+        <button
+          onclick="closeSizePredictor()"
+          class="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 border border-border rounded-full text-xs sm:text-sm font-semibold hover:border-[#0D0D0D] transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          onclick="calculateSize()"
+          class="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-accent text-white rounded-full text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
+        >
+          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
+          </svg>
+          Calculate Size
+        </button>
+      </div>
+      
+      <div id="result-buttons" class="hidden gap-2 sm:gap-3 w-full">
+        <button
+          onclick="resetCalculator()"
+          class="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 border border-border rounded-full text-xs sm:text-sm font-semibold hover:border-[#0D0D0D] transition-colors"
+        >
+          Try Again
+        </button>
+        <button
+          onclick="closeSizePredictor()"
+          class="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-accent text-white rounded-full text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-colors"
+        >
+          Got It!
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} JavaScript for Size Predictor {%- endcomment -%}
+<script>
+  // Size calculation logic (portable, no dependencies)
+  function calculateSizeRecommendation(category, height, weight, shoulderWidth, waistSize) {
+    const bmi = weight / ((height / 100) ** 2);
+    
+    if (category === 'tops') {
+      if (height < 165 && weight < 55 && (shoulderWidth || 0) < 40) return 'XS';
+      if (height < 170 && weight < 65 && bmi < 23) return 'S';
+      if (height > 178 || weight > 80 || bmi > 26) return 'L';
+      if (height > 185 || weight > 90 || (shoulderWidth || 0) > 48) return 'XL';
+      return 'M';
+    } else {
+      if (height < 165 && (waistSize || 0) < 76 && weight < 55) return 'XS';
+      if ((waistSize || 0) < 81 && bmi < 23 && height < 175) return 'S';
+      if ((waistSize || 0) > 91 || weight > 85 || bmi > 26) return 'L';
+      if ((waistSize || 0) > 101 || weight > 95 || height > 190) return 'XL';
+      return 'M';
+    }
+  }
+
+  let currentCategory = 'tops';
+
+  function openSizePredictor() {
+    document.getElementById('size-predictor-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSizePredictor() {
+    document.getElementById('size-predictor-modal').classList.add('hidden');
+    document.body.style.overflow = 'unset';
+    resetCalculator();
+  }
+
+  function switchCategory(category) {
+    currentCategory = category;
+    
+    // Update button states
+    if (category === 'tops') {
+      document.getElementById('category-tops').className = 'flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all bg-[#0D0D0D] text-white';
+      document.getElementById('category-pants').className = 'flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all border border-border text-[#0D0D0D] hover:border-[#0D0D0D]';
+      document.getElementById('shoulder-field').classList.remove('hidden');
+      document.getElementById('waist-field').classList.add('hidden');
+    } else {
+      document.getElementById('category-pants').className = 'flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all bg-[#0D0D0D] text-white';
+      document.getElementById('category-tops').className = 'flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all border border-border text-[#0D0D0D] hover:border-[#0D0D0D]';
+      document.getElementById('shoulder-field').classList.add('hidden');
+      document.getElementById('waist-field').classList.remove('hidden');
+    }
+    
+    // Reset inputs
+    document.getElementById('sp-height').value = '';
+    document.getElementById('sp-weight').value = '';
+    document.getElementById('sp-shoulder').value = '';
+    document.getElementById('sp-waist').value = '';
+    hideResult();
+  }
+
+  function calculateSize() {
+    const height = parseFloat(document.getElementById('sp-height').value);
+    const weight = parseFloat(document.getElementById('sp-weight').value);
+    const shoulderWidth = parseFloat(document.getElementById('sp-shoulder').value) || 0;
+    const waistSize = parseFloat(document.getElementById('sp-waist').value) || 0;
+
+    // Validation
+    if (!height || !weight) {
+      alert('Please fill in all required fields (Height and Weight)');
+      return;
+    }
+
+    // Calculate
+    const size = calculateSizeRecommendation(
+      currentCategory,
+      height,
+      weight,
+      shoulderWidth,
+      waistSize
+    );
+
+    // Display result
+    document.getElementById('recommended-size').textContent = size;
+    document.getElementById('recommended-size-text').textContent = size;
+    document.getElementById('size-result').classList.remove('hidden');
+    document.getElementById('initial-buttons').classList.add('hidden');
+    document.getElementById('result-buttons').classList.remove('hidden');
+    document.getElementById('result-buttons').style.display = 'flex';
+  }
+
+  function resetCalculator() {
+    document.getElementById('sp-height').value = '';
+    document.getElementById('sp-weight').value = '';
+    document.getElementById('sp-shoulder').value = '';
+    document.getElementById('sp-waist').value = '';
+    hideResult();
+  }
+
+  function hideResult() {
+    document.getElementById('size-result').classList.add('hidden');
+    document.getElementById('initial-buttons').classList.remove('hidden');
+    document.getElementById('initial-buttons').style.display = 'flex';
+    document.getElementById('result-buttons').classList.add('hidden');
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && !document.getElementById('size-predictor-modal').classList.contains('hidden')) {
+      closeSizePredictor();
+    }
+  });
+</script>
+
+{% comment %}
+  CONVERSION NOTES:
+  
+  React → Pure JavaScript:
+  - useState hooks → global variables
+  - React components → HTML + vanilla JS
+  - onClick → onclick attribute
+  - className conditions → direct class manipulation
+  - Conditional rendering → classList.add/remove('hidden')
+  
+  Calculation Logic:
+  - Exact same BMI-based algorithm
+  - No dependencies required
+  - Portable to any Shopify theme
+  - Can be easily customized
+  
+  Modal Behavior:
+  - Opens with openSizePredictor()
+  - Closes on backdrop click, X button, or Escape key
+  - Prevents body scroll when open
+  - Responsive design (mobile optimized)
+  
+  Integration:
+  1. Include this snippet in product template
+  2. Add trigger buttons where needed:
+     <button onclick="openSizePredictor()">Find Size</button>
+  3. Already integrated in variant-selector snippet
+  
+  Customization:
+  - Adjust size ranges in calculateSizeRecommendation()
+  - Change BMI thresholds for different fit preferences
+  - Add more measurement fields if needed
+  - Customize styling via Tailwind classes
+  
+  Testing:
+  - Test with various height/weight combinations
+  - Verify correct size recommendations
+  - Check mobile responsiveness
+  - Ensure proper modal behavior
+{% endcomment %}

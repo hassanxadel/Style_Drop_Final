@@ -1,0 +1,130 @@
+{% comment %}
+  Product Info Panel - Title, Rating, Description, Price
+  
+  Converts React product info to Shopify Liquid
+  Source: ProductDetails.tsx (lines 221-261)
+  
+  Features:
+  - Brand/Vendor display
+  - Product title
+  - Star rating display
+  - Review count
+  - Product description
+  - Price with compare-at price
+  - Discount percentage badge
+  
+  Usage:
+  {% render 'product-info-panel', product: product %}
+{% endcomment %}
+
+<div class="space-y-6">
+  {%- comment -%} Product Title & Rating {%- endcomment -%}
+  <div class="mb-4">
+    {%- comment -%} Brand/Vendor {%- endcomment -%}
+    {%- if product.vendor != blank -%}
+      <p class="text-[10px] text-muted-foreground tracking-[0.15em] uppercase mb-2">
+        {{ product.vendor }}
+      </p>
+    {%- endif -%}
+
+    {%- comment -%} Product Title {%- endcomment -%}
+    <h1 class="font-display text-4xl md:text-5xl mb-3">
+      {{ product.title }}
+    </h1>
+
+    {%- comment -%} Rating & Reviews {%- endcomment -%}
+    {%- if product.metafields.reviews.rating != blank -%}
+      <div class="flex items-center gap-3 text-sm">
+        {%- comment -%} Star Rating Display {%- endcomment -%}
+        <div class="flex items-center gap-1">
+          {%- assign rating = product.metafields.reviews.rating | times: 1.0 -%}
+          {%- assign full_stars = rating | floor -%}
+          {%- assign empty_stars = 5 | minus: full_stars -%}
+          
+          {%- comment -%} Full stars {%- endcomment -%}
+          {%- for i in (1..full_stars) -%}
+            <span class="text-yellow-500">★</span>
+          {%- endfor -%}
+          
+          {%- comment -%} Empty stars {%- endcomment -%}
+          {%- for i in (1..empty_stars) -%}
+            <span class="text-gray-300">★</span>
+          {%- endfor -%}
+          
+          {%- comment -%} Rating number {%- endcomment -%}
+          <span class="ml-1 font-semibold">{{ rating | round: 1 }}</span>
+        </div>
+
+        {%- comment -%} Review count {%- endcomment -%}
+        {%- if product.metafields.reviews.count != blank -%}
+          <span class="text-muted-foreground">
+            {{ product.metafields.reviews.count | default: 0 }} reviews
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Product Description {%- endcomment -%}
+  {%- if product.description != blank -%}
+    <div class="text-sm text-muted-foreground leading-relaxed mb-6">
+      {{ product.description | strip_html | truncatewords: 50 }}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Price Section {%- endcomment -%}
+  <div class="flex items-center gap-3 mb-6">
+    {%- comment -%} Current Price {%- endcomment -%}
+    <span class="font-display text-3xl" id="product-price">
+      {{ product.selected_or_first_available_variant.price | money }}
+    </span>
+
+    {%- comment -%} Compare At Price (Original Price) {%- endcomment -%}
+    {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+      <span class="text-lg text-muted-foreground line-through">
+        {{ product.selected_or_first_available_variant.compare_at_price | money }}
+      </span>
+
+      {%- comment -%} Discount Percentage Badge {%- endcomment -%}
+      {%- assign savings = product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price -%}
+      {%- assign percentage = savings | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | round -%}
+      <span class="badge-accent text-[10px]">
+        -{{ percentage }}% OFF
+      </span>
+    {%- endif -%}
+  </div>
+</div>
+
+{% comment %}
+  CONVERSION NOTES:
+  
+  React → Liquid Mappings:
+  - product.brand → {{ product.vendor }}
+  - product.name → {{ product.title }}
+  - product.description → {{ product.description }}
+  - product.price → {{ product.selected_or_first_available_variant.price | money }}
+  - product.originalPrice → {{ product.compare_at_price | money }}
+  - product.rating → {{ product.metafields.reviews.rating }}
+  - product.reviews → {{ product.metafields.reviews.count }}
+  
+  Shopify Features Used:
+  - {{ product.vendor }} - Brand name
+  - {{ product.title }} - Product name
+  - {{ product.description }} - Product description
+  - {{ product.selected_or_first_available_variant }} - Active variant
+  - .price | money - Shopify money filter for currency formatting
+  - .compare_at_price - Original price for discount display
+  - product.metafields - Custom fields for ratings
+  
+  Required Metafields Setup:
+  To display ratings, add these metafields to your products:
+  1. reviews.rating (number_decimal) - e.g., 4.5
+  2. reviews.count (number_integer) - e.g., 1381
+  
+  Optional Enhancements:
+  1. Integrate with Shopify Reviews app
+  2. Add product rating schema markup for SEO
+  3. Link to reviews section on page
+  4. Add social proof (e.g., "X people viewing this")
+  5. Show stock availability
+{% endcomment %}

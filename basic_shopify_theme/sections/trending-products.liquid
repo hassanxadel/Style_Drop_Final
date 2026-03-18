@@ -1,0 +1,322 @@
+{% comment %}
+  Trending Products Section
+  
+  Converts React TrendingSection to Shopify section
+  Source: src/sections/TrendingSection.tsx
+  
+  Features:
+  - Dark background (#0D0D0D)
+  - Section heading with yellow badge
+  - 4-column grid (desktop) / 2 visible + scroll (mobile)
+  - Product cards with badges
+  - Wishlist button
+  - "Free Returns" badge
+  - Hover effects
+  
+  Usage:
+  Add to homepage template or use in Theme Editor
+{% endcomment %}
+
+{%- comment -%} Trending Products Section {%- endcomment -%}
+<section class="bg-[#0D0D0D] pt-16 pb-16">
+  <div class="container px-8">
+    
+    {%- comment -%} Section Header {%- endcomment -%}
+    <div class="flex items-end justify-between mb-14 gap-6">
+      <div>
+        {%- comment -%} Yellow Badge {%- endcomment -%}
+        <span class="inline-block mb-3 rounded px-1.5 py-0.5 bg-[#F5C800] font-condensed text-[15px] font-extrabold uppercase tracking-[3.54px] text-[#0D0D0D]">
+          {{ section.settings.badge_text | default: 'Trending Now' }}
+        </span>
+        
+        {%- comment -%} Section Heading {%- endcomment -%}
+        <h2 class="font-display font-normal text-[65px] leading-[55px] tracking-[1.7px] sub-heading-stretch-up text-white">
+          {{ section.settings.heading_line_1 | default: 'STYLES THE INTERNET' }}
+          <br>
+          <span class="text-[#DC2626]">{{ section.settings.heading_line_2 | default: "CAN'T STOP" }}</span> {{ section.settings.heading_line_3 | default: 'WEARING' }}
+        </h2>
+      </div>
+      
+      {%- comment -%} View All Link {%- endcomment -%}
+      <a href="{{ section.settings.view_all_link | default: '/collections/all' }}" class="font-sans text-[13px] font-semibold text-white/70 hover:text-white hover:underline flex items-center gap-1.5">
+        {{ section.settings.view_all_text | default: 'View all' }}
+        <span aria-hidden="true" class="text-base">→</span>
+      </a>
+    </div>
+
+    {%- comment -%} Product Grid (4 cols desktop, 2 visible + scroll mobile) {%- endcomment -%}
+    <div class="md:grid md:grid-cols-4 md:gap-3 flex md:flex-none overflow-x-auto md:overflow-visible gap-3 snap-x snap-mandatory scrollbar-hide pb-2">
+      
+      {%- comment -%} Get products from collection {%- endcomment -%}
+      {%- assign collection_handle = section.settings.collection | default: 'all' -%}
+      {%- assign collection = collections[collection_handle] -%}
+      {%- assign product_limit = section.settings.product_limit | default: 4 -%}
+      
+      {%- if collection and collection.products.size > 0 -%}
+        {%- for product in collection.products limit: product_limit -%}
+          <a 
+            href="{{ product.url }}" 
+            class="group cursor-pointer flex flex-col w-[calc(50%-6px)] md:w-full flex-shrink-0 bg-white rounded-[16px] overflow-hidden shadow-[0px_2px_12px_rgba(0,0,0,0.05)] hover:shadow-[0px_4px_20px_rgba(0,0,0,0.12)] transition-shadow snap-start"
+          >
+            {%- comment -%} Product Image {%- endcomment -%}
+            <div class="relative w-full aspect-[270/280]">
+              {%- if product.featured_image -%}
+                <img
+                  src="{{ product.featured_image | img_url: '400x' }}"
+                  alt="{{ product.title }}"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              {%- endif -%}
+
+              {%- comment -%} Product Badges {%- endcomment -%}
+              <div class="absolute top-3 left-3 flex flex-col gap-1.5">
+                {%- comment -%} Primary Badge (Sale, Best Seller, New) {%- endcomment -%}
+                {%- if product.tags contains 'sale' or product.compare_at_price > product.price -%}
+                  <span class="inline-flex items-center rounded-full bg-[#DC2626] text-white font-sans text-[9px] font-bold leading-[14px] tracking-[0.9px] uppercase px-2 py-1">
+                    ● SALE
+                  </span>
+                {%- elsif product.tags contains 'bestseller' or product.tags contains 'best seller' -%}
+                  <span class="inline-flex items-center rounded-full bg-[#DC2626] text-white font-sans text-[9px] font-bold leading-[14px] tracking-[0.9px] uppercase px-2 py-1">
+                    ● BEST SELLER
+                  </span>
+                {%- elsif product.tags contains 'new' -%}
+                  <span class="inline-flex items-center rounded-full bg-[#DC2626] text-white font-sans text-[9px] font-bold leading-[14px] tracking-[0.9px] uppercase px-2 py-1">
+                    ● NEW IN
+                  </span>
+                {%- elsif product.tags contains 'trending' -%}
+                  <span class="inline-flex items-center rounded-full bg-[#DC2626] text-white font-sans text-[9px] font-bold leading-[14px] tracking-[0.9px] uppercase px-2 py-1">
+                    ● TRENDING
+                  </span>
+                {%- endif -%}
+
+                {%- comment -%} Secondary Badge (Fast Drop) {%- endcomment -%}
+                {%- if product.tags contains 'fast-drop' or product.tags contains 'fast drop' -%}
+                  <span class="inline-flex items-center gap-1 rounded-full bg-[#0D0D0D] text-white font-sans text-[9px] font-bold leading-[14px] tracking-[0.72px] uppercase px-2 py-1">
+                    <svg class="w-2 h-2 fill-white" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
+                    </svg>
+                    FAST DROP
+                  </span>
+                {%- endif -%}
+              </div>
+
+              {%- comment -%} Wishlist Button {%- endcomment -%}
+              <button 
+                class="wishlist-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-[#0D0D0D] hover:bg-[#DC2626] hover:text-white transition-colors" 
+                aria-label="Add to wishlist"
+                data-product-id="{{ product.id }}"
+                onclick="event.preventDefault(); addToWishlist({{ product.id }});"
+              >
+                <svg class="w-[15px] h-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.25">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+            </div>
+
+            {%- comment -%} Product Info {%- endcomment -%}
+            <div class="p-3.5 flex flex-col">
+              <p class="font-condensed text-[10px] font-bold tracking-[1.4px] text-[#0D0D0D]/45 uppercase">
+                {{ product.vendor | upcase }}
+              </p>
+              <p class="font-sans text-sm font-semibold text-[#0D0D0D] mt-1">
+                {{ product.title }}
+              </p>
+              <div class="flex items-center justify-between gap-2 mt-2">
+                <span class="font-sans text-[15px] font-bold leading-[22px] text-[#0D0D0D]">
+                  {{ product.price | money }}
+                </span>
+                <span class="font-sans text-[9px] font-semibold leading-[14px] tracking-[0.45px] text-[#0D0D0D] px-2 py-1 rounded-full bg-[#F5F0EB]">
+                  ↩ Free Returns
+                </span>
+              </div>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Placeholder if no products {%- endcomment -%}
+        <div class="col-span-4 text-center py-12">
+          <p class="text-white/50">No products available. Select a collection in Theme Editor.</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Wishlist JavaScript {%- endcomment -%}
+<script>
+  function addToWishlist(productId) {
+    // Get existing wishlist from localStorage
+    let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    
+    // Toggle product in wishlist
+    const index = wishlist.indexOf(productId);
+    if (index > -1) {
+      wishlist.splice(index, 1);
+      console.log('Removed from wishlist:', productId);
+    } else {
+      wishlist.push(productId);
+      console.log('Added to wishlist:', productId);
+    }
+    
+    // Save updated wishlist
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    
+    // Update button visual state
+    const button = document.querySelector(`.wishlist-btn[data-product-id="${productId}"]`);
+    if (button) {
+      if (index > -1) {
+        button.classList.remove('bg-[#DC2626]', 'text-white');
+        button.classList.add('bg-white/90', 'text-[#0D0D0D]');
+      } else {
+        button.classList.remove('bg-white/90', 'text-[#0D0D0D]');
+        button.classList.add('bg-[#DC2626]', 'text-white');
+      }
+    }
+    
+    // Optional: Show toast notification
+    // showToast(index > -1 ? 'Removed from wishlist' : 'Added to wishlist');
+  }
+
+  // Initialize wishlist button states on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    wishlist.forEach(productId => {
+      const button = document.querySelector(`.wishlist-btn[data-product-id="${productId}"]`);
+      if (button) {
+        button.classList.remove('bg-white/90', 'text-[#0D0D0D]');
+        button.classList.add('bg-[#DC2626]', 'text-white');
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Trending Products",
+  "tag": "section",
+  "class": "section-trending",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Trending Now"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading Line 1",
+      "default": "STYLES THE INTERNET"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading Line 2 (Red)",
+      "default": "CAN'T STOP"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_3",
+      "label": "Heading Line 3",
+      "default": "WEARING"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Text",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select which collection to show products from"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Number of Products",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "info": "Maximum number of products to display"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trending Products"
+    }
+  ]
+}
+{% endschema %}
+
+{% comment %}
+  CONVERSION NOTES:
+  
+  React → Liquid Conversions:
+  - Removed React imports (Product type, Heart icon, Link)
+  - Converted <Link> to <a> tags
+  - Heart icon → inline SVG
+  - defaultProducts array → Shopify collection products
+  - Made all text configurable via schema
+  
+  Badge Logic:
+  - Sale: product has compare_at_price OR 'sale' tag
+  - Best Seller: 'bestseller' or 'best seller' tag
+  - New: 'new' tag
+  - Trending: 'trending' tag
+  - Fast Drop: 'fast-drop' or 'fast drop' tag (secondary badge)
+  
+  Mobile Optimization:
+  - Grid: `md:grid md:grid-cols-4 md:gap-3`
+  - Scroll: `flex overflow-x-auto snap-x snap-mandatory scrollbar-hide`
+  - Cards: `w-[calc(50%-6px)] md:w-full` (shows 2 on mobile)
+  - Smooth snap scrolling with `snap-start`
+  
+  Features:
+  - ✅ Horizontal scroll on mobile (2 visible)
+  - ✅ 4-column grid on desktop
+  - ✅ Wishlist functionality (localStorage)
+  - ✅ Badge system (Sale, Best Seller, New, Trending, Fast Drop)
+  - ✅ Hover effects (scale image, shadow)
+  - ✅ Free Returns badge
+  - ✅ Configurable collection source
+  - ✅ Product limit control
+  
+  Shopify Integration:
+  - Uses collection selector in schema
+  - Product data from collections[handle].products
+  - Money filter for prices
+  - img_url filter for images
+  - Tag-based badge logic
+  
+  Usage:
+  1. Add section to homepage in Theme Editor
+  2. Select collection (e.g., 'trending', 'bestsellers')
+  3. Set product limit (2-12)
+  4. Customize heading and badge text
+  5. Tag products appropriately for badges
+  
+  Required Product Tags:
+  - 'sale' - Shows SALE badge
+  - 'bestseller' or 'best seller' - Shows BEST SELLER badge
+  - 'new' - Shows NEW IN badge
+  - 'trending' - Shows TRENDING badge
+  - 'fast-drop' or 'fast drop' - Shows FAST DROP secondary badge
+{% endcomment %}

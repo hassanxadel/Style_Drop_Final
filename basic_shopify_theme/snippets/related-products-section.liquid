@@ -1,0 +1,278 @@
+{% comment %}
+  Related Products Section - "Complete the Look"
+  
+  Converts React related products to Shopify Liquid
+  Source: ProductDetails.tsx (lines 416-564)
+  
+  Features:
+  - Black rounded container on cream background
+  - Section heading with badge
+  - Product grid (4 cols desktop, horizontal scroll mobile)
+  - Product cards with image, info, add to cart
+  - Swipe indicator for mobile
+  - View all link
+  
+  Usage:
+  {% render 'related-products-section', 
+              product: product, 
+              collection_handle: 'featured' %}
+{% endcomment %}
+
+{%- comment -%} Get related products (can be customized based on tags, vendor, or collection) {%- endcomment -%}
+{%- if recommendations.performed and recommendations.products_count > 0 -%}
+  {%- assign related_products = recommendations.products -%}
+{%- else -%}
+  {%- comment -%} Fallback: Get products from same collection or vendor {%- endcomment -%}
+  {%- assign related_products = collections[collection_handle].products | where_exp: "item", "item.id != product.id" | limit: 4 -%}
+{%- endif -%}
+
+{%- if related_products.size > 0 -%}
+  {%- comment -%} Cream Background Section {%- endcomment -%}
+  <div class="bg-[#F5F0EB] py-16">
+    <div class="container">
+      {%- comment -%} Black Rounded Container {%- endcomment -%}
+      <div class="bg-[#0D0D0D] rounded-3xl px-6 md:px-10 lg:px-12 py-10 md:py-12">
+        
+        {%- comment -%} Section Header {%- endcomment -%}
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            {%- comment -%} Badge - Yellow {%- endcomment -%}
+            <span class="inline-block mb-3 px-3 py-1.5 bg-[#F5C800] rounded font-condensed text-[10px] font-extrabold uppercase tracking-[1.54px] text-[#0D0D0D]">
+              RELATED PRODUCTS
+            </span>
+            
+            {%- comment -%} Heading {%- endcomment -%}
+            <h2 class="font-display text-4xl md:text-5xl font-normal text-white">
+              COMPLETE <span class="text-accent">THE</span> LOOK
+            </h2>
+          </div>
+          
+          {%- comment -%} View All Link {%- endcomment -%}
+          <a 
+            href="{{ routes.all_products_collection_url }}" 
+            class="text-sm text-white/60 hover:text-white flex items-center gap-2 transition-colors"
+          >
+            View all
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        {%- comment -%} Products Grid - Mobile: horizontal scroll, Desktop: 4 columns {%- endcomment -%}
+        <div class="md:grid md:grid-cols-4 md:gap-5 flex md:flex-none overflow-x-auto md:overflow-visible gap-5 snap-x snap-mandatory scrollbar-hide pb-2">
+          {%- for related_product in related_products limit: 4 -%}
+            <a 
+              href="{{ related_product.url }}" 
+              class="group w-[85%] md:w-auto flex-shrink-0 snap-start"
+            >
+              <div class="bg-[#0D0D0D] rounded-2xl overflow-hidden hover:shadow-xl transition-shadow border border-white/10">
+                
+                {%- comment -%} Product Image Container {%- endcomment -%}
+                <div class="relative aspect-[3/4] overflow-hidden bg-muted">
+                  {%- if related_product.featured_image -%}
+                    <img
+                      src="{{ related_product.featured_image | img_url: '600x' }}"
+                      alt="{{ related_product.title }}"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  {%- endif -%}
+                  
+                  {%- comment -%} Wishlist Button - Top Right {%- endcomment -%}
+                  <button
+                    type="button"
+                    class="wishlist-btn absolute top-3 right-3 w-9 h-9 bg-white rounded-full flex items-center justify-center text-[#0D0D0D] hover:bg-accent hover:text-white transition-colors shadow-md"
+                    data-product-id="{{ related_product.id }}"
+                    aria-label="Add to wishlist"
+                    onclick="event.preventDefault(); addToWishlist({{ related_product.id }});"
+                  >
+                    {%- comment -%} Heart Icon SVG {%- endcomment -%}
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                  </button>
+
+                  {%- comment -%} Badge - Top Left {%- endcomment -%}
+                  {%- if related_product.tags contains 'sale' or related_product.compare_at_price > related_product.price -%}
+                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full font-condensed text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 bg-[#0D0D0D] text-white">
+                      <span class="inline-block w-1.5 h-1.5 rounded-full bg-white"></span>
+                      SALE
+                    </span>
+                  {%- elsif related_product.tags contains 'new' -%}
+                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full font-condensed text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 bg-[#0D0D0D] text-white">
+                      <span class="inline-block w-1.5 h-1.5 rounded-full bg-white"></span>
+                      NEW
+                    </span>
+                  {%- elsif related_product.tags contains 'hot' or related_product.tags contains 'bestseller' -%}
+                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full font-condensed text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 bg-[#0D0D0D] text-white">
+                      <span class="inline-block w-1.5 h-1.5 rounded-full bg-white"></span>
+                      HOT
+                    </span>
+                  {%- endif -%}
+                </div>
+
+                {%- comment -%} Product Info - Inside Black Card {%- endcomment -%}
+                <div class="p-4">
+                  {%- comment -%} Brand {%- endcomment -%}
+                  {%- if related_product.vendor != blank -%}
+                    <p class="font-condensed text-[10px] font-bold tracking-[1.4px] uppercase text-white/50 mb-1">
+                      {{ related_product.vendor }}
+                    </p>
+                  {%- endif -%}
+
+                  {%- comment -%} Product Name {%- endcomment -%}
+                  <h3 class="font-sans text-sm font-semibold text-white mb-2">
+                    {{ related_product.title }}
+                  </h3>
+
+                  {%- comment -%} Price & Original Price {%- endcomment -%}
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="font-sans text-base font-bold text-white">
+                      {{ related_product.price | money }}
+                    </span>
+                    {%- if related_product.compare_at_price > related_product.price -%}
+                      <span class="font-sans text-sm text-white/40 line-through">
+                        {{ related_product.compare_at_price | money }}
+                      </span>
+                    {%- endif -%}
+                  </div>
+
+                  {%- comment -%} Add to Cart Button - Red {%- endcomment -%}
+                  <button
+                    type="button"
+                    class="quick-add-btn w-full bg-accent text-white rounded-full py-2.5 px-4 font-condensed text-xs tracking-[0.15em] uppercase flex items-center justify-center gap-2 hover:bg-accent/90 transition-colors"
+                    data-product-id="{{ related_product.id }}"
+                    data-variant-id="{{ related_product.selected_or_first_available_variant.id }}"
+                    onclick="event.preventDefault(); quickAddToCart(this);"
+                  >
+                    {%- comment -%} Shopping Bag Icon SVG {%- endcomment -%}
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                    </svg>
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Swipe Indicator - Mobile Only {%- endcomment -%}
+        <div class="md:hidden flex items-center justify-center gap-2 mt-6">
+          <span class="text-white/60 text-xs">Swipe for more</span>
+          <svg 
+            class="w-5 h-5 text-white/60 animate-pulse" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M13 7l5 5m0 0l-5 5m5-5H6"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- comment -%} JavaScript for Quick Add & Wishlist {%- endcomment -%}
+<script>
+  // Quick Add to Cart
+  function quickAddToCart(button) {
+    const variantId = button.dataset.variantId;
+    const originalText = button.innerHTML;
+    
+    // Show loading state
+    button.disabled = true;
+    button.innerHTML = '<span class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>';
+    
+    // Add to cart via Shopify AJAX
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: 1
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Success - update cart count, show notification
+      console.log('Added to cart:', data);
+      document.dispatchEvent(new CustomEvent('cart:add', { detail: data }));
+      
+      // Reset button
+      button.disabled = false;
+      button.innerHTML = originalText;
+      
+      // Optional: Show success message
+      alert('Added to cart!');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      button.disabled = false;
+      button.innerHTML = originalText;
+      alert('Error adding to cart. Please try again.');
+    });
+  }
+
+  // Add to Wishlist
+  function addToWishlist(productId) {
+    console.log('Add to wishlist:', productId);
+    // Implement wishlist functionality
+    // Can use localStorage, Shopify customer metafields, or wishlist app
+  }
+</script>
+
+{% comment %}
+  CONVERSION NOTES:
+  
+  React → Liquid Mappings:
+  - relatedProducts.map() → {% for related_product in related_products %}
+  - product.img → {{ related_product.featured_image | img_url }}
+  - product.name → {{ related_product.title }}
+  - product.brand → {{ related_product.vendor }}
+  - product.price → {{ related_product.price | money }}
+  - Link component → <a href="{{ related_product.url }}">
+  
+  Shopify Features Used:
+  - {{ recommendations.products }} - AI-powered product recommendations
+  - {{ collections[handle].products }} - Fallback collection products
+  - {{ product.tags }} - Badge logic
+  - {{ product.compare_at_price }} - Sale price detection
+  - /cart/add.js - AJAX cart API
+  
+  Related Products Logic:
+  1. Primary: Use Shopify's product recommendations API
+  2. Fallback: Products from same collection (excluding current)
+  3. Can also filter by: vendor, tags, product type
+  
+  Recommendations API Setup:
+  Add this to your product template before including this snippet:
+  {% render 'product-recommendations' %}
+  
+  Mobile Behavior:
+  - Horizontal scroll with snap points
+  - Products at 85% width
+  - Swipe indicator with animation
+  - Hidden scrollbar
+  
+  Quick Add Feature:
+  - Adds first available variant to cart
+  - Shows loading spinner
+  - AJAX request to /cart/add.js
+  - Triggers custom event for cart update
+  
+  Optional Enhancements:
+  1. Add variant selector modal for quick add
+  2. Integrate with Shopify recommendations app
+  3. Add "Recently Viewed" products
+  4. Show stock availability
+  5. Add product quick view modal
+  6. Implement proper wishlist with app integration
+{% endcomment %}

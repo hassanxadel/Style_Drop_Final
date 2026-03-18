@@ -1,0 +1,246 @@
+{% comment %}
+  Quantity Selector & Add to Cart
+  
+  Converts React quantity selector and cart button to Shopify Liquid
+  Source: ProductDetails.tsx (lines 319-377)
+  
+  Features:
+  - Quantity selector with +/- buttons
+  - Add to Cart button with icon
+  - Wishlist/Save button
+  - Product features (shipping, returns, checkout)
+  
+  Usage:
+  {% render 'product-add-to-cart', product: product %}
+{% endcomment %}
+
+{%- form 'product', product, id: 'product-form', class: 'product-form' -%}
+  
+  {%- comment -%} Quantity Selector + Buttons Row {%- endcomment -%}
+  <div class="flex items-center gap-3 mb-6">
+    
+    {%- comment -%} Quantity Selector {%- endcomment -%}
+    <div class="flex items-center justify-between bg-white border border-border rounded-full px-6 py-3 shadow-sm flex-none w-[40%] max-w-xs">
+      <button
+        type="button"
+        class="quantity-minus w-6 h-6 flex items-center justify-center hover:bg-muted rounded-full transition-colors"
+        aria-label="Decrease quantity"
+      >
+        {%- comment -%} Minus Icon SVG {%- endcomment -%}
+        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4"/>
+        </svg>
+      </button>
+      
+      <input
+        type="number"
+        name="quantity"
+        id="quantity"
+        value="1"
+        min="1"
+        class="quantity-input min-w-[2rem] text-center font-semibold text-sm bg-transparent border-none outline-none"
+        aria-label="Product quantity"
+      />
+      
+      <button
+        type="button"
+        class="quantity-plus w-6 h-6 flex items-center justify-center hover:bg-muted rounded-full transition-colors"
+        aria-label="Increase quantity"
+      >
+        {%- comment -%} Plus Icon SVG {%- endcomment -%}
+        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/>
+        </svg>
+      </button>
+    </div>
+
+    {%- comment -%} Add to Cart Button + Wishlist {%- endcomment -%}
+    <div class="flex flex-1 items-center gap-3">
+      {%- comment -%} Add to Cart Button {%- endcomment -%}
+      <button
+        type="submit"
+        name="add"
+        class="add-to-cart-button flex-1 h-12 bg-accent text-white rounded-full font-condensed text-sm tracking-[0.18em] uppercase flex items-center justify-center gap-2 shadow-md hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        {% unless product.available %}disabled{% endunless %}
+      >
+        {%- comment -%} Shopping Bag Icon SVG {%- endcomment -%}
+        <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <span class="add-to-cart-text">
+          {% if product.available %}ADD TO CART{% else %}SOLD OUT{% endif %}
+        </span>
+      </button>
+
+      {%- comment -%} Wishlist Button {%- endcomment -%}
+      <button
+        type="button"
+        class="wishlist-button w-11 h-11 border border-border rounded-full flex items-center justify-center hover:border-[#0D0D0D] hover:text-[#0D0D0D] transition-colors"
+        aria-label="Add to wishlist"
+        data-product-id="{{ product.id }}"
+      >
+        {%- comment -%} Heart Icon SVG {%- endcomment -%}
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+{%- endform -%}
+
+{%- comment -%} Product Features - Square Cards {%- endcomment -%}
+<div class="grid grid-cols-3 gap-3 mb-6 pb-6 border-b border-border">
+  {%- comment -%} Feature 1: Free Shipping {%- endcomment -%}
+  <div class="flex flex-col items-center justify-center gap-3 px-3 py-4 bg-white rounded-2xl border border-border shadow-sm text-center">
+    <div>
+      {%- comment -%} Truck Icon SVG {%- endcomment -%}
+      <svg class="w-[18px] h-[18px] text-accent mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0h4m10-1a1 1 0 001 1h1a2 2 0 104 0h-6"/>
+      </svg>
+    </div>
+    <span class="text-xs leading-tight">Free shipping over<br />EGP 975</span>
+  </div>
+
+  {%- comment -%} Feature 2: Free Returns {%- endcomment -%}
+  <div class="flex flex-col items-center justify-center gap-3 px-3 py-4 bg-white rounded-2xl border border-border shadow-sm text-center">
+    <div>
+      {%- comment -%} Rotate Icon SVG {%- endcomment -%}
+      <svg class="w-[18px] h-[18px] text-accent mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+      </svg>
+    </div>
+    <span class="text-xs leading-tight">Free returns,<br />30 days</span>
+  </div>
+
+  {%- comment -%} Feature 3: Secure Checkout {%- endcomment -%}
+  <div class="flex flex-col items-center justify-center gap-3 px-3 py-4 bg-white rounded-2xl border border-border shadow-sm text-center">
+    <div>
+      {%- comment -%} Shield Icon SVG {%- endcomment -%}
+      <svg class="w-[18px] h-[18px] text-accent mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      </svg>
+    </div>
+    <span class="text-xs leading-tight">Secure<br />checkout</span>
+  </div>
+</div>
+
+{%- comment -%} JavaScript for Quantity Controls {%- endcomment -%}
+<script>
+  (function() {
+    const quantityInput = document.getElementById('quantity');
+    const minusButton = document.querySelector('.quantity-minus');
+    const plusButton = document.querySelector('.quantity-plus');
+
+    // Decrease quantity
+    minusButton?.addEventListener('click', function() {
+      const currentValue = parseInt(quantityInput.value) || 1;
+      if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+      }
+    });
+
+    // Increase quantity
+    plusButton?.addEventListener('click', function() {
+      const currentValue = parseInt(quantityInput.value) || 1;
+      quantityInput.value = currentValue + 1;
+    });
+
+    // Prevent manual input of values less than 1
+    quantityInput?.addEventListener('change', function() {
+      const value = parseInt(this.value) || 1;
+      if (value < 1) {
+        this.value = 1;
+      }
+    });
+
+    // Add to cart with AJAX (optional enhancement)
+    const form = document.getElementById('product-form');
+    form?.addEventListener('submit', function(e) {
+      // Uncomment to enable AJAX cart (requires Shopify AJAX API)
+      /*
+      e.preventDefault();
+      const formData = new FormData(this);
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Added to cart:', data);
+        // Update cart count, show notification, etc.
+        document.dispatchEvent(new CustomEvent('cart:add', { detail: data }));
+      })
+      .catch(error => {
+        console.error('Error adding to cart:', error);
+      });
+      */
+    });
+
+    // Wishlist button functionality
+    document.querySelector('.wishlist-button')?.addEventListener('click', function() {
+      const productId = this.dataset.productId;
+      // Implement wishlist functionality
+      console.log('Add to wishlist:', productId);
+      
+      // Toggle heart fill (visual feedback)
+      const svg = this.querySelector('svg');
+      if (svg.getAttribute('fill') === 'none') {
+        svg.setAttribute('fill', 'currentColor');
+        this.classList.add('text-accent');
+      } else {
+        svg.setAttribute('fill', 'none');
+        this.classList.remove('text-accent');
+      }
+    });
+  })();
+</script>
+
+{% comment %}
+  CONVERSION NOTES:
+  
+  React → Liquid Mappings:
+  - useState(quantity) → HTML input with JavaScript
+  - onClick handlers → addEventListener
+  - <button> with onClick → <button type="submit"> in form
+  - Shopping bag component → SVG icon
+  - Heart component → SVG icon
+  
+  Shopify Features Used:
+  - {% form 'product' %} - Shopify product form tag
+  - name="add" - Add to cart action
+  - name="quantity" - Quantity field
+  - product.available - Check if product is in stock
+  - /cart/add.js - Shopify AJAX cart API
+  
+  Form Submission:
+  - Default: Page reload with cart update
+  - Optional: AJAX submission (commented in JavaScript)
+  
+  Quantity Controls:
+  - Minimum: 1
+  - Maximum: No limit (can add inventory check)
+  - Manual input: Validates on change
+  
+  Add to Cart Button States:
+  - Available: "ADD TO CART" (clickable)
+  - Sold Out: "SOLD OUT" (disabled)
+  - Loading: Can add spinner (optional)
+  
+  Wishlist Functionality:
+  - Basic toggle implementation included
+  - Can integrate with Shopify wishlist apps
+  - Can use localStorage for guest users
+  - Can use customer metafields for logged-in users
+  
+  Optional Enhancements:
+  1. Add loading spinner on submit
+  2. Show success notification after add
+  3. Implement sticky add-to-cart bar on scroll
+  4. Add inventory check for max quantity
+  5. Show "Low stock" warning
+  6. Add "Buy Now" button for direct checkout
+  7. Integrate with wishlist app (Swym, Wishlist Plus, etc.)
+{% endcomment %}

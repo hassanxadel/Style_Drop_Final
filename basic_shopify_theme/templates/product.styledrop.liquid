@@ -1,0 +1,122 @@
+{% comment %}
+  StyleDrop Product Template
+  
+  Custom product template using all converted React components.
+  This template replaces the default Dawn product template with the StyleDrop design.
+  
+  To use this template:
+  1. In Shopify admin, go to Online Store > Themes > Customize
+  2. Navigate to a product page
+  3. In the left sidebar, under "Template", select "product.styledrop"
+  
+  Or set as default template for all products by duplicating and renaming to product.liquid
+{% endcomment %}
+
+{%- comment -%} Load custom StyleDrop CSS {%- endcomment -%}
+<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+
+{%- comment -%} Product Page Container {%- endcomment -%}
+<div class="bg-[#F5F0EB] min-h-screen">
+  
+  {%- comment -%} 1. Breadcrumb Navigation {%- endcomment -%}
+  {% render 'breadcrumb-product' %}
+
+  {%- comment -%} 2. Main Product Section {%- endcomment -%}
+  <div class="container py-8 md:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 bg-white rounded-3xl p-6 md:p-10 shadow-sm">
+      
+      {%- comment -%} Left Column: Image Gallery {%- endcomment -%}
+      <div>
+        {% render 'product-image-gallery', product: product %}
+      </div>
+
+      {%- comment -%} Right Column: Product Info & Purchase {%- endcomment -%}
+      <div class="space-y-6">
+        {%- comment -%} Product Info (Title, Brand, Rating, Price) {%- endcomment -%}
+        {% render 'product-info-panel', product: product %}
+
+        {%- comment -%} Variant Selector (Color & Size) {%- endcomment -%}
+        {% render 'product-variant-selector', product: product %}
+
+        {%- comment -%} Quantity & Add to Cart {%- endcomment -%}
+        {% render 'product-add-to-cart', product: product %}
+
+        {%- comment -%} Accordion Sections (Size Guide, Shipping, etc.) {%- endcomment -%}
+        {% render 'product-accordion-sections', product: product %}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} 3. Related Products Section {%- endcomment -%}
+  {% render 'related-products-section', 
+              product: product, 
+              collection_handle: 'all' %}
+
+  {%- comment -%} 4. Size Predictor Modal (global, triggered by button) {%- endcomment -%}
+  {% render 'size-predictor-modal' %}
+
+</div>
+
+{%- comment -%} Schema for Theme Editor {%- endcomment -%}
+{% schema %}
+{
+  "name": "StyleDrop Product",
+  "tag": "section",
+  "class": "section-styledrop-product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "StyleDrop Product Template"
+    },
+    {
+      "type": "paragraph",
+      "content": "This is a custom product template using the StyleDrop design. All styling is handled by style-drop-custom.css and the component snippets."
+    },
+    {
+      "type": "text",
+      "id": "related_collection",
+      "label": "Related Products Collection Handle",
+      "default": "all",
+      "info": "Enter the handle of the collection to show related products from (e.g. 'featured', 'bestsellers', or leave as 'all')"
+    }
+  ]
+}
+{% endschema %}
+
+{% comment %}
+  USAGE NOTES:
+  
+  This template integrates all 8 converted React snippets:
+  1. breadcrumb-product.liquid - Navigation breadcrumb
+  2. product-image-gallery.liquid - Main image gallery with thumbnails
+  3. product-info-panel.liquid - Title, brand, rating, description, price
+  4. product-variant-selector.liquid - Color/size selection
+  5. product-add-to-cart.liquid - Quantity, add to cart, wishlist
+  6. product-accordion-sections.liquid - Collapsible info sections
+  7. related-products-section.liquid - "Complete the Look" products
+  8. size-predictor-modal.liquid - Smart size calculator modal
+  
+  FEATURES:
+  - ✅ Full StyleDrop design system
+  - ✅ Responsive layout (mobile & desktop)
+  - ✅ All custom interactions (wishlist, quick add, size predictor)
+  - ✅ Shopify native product forms
+  - ✅ SEO-friendly structure
+  - ✅ No dependencies on Dawn default styles
+  
+  CUSTOMIZATION:
+  - Modify individual snippets for component-level changes
+  - Update style-drop-custom.css for design system changes
+  - Adjust grid/spacing in this template for layout changes
+  
+  TESTING CHECKLIST:
+  □ Product images load correctly
+  □ Variant selection updates price/image
+  □ Add to cart adds correct variant
+  □ Breadcrumb links work
+  □ Related products show recommendations
+  □ Size predictor modal opens and calculates
+  □ Wishlist button toggles
+  □ Mobile responsive layout works
+  □ All accordions expand/collapse
+{% endcomment %}

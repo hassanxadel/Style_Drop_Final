@@ -1,0 +1,55 @@
+{% comment %}
+  StyleDrop Homepage Template
+  
+  Custom homepage template integrating all converted sections.
+  
+  Sections included:
+  1. Hero Section
+  2. Trending Products
+  3. Testimonials
+  (Add more sections as needed via Theme Editor)
+  
+  To use this template:
+  - This file will automatically be used for the homepage
+  - Add/remove/reorder sections in Theme Editor
+  - All sections are configurable via Theme Editor
+{% endcomment %}
+
+{%- comment -%} Load custom StyleDrop CSS {%- endcomment -%}
+<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+
+{%- comment -%} Homepage Content - Uses Section Groups {%- endcomment -%}
+{% sections 'index' %}
+
+{% comment %}
+  USAGE INSTRUCTIONS:
+  
+  This is a JSON template that uses Shopify's section groups.
+  The actual sections are configured in templates/index.json
+  
+  To customize the homepage:
+  1. Go to Online Store > Themes > Customize
+  2. Navigate to Homepage
+  3. Add/remove/reorder sections
+  4. Configure each section's settings
+  
+  Available StyleDrop Sections:
+  - Hero Section
+  - Trending Products
+  - Testimonials
+  
+  You can also add Dawn's built-in sections:
+  - Image banner
+  - Featured collection
+  - Multicolumn
+  - Newsletter
+  - etc.
+  
+  RECOMMENDED HOMEPAGE STRUCTURE:
+  1. Hero Section (custom)
+  2. Trending Products (custom)
+  3. Image banner (for lifestyle banners)
+  4. Featured collection (for categories)
+  5. Testimonials (custom)
+  6. Newsletter (Dawn built-in)
+{% endcomment %}

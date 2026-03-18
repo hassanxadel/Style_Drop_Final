@@ -1,0 +1,294 @@
+{% comment %}
+  Product Accordion Sections
+  
+  Converts React accordion to Shopify Liquid
+  Source: ProductDetails.tsx (lines 62-68, 379-400)
+  
+  Sections:
+  - Size Guide
+  - Shipping Information
+  - Fabric & Care
+  - FAQ
+  - Return Policy
+  
+  Usage:
+  {% render 'product-accordion-sections', product: product %}
+{% endcomment %}
+
+{%- comment -%} Accordion Container {%- endcomment -%}
+<div class="product-accordion">
+  
+  {%- comment -%} Section 1: Size Guide {%- endcomment -%}
+  <div class="accordion-item border-b border-border">
+    <button
+      type="button"
+      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      data-accordion="size-guide"
+      aria-expanded="false"
+      aria-controls="size-guide-content"
+    >
+      <span>Size Guide</span>
+      {%- comment -%} ChevronDown Icon {%- endcomment -%}
+      <svg 
+        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+    <div 
+      id="size-guide-content" 
+      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+      aria-labelledby="size-guide"
+    >
+      {%- if product.metafields.custom.size_guide != blank -%}
+        {{ product.metafields.custom.size_guide }}
+      {%- else -%}
+        <p>Size guide content will be displayed here. Measurements for each size available.</p>
+        <p class="mt-2">Please refer to our size chart for accurate measurements.</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Section 2: Shipping Information {%- endcomment -%}
+  <div class="accordion-item border-b border-border">
+    <button
+      type="button"
+      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      data-accordion="shipping"
+      aria-expanded="false"
+      aria-controls="shipping-content"
+    >
+      <span>Shipping Information</span>
+      <svg 
+        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+    <div 
+      id="shipping-content" 
+      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+    >
+      {%- if product.metafields.custom.shipping_info != blank -%}
+        {{ product.metafields.custom.shipping_info }}
+      {%- else -%}
+        <p>Free shipping on orders over EGP 975.</p>
+        <p class="mt-2">Same-day delivery available in select areas.</p>
+        <p class="mt-2">Standard shipping takes 2-5 business days.</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Section 3: Fabric & Care {%- endcomment -%}
+  <div class="accordion-item border-b border-border">
+    <button
+      type="button"
+      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      data-accordion="fabric"
+      aria-expanded="false"
+      aria-controls="fabric-content"
+    >
+      <span>Fabric & Care</span>
+      <svg 
+        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+    <div 
+      id="fabric-content" 
+      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+    >
+      {%- if product.metafields.custom.fabric_care != blank -%}
+        {{ product.metafields.custom.fabric_care }}
+      {%- else -%}
+        {%- comment -%} Default content or from product type/tags {%- endcomment -%}
+        <p><strong>Material:</strong> {{ product.metafields.custom.material | default: '100% premium faux leather' }}</p>
+        <p class="mt-2"><strong>Care Instructions:</strong></p>
+        <ul class="list-disc list-inside mt-1 space-y-1">
+          <li>Wipe clean with a damp cloth</li>
+          <li>Avoid direct sunlight</li>
+          <li>Store in a cool, dry place</li>
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Section 4: FAQ {%- endcomment -%}
+  <div class="accordion-item border-b border-border">
+    <button
+      type="button"
+      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      data-accordion="faq"
+      aria-expanded="false"
+      aria-controls="faq-content"
+    >
+      <span>FAQ</span>
+      <svg 
+        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+    <div 
+      id="faq-content" 
+      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+    >
+      {%- if product.metafields.custom.faq != blank -%}
+        {{ product.metafields.custom.faq }}
+      {%- else -%}
+        <div class="space-y-3">
+          <div>
+            <p class="font-semibold text-foreground">Is this item true to size?</p>
+            <p class="mt-1">Yes, this item fits true to size. Please refer to our size guide for measurements.</p>
+          </div>
+          <div>
+            <p class="font-semibold text-foreground">How do I track my order?</p>
+            <p class="mt-1">You'll receive a tracking number via email once your order ships.</p>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Section 5: Return Policy {%- endcomment -%}
+  <div class="accordion-item border-b border-border">
+    <button
+      type="button"
+      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      data-accordion="returns"
+      aria-expanded="false"
+      aria-controls="returns-content"
+    >
+      <span>Return Policy</span>
+      <svg 
+        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+    <div 
+      id="returns-content" 
+      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+    >
+      {%- if product.metafields.custom.return_policy != blank -%}
+        {{ product.metafields.custom.return_policy }}
+      {%- else -%}
+        <p>Free 30-day returns on all items.</p>
+        <p class="mt-2"><strong>Items must be:</strong></p>
+        <ul class="list-disc list-inside mt-1 space-y-1">
+          <li>Unworn and unwashed</li>
+          <li>In original packaging with tags attached</li>
+          <li>Returned within 30 days of delivery</li>
+        </ul>
+        <p class="mt-2">Refunds will be processed within 5-7 business days of receiving your return.</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+</div>
+
+{%- comment -%} JavaScript for Accordion Functionality {%- endcomment -%}
+<script>
+  (function() {
+    // Get all accordion toggles
+    const accordionToggles = document.querySelectorAll('.accordion-toggle');
+
+    accordionToggles.forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const accordionName = this.dataset.accordion;
+        const content = this.nextElementSibling;
+        const icon = this.querySelector('.accordion-icon');
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+        // Close all other accordions (optional - remove if you want multiple open)
+        accordionToggles.forEach(otherToggle => {
+          if (otherToggle !== toggle) {
+            const otherContent = otherToggle.nextElementSibling;
+            const otherIcon = otherToggle.querySelector('.accordion-icon');
+            
+            otherToggle.setAttribute('aria-expanded', 'false');
+            otherContent.classList.add('hidden');
+            otherIcon.classList.remove('rotate-180');
+          }
+        });
+
+        // Toggle current accordion
+        if (isExpanded) {
+          // Close
+          this.setAttribute('aria-expanded', 'false');
+          content.classList.add('hidden');
+          icon.classList.remove('rotate-180');
+        } else {
+          // Open
+          this.setAttribute('aria-expanded', 'true');
+          content.classList.remove('hidden');
+          icon.classList.add('rotate-180');
+        }
+      });
+    });
+
+    // Optional: Open first accordion by default
+    // accordionToggles[0]?.click();
+  })();
+</script>
+
+{% comment %}
+  CONVERSION NOTES:
+  
+  React → Liquid Mappings:
+  - useState(openAccordion) → JavaScript aria-expanded attribute
+  - accordionSections.map() → Multiple hardcoded sections
+  - onClick handlers → addEventListener
+  - Conditional rendering → classList.toggle('hidden')
+  - ChevronDown rotation → CSS class toggle
+  
+  Shopify Features Used:
+  - product.metafields.custom.* - Custom content fields
+  - Accessible ARIA attributes (aria-expanded, aria-controls)
+  - Semantic HTML structure
+  
+  Accordion Behavior:
+  - Single accordion open at a time (can be changed)
+  - Smooth rotation animation on icon
+  - Hover effect on headers
+  - Keyboard accessible
+  
+  Optional Metafields:
+  Add these metafields to your products for custom content:
+  1. custom.size_guide (multi_line_text_field)
+  2. custom.shipping_info (multi_line_text_field)
+  3. custom.fabric_care (multi_line_text_field)
+  4. custom.material (single_line_text_field)
+  5. custom.faq (multi_line_text_field)
+  6. custom.return_policy (multi_line_text_field)
+  
+  Default Content:
+  - If metafields are empty, shows default content
+  - Can be customized per product type
+  - Fallback to generic information
+  
+  Optional Enhancements:
+  1. Allow multiple accordions open simultaneously
+  2. Add smooth slide animation with max-height
+  3. Add schema markup for FAQ section
+  4. Link size guide to separate page/modal
+  5. Add icons to each section header
+  6. Store accordion state in localStorage
+  7. Add print-friendly styles
+{% endcomment %}
