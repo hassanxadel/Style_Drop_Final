@@ -1,0 +1,95 @@
+{% comment %}
+  Breadcrumb Navigation for Product Pages
+  
+  Converts React breadcrumb to Shopify Liquid
+  Source: ProductDetails.tsx (lines 73-84)
+  
+  Usage:
+  {% render 'breadcrumb-product' %}
+  
+  Dependencies:
+  - Requires product object in context
+  - Optional: collection object for collection breadcrumb
+{% endcomment %}
+
+{%- comment -%} Breadcrumb Background Section {%- endcomment -%}
+<div class="bg-[#F5F0EB] border-b border-[#0D0D0D]/10">
+  <div class="container py-4">
+    <nav class="flex items-center gap-2 text-sm text-muted-foreground" aria-label="Breadcrumb">
+      
+      {%- comment -%} Back Arrow Icon (ChevronLeft) {%- endcomment -%}
+      <svg 
+        class="w-3.5 h-3.5" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+
+      {%- comment -%} Home Link {%- endcomment -%}
+      <a 
+        href="{{ routes.root_url }}" 
+        class="hover:text-foreground transition-colors"
+      >
+        Home
+      </a>
+
+      {%- comment -%} Separator {%- endcomment -%}
+      <span aria-hidden="true">/</span>
+
+      {%- comment -%} Brand/Vendor Link (Optional - can link to vendor collection) {%- endcomment -%}
+      {%- if product.vendor != blank -%}
+        <a 
+          href="{{ routes.collections_url }}/vendors?q={{ product.vendor | url_encode }}" 
+          class="hover:text-foreground transition-colors"
+        >
+          {{ product.vendor }}
+        </a>
+        <span aria-hidden="true">/</span>
+      {%- endif -%}
+
+      {%- comment -%} Product Title (Current Page - Not Clickable) {%- endcomment -%}
+      <span class="text-foreground" aria-current="page">
+        {{ product.title }}
+      </span>
+
+    </nav>
+  </div>
+</div>
+
+{% comment %}
+  CONVERSION NOTES:
+  
+  React → Liquid Mappings:
+  - <Link to="/"> → <a href="{{ routes.root_url }}">
+  - product.brand → {{ product.vendor }}
+  - product.name → {{ product.title }}
+  - className → class
+  - ChevronLeft icon → SVG element
+  
+  Shopify Objects Used:
+  - routes.root_url: Homepage URL
+  - product.vendor: Brand/manufacturer name
+  - product.title: Product name
+  - routes.collections_url: Collections page base URL
+  
+  Optional Enhancements:
+  1. Add collection breadcrumb if product is viewed from collection:
+     {% if collection %}
+       <a href="{{ collection.url }}">{{ collection.title }}</a>
+       <span>/</span>
+     {% endif %}
+  
+  2. Truncate long product titles:
+     {{ product.title | truncate: 50 }}
+  
+  3. Add schema markup for SEO:
+     Add itemscope, itemtype, itemprop attributes
+{% endcomment %}
