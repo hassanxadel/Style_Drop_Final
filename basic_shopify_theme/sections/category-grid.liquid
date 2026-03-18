@@ -1,0 +1,245 @@
+{% comment %}
+  StyleDrop Category Grid Section
+  Converted from: src/sections/CategoryGridSection.tsx
+  
+  Features:
+  - Masonry-style category grid
+  - Section heading with badge
+  - Configurable categories via blocks
+  - Integrated sale banner option
+  - Responsive layout
+  
+  Settings:
+  - Section heading
+  - Badge text
+  - Category blocks (up to 6)
+{% endcomment %}
+
+<section class="bg-background py-14">
+  <div class="container px-4 md:px-8">
+    {%- comment -%} Section Header {%- endcomment -%}
+    <div class="text-center mb-12">
+      {%- comment -%} Badge {%- endcomment -%}
+      {%- if section.settings.badge_text != blank -%}
+        <span class="inline-block mb-4 px-3 py-1.5 bg-[#F5C800] rounded font-condensed text-[14px] font-extrabold uppercase tracking-[1.54px] text-[#0D0D0D]">
+          {{ section.settings.badge_text }}
+        </span>
+      {%- endif -%}
+
+      {%- comment -%} Heading {%- endcomment -%}
+      <h2 class="font-display text-[64px] leading-[60.8px] tracking-[1.92px] font-normal">
+        {{ section.settings.heading_line_1 | default: "CLOTHES THAT FIT" }}
+        <br />
+        <span class="text-accent">{{ section.settings.heading_line_2 | default: "YOUR LIFE" }}</span>
+      </h2>
+    </div>
+
+    {%- comment -%} Category Grid - Masonry Layout {%- endcomment -%}
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6 auto-rows-[240px] md:auto-rows-[280px]">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'category' -%}
+            {% render 'category-card',
+              category_name: block.settings.category_name,
+              category_url: block.settings.category_url,
+              category_image: block.settings.category_image,
+              grid_span: block.settings.grid_span
+            %}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Integrated Sale Banner (optional) {%- endcomment -%}
+    {%- if section.settings.show_sale_banner -%}
+      <a href="{{ section.settings.sale_banner_link | default: '/collections/sale' }}" class="block">
+        <div class="relative overflow-hidden rounded-2xl h-[200px] md:h-[240px] group cursor-pointer">
+          {%- comment -%} Background Image {%- endcomment -%}
+          {%- if section.settings.sale_banner_image != blank -%}
+            <img
+              src="{{ section.settings.sale_banner_image | image_url: width: 1600 }}"
+              alt="{{ section.settings.sale_banner_title }}"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          {%- else -%}
+            <div class="w-full h-full bg-gray-300"></div>
+          {%- endif -%}
+
+          {%- comment -%} Overlay {%- endcomment -%}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-center justify-center">
+            <div class="text-center px-4">
+              {%- comment -%} Title {%- endcomment -%}
+              <h3 class="font-display text-4xl md:text-6xl font-normal text-white mb-2" style="letter-spacing: 0.05em;">
+                {{ section.settings.sale_banner_title | default: "SALE — UP TO 50% OFF" }}
+              </h3>
+
+              {%- comment -%} Subtitle {%- endcomment -%}
+              {%- if section.settings.sale_banner_subtitle != blank -%}
+                <p class="text-white/80 text-xs md:text-sm mb-6">
+                  {{ section.settings.sale_banner_subtitle }}
+                </p>
+              {%- endif -%}
+
+              {%- comment -%} CTA Button {%- endcomment -%}
+              <span class="btn-accent px-8 py-3 text-xs font-bold hover:bg-accent/90 transition-colors inline-block">
+                {{ section.settings.sale_banner_button | default: "SHOP SALE" }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category Grid",
+  "tag": "section",
+  "class": "section-category-grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "SHOP BY CATEGORY"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading Line 1",
+      "default": "CLOTHES THAT FIT"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading Line 2 (Accent Color)",
+      "default": "YOUR LIFE"
+    },
+    {
+      "type": "header",
+      "content": "Sale Banner (Optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_banner",
+      "label": "Show Sale Banner",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "sale_banner_image",
+      "label": "Sale Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "sale_banner_title",
+      "label": "Sale Banner Title",
+      "default": "SALE — UP TO 50% OFF"
+    },
+    {
+      "type": "text",
+      "id": "sale_banner_subtitle",
+      "label": "Sale Banner Subtitle",
+      "default": "Limited time · While stocks last"
+    },
+    {
+      "type": "text",
+      "id": "sale_banner_button",
+      "label": "Sale Banner Button Text",
+      "default": "SHOP SALE"
+    },
+    {
+      "type": "url",
+      "id": "sale_banner_link",
+      "label": "Sale Banner Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_name",
+          "label": "Category Name",
+          "default": "CATEGORY"
+        },
+        {
+          "type": "url",
+          "id": "category_url",
+          "label": "Category Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "category_image",
+          "label": "Category Image"
+        },
+        {
+          "type": "select",
+          "id": "grid_span",
+          "label": "Grid Size",
+          "options": [
+            {
+              "value": "col-span-1",
+              "label": "Small (1x1)"
+            },
+            {
+              "value": "col-span-1 row-span-2",
+              "label": "Tall (1x2)"
+            },
+            {
+              "value": "col-span-2",
+              "label": "Wide (2x1)"
+            }
+          ],
+          "default": "col-span-1"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Grid",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "WOMEN",
+            "grid_span": "col-span-1 row-span-2"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "MEN"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "SHOES"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "ACCESSORIES"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "NEW IN"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

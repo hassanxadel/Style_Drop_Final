@@ -2,43 +2,18 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
-      "blocks": {
-        "announcement-bar-0": {
-          "type": "announcement",
-          "settings": {
-            "text": "Welcome to our store",
-            "text_alignment": "center",
-            "color_scheme": "scheme-1",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "announcement-bar-0"
-      ]
-    },
     "header": {
       "type": "header",
       "settings": {
-        "color_scheme": "scheme-1",
-        "logo_position": "middle-left",
+        "logo": "",
         "menu": "main-menu",
-        "menu_type_desktop": "dropdown",
-        "sticky_header_type": "on-scroll-up",
-        "show_line_separator": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "mobile_logo_position": "center",
-        "margin_bottom": 0,
-        "padding_top": 20,
-        "padding_bottom": 20
+        "promo_message_1": "🚚 Free delivery on orders over EGP 975",
+        "promo_message_2": "💖 New drops every Friday - don't miss out",
+        "promo_message_3": "🔥 Up to 40% off Sale items · Limited time"
       }
     }
   },
   "order": [
-    "announcement-bar",
     "header"
   ]
 }

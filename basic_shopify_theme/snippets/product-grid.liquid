@@ -1,0 +1,28 @@
+{% comment %}
+  StyleDrop Product Grid Snippet
+  Converted from: src/components/ProductGrid.tsx
+  
+  Responsive grid layout for displaying products
+  
+  Usage:
+  {% render 'product-grid', products: collection.products, columns: 3 %}
+{% endcomment %}
+
+{%- assign grid_columns = columns | default: 3 -%}
+
+{%- assign grid_classes = 'grid-cols-2 md:grid-cols-3' -%}
+{%- if grid_columns == 2 -%}
+  {%- assign grid_classes = 'grid-cols-2 md:grid-cols-2' -%}
+{%- elsif grid_columns == 4 -%}
+  {%- assign grid_classes = 'grid-cols-2 md:grid-cols-4' -%}
+{%- endif -%}
+
+<div class="grid gap-5 {{ grid_classes }}">
+  {%- for product in products -%}
+    {% render 'product-card', product: product %}
+  {%- else -%}
+    <p class="col-span-full text-center py-12 text-muted-foreground">
+      No products found.
+    </p>
+  {%- endfor -%}
+</div>

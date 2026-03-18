@@ -1,0 +1,104 @@
+{% comment %}
+  StyleDrop Sale Banner Section
+  Converted from: src/sections/SaleBanner.tsx
+  
+  Features:
+  - Full-width promotional banner
+  - Background image with overlay
+  - Configurable title, subtitle, button
+  - Responsive height
+  - Centered content
+  
+  Settings:
+  - Image
+  - Title
+  - Subtitle
+  - Button text and link
+{% endcomment %}
+
+<section class="relative overflow-hidden rounded-2xl mx-4 md:mx-8 my-8">
+  {%- comment -%} Background Image {%- endcomment -%}
+  {%- if section.settings.banner_image != blank -%}
+    <img
+      src="{{ section.settings.banner_image | image_url: width: 1600 }}"
+      alt="{{ section.settings.title }}"
+      class="w-full h-[200px] md:h-[280px] object-cover"
+      loading="lazy"
+    />
+  {%- else -%}
+    <div class="w-full h-[200px] md:h-[280px] bg-gray-300"></div>
+  {%- endif -%}
+
+  {%- comment -%} Overlay with Content {%- endcomment -%}
+  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-center justify-center">
+    <div class="text-center px-4">
+      {%- comment -%} Title {%- endcomment -%}
+      <h2 class="font-display text-4xl md:text-6xl font-normal text-white mb-2" style="letter-spacing: 0.05em;">
+        {{ section.settings.title | default: "SALE — UP TO 50% OFF" }}
+      </h2>
+
+      {%- comment -%} Subtitle {%- endcomment -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="text-white/80 text-xs md:text-sm mb-6">
+          {{ section.settings.subtitle }}
+        </p>
+      {%- endif -%}
+
+      {%- comment -%} CTA Button {%- endcomment -%}
+      {%- if section.settings.button_text != blank -%}
+        <a href="{{ section.settings.button_link | default: '/collections/all' }}">
+          <span class="btn-accent px-8 py-3 text-xs font-bold inline-block">
+            {{ section.settings.button_text }}
+          </span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sale Banner",
+  "tag": "section",
+  "class": "section-sale-banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "SALE — UP TO 50% OFF"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Limited time · While stocks last"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "SHOP SALE"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sale Banner"
+    }
+  ]
+}
+{% endschema %}

@@ -18,6 +18,76 @@
         "show_fast_drop_badge": true
       }
     },
+    "brands": {
+      "type": "brands-section",
+      "settings": {
+        "badge_text": "FEATURED BRANDS",
+        "heading_line_1": "200+ BRANDS",
+        "heading_line_2": "ONE PLATFORM",
+        "collection": "all",
+        "brand_limit": 12,
+        "all_brands_text": "All brands",
+        "all_brands_link": "/pages/brands"
+      }
+    },
+    "category-grid": {
+      "type": "category-grid",
+      "settings": {
+        "badge_text": "SHOP BY CATEGORY",
+        "heading_line_1": "CLOTHES THAT FIT",
+        "heading_line_2": "YOUR LIFE",
+        "show_sale_banner": true,
+        "sale_banner_title": "SALE — UP TO 50% OFF",
+        "sale_banner_subtitle": "Limited time · While stocks last",
+        "sale_banner_button": "SHOP SALE",
+        "sale_banner_link": "/collections/sale"
+      },
+      "blocks": {
+        "category-1": {
+          "type": "category",
+          "settings": {
+            "category_name": "WOMEN",
+            "category_url": "/collections/women",
+            "grid_span": "col-span-1 row-span-2"
+          }
+        },
+        "category-2": {
+          "type": "category",
+          "settings": {
+            "category_name": "MEN",
+            "category_url": "/collections/men"
+          }
+        },
+        "category-3": {
+          "type": "category",
+          "settings": {
+            "category_name": "SHOES",
+            "category_url": "/collections/shoes"
+          }
+        },
+        "category-4": {
+          "type": "category",
+          "settings": {
+            "category_name": "ACCESSORIES",
+            "category_url": "/collections/accessories"
+          }
+        },
+        "category-5": {
+          "type": "category",
+          "settings": {
+            "category_name": "NEW IN",
+            "category_url": "/collections/new-arrivals"
+          }
+        }
+      },
+      "block_order": [
+        "category-1",
+        "category-2",
+        "category-3",
+        "category-4",
+        "category-5"
+      ]
+    },
     "trending": {
       "type": "trending-products",
       "settings": {
@@ -29,6 +99,23 @@
         "view_all_link": "/collections/all",
         "collection": "all",
         "product_limit": 4
+      }
+    },
+    "lifestyle-banners": {
+      "type": "lifestyle-banners",
+      "settings": {
+        "banner_1_badge": "NEW DROP",
+        "banner_1_eyebrow": "MEN'S COLLECTION",
+        "banner_1_title": "EVERYDAY\nSTREETWEAR",
+        "banner_1_button_text": "SHOP MEN'S →",
+        "banner_1_link": "/collections/men",
+        "banner_2_badge": "FIND YOUR FIT",
+        "banner_2_eyebrow": "YOUR EVERYDAY FAVORITES",
+        "banner_2_title_line1": "COMFORT",
+        "banner_2_title_line2": "REDEFINED",
+        "banner_2_description": "Fabrics that move with you. Styles that speak for you.",
+        "banner_2_button_text": "EXPLORE STYLES →",
+        "banner_2_link": "/collections/all"
       }
     },
     "testimonials": {
@@ -47,11 +134,27 @@
         "testimonial_3_text": "Finally a fashion site that curates for real people. Everything fits true to size and the returns process is seamless.",
         "testimonial_3_rating": 4
       }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "badge_text": "DROP INSIDER",
+        "heading": "BE FIRST TO KNOW<br>EVERY DROP.",
+        "description": "Join 50K+ shoppers who get early access to new drops, exclusive deals, and style inspo — before anyone else.",
+        "input_placeholder": "your@email.com",
+        "button_text": "GET EARLY ACCESS →",
+        "success_message": "Thanks for subscribing! Check your email for a welcome offer.",
+        "privacy_text": "No spam, ever. Unsubscribe anytime. We respect your inbox."
+      }
     }
   },
   "order": [
     "hero",
+    "brands",
+    "category-grid",
     "trending",
-    "testimonials"
+    "lifestyle-banners",
+    "testimonials",
+    "newsletter"
   ]
 }

@@ -1,0 +1,88 @@
+{% comment %}
+  StyleDrop Mobile Sidebar Snippet
+  Converted from: src/components/MobileSidebar.tsx
+  
+  Features:
+  - Slide-in navigation from left
+  - Logo at top
+  - Navigation links
+  - Close button
+  - Promo messages at bottom
+  - Backdrop overlay
+  
+  Usage:
+  {% render 'mobile-sidebar', menu: 'main-menu', logo: section.settings.logo %}
+{% endcomment %}
+
+{%- comment -%} Backdrop Overlay {%- endcomment -%}
+<div
+  id="mobile-sidebar-backdrop"
+  class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300"
+></div>
+
+{%- comment -%} Sidebar {%- endcomment -%}
+<div
+  id="mobile-sidebar"
+  class="fixed top-0 left-0 h-full w-[280px] bg-white z-50 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out"
+>
+  {%- comment -%} Sidebar Header {%- endcomment -%}
+  <div class="flex items-center justify-between p-5 border-b border-gray-200">
+    {%- comment -%} Logo {%- endcomment -%}
+    <a 
+      href="{{ routes.root_url }}" 
+      class="flex items-center"
+      onclick="toggleMobileSidebar()"
+    >
+      {%- if logo != blank -%}
+        <img 
+          src="{{ logo | image_url: width: 150 }}" 
+          alt="{{ shop.name }}" 
+          class="h-16 w-auto object-contain"
+          width="150"
+          height="64"
+        />
+      {%- else -%}
+        <span class="font-display text-xl tracking-tight">
+          {{ shop.name }}
+        </span>
+      {%- endif -%}
+    </a>
+
+    {%- comment -%} Close Button {%- endcomment -%}
+    <button
+      onclick="toggleMobileSidebar()"
+      class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+      aria-label="Close menu"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  {%- comment -%} Navigation Links {%- endcomment -%}
+  <nav class="p-5">
+    {%- if menu != blank -%}
+      <ul class="space-y-1">
+        {%- for link in linklists[menu].links -%}
+          <li>
+            <a
+              href="{{ link.url }}"
+              class="block px-4 py-3 text-[15px] font-medium tracking-[0.3px] rounded-lg transition-colors {% if link.title == 'Sale' %}text-[#DC2626] bg-red-50 hover:bg-red-100{% else %}text-[#0D0D0D] hover:bg-gray-50{% endif %}"
+              onclick="toggleMobileSidebar()"
+            >
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </nav>
+
+  {%- comment -%} Footer Info {%- endcomment -%}
+  <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-200 text-xs text-gray-500">
+    <p>🚚 Free delivery over EGP 975</p>
+    <p class="mt-1">💖 New drops every Friday</p>
+  </div>
+</div>

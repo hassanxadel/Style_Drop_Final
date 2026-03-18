@@ -1,0 +1,227 @@
+{% comment %}
+  StyleDrop Brands Section
+  Converted from: src/sections/BrandsSection.tsx
+  
+  Features:
+  - Featured brands horizontal scroll
+  - Brand cards (160x160px)
+  - "All brands" link to brands page
+  - Yellow "FEATURED BRANDS" badge
+  - Dynamic brand loading from product vendors
+  
+  Settings:
+  - Section heading
+  - Badge text
+  - Number of brands to show
+  - Link to brands page
+{% endcomment %}
+
+<section class="bg-[#F5F0EB] py-16">
+  <div class="container px-8">
+    {%- comment -%} Section Header {%- endcomment -%}
+    <div class="flex items-end justify-between mb-8 gap-4">
+      <div>
+        {%- comment -%} Badge {%- endcomment -%}
+        {%- if section.settings.badge_text != blank -%}
+          <span class="inline-block mb-3 rounded px-3 py-1 bg-[#F5C800] font-condensed text-[11px] font-extrabold uppercase tracking-[1.54px] text-[#0D0D0D]">
+            {{ section.settings.badge_text }}
+          </span>
+        {%- endif -%}
+
+        {%- comment -%} Heading {%- endcomment -%}
+        <h2 class="font-display font-normal text-[52px] leading-[49px] tracking-[0.12px] text-[#0D0D0D]">
+          {{ section.settings.heading_line_1 | default: "200+ BRANDS" }}
+          <br />
+          {{ section.settings.heading_line_2 | default: "ONE PLATFORM" }}
+        </h2>
+      </div>
+
+      {%- comment -%} All Brands Link {%- endcomment -%}
+      {%- if section.settings.all_brands_link != blank -%}
+        <a
+          href="{{ section.settings.all_brands_link }}"
+          class="font-sans text-[14px] font-semibold tracking-[0.18em] uppercase text-[#0D0D0D]/70 hover:text-[#0D0D0D] flex items-center gap-1"
+        >
+          {{ section.settings.all_brands_text | default: "All brands" }}
+          <span aria-hidden>→</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Brand Cards - Horizontal Scroll {%- endcomment -%}
+    <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+      {%- comment -%} Get unique vendors from products {%- endcomment -%}
+      {%- assign all_vendors = '' -%}
+      {%- assign brand_count = 0 -%}
+      {%- assign max_brands = section.settings.brand_limit | default: 12 -%}
+
+      {%- if section.settings.collection != blank -%}
+        {%- assign brand_collection = collections[section.settings.collection] -%}
+        {%- for product in brand_collection.products limit: 50 -%}
+          {%- unless all_vendors contains product.vendor -%}
+            {%- if brand_count < max_brands -%}
+              {%- assign vendor_slug = product.vendor | handleize -%}
+              {%- assign brand_color = '#DC2626' -%}
+              
+              {%- comment -%} Assign colors based on vendor name hash {%- endcomment -%}
+              {%- assign color_index = product.vendor | size | modulo: 6 -%}
+              {%- case color_index -%}
+                {%- when 0 -%}{%- assign brand_color = '#DC2626' -%}
+                {%- when 1 -%}{%- assign brand_color = '#0D0D0D' -%}
+                {%- when 2 -%}{%- assign brand_color = '#2563EB' -%}
+                {%- when 3 -%}{%- assign brand_color = '#059669' -%}
+                {%- when 4 -%}{%- assign brand_color = '#7C3AED' -%}
+                {%- when 5 -%}{%- assign brand_color = '#EA580C' -%}
+              {%- endcase -%}
+
+              <a
+                href="/collections/{{ vendor_slug }}"
+                class="shrink-0 w-[160px] h-[160px] bg-white rounded-[20px] border border-black/[0.04] shadow-[0px_2px_12px_rgba(0,0,0,0.06)] box-border flex flex-col items-center pt-5 pb-4 px-4 hover:shadow-[0px_4px_20px_rgba(0,0,0,0.12)] transition-shadow"
+              >
+                {%- comment -%} Brand Logo/Initial {%- endcomment -%}
+                <div
+                  class="w-16 h-16 rounded-[16px] flex items-center justify-center text-white font-display text-[22px] leading-[33px] tracking-[2.64px]"
+                  style="background-color: {{ brand_color }};"
+                >
+                  {%- if product.featured_image -%}
+                    <img 
+                      src="{{ product.featured_image | image_url: width: 64 }}" 
+                      alt="{{ product.vendor }}" 
+                      class="w-10 h-10 object-contain"
+                      loading="lazy"
+                    />
+                  {%- else -%}
+                    <span>{{ product.vendor | slice: 0 }}</span>
+                  {%- endif -%}
+                </div>
+
+                {%- comment -%} Brand Name {%- endcomment -%}
+                <div class="mt-4 text-center">
+                  <p class="font-condensed text-sm font-bold tracking-[1.4px] text-[#0D0D0D]">
+                    {{ product.vendor | upcase }}
+                  </p>
+                </div>
+              </a>
+
+              {%- assign all_vendors = all_vendors | append: product.vendor | append: ',' -%}
+              {%- assign brand_count = brand_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Fallback: Use all products if no collection specified {%- endcomment -%}
+        {%- for product in collections.all.products limit: 50 -%}
+          {%- unless all_vendors contains product.vendor -%}
+            {%- if brand_count < max_brands -%}
+              {%- assign vendor_slug = product.vendor | handleize -%}
+              {%- assign brand_color = '#DC2626' -%}
+              
+              {%- assign color_index = product.vendor | size | modulo: 6 -%}
+              {%- case color_index -%}
+                {%- when 0 -%}{%- assign brand_color = '#DC2626' -%}
+                {%- when 1 -%}{%- assign brand_color = '#0D0D0D' -%}
+                {%- when 2 -%}{%- assign brand_color = '#2563EB' -%}
+                {%- when 3 -%}{%- assign brand_color = '#059669' -%}
+                {%- when 4 -%}{%- assign brand_color = '#7C3AED' -%}
+                {%- when 5 -%}{%- assign brand_color = '#EA580C' -%}
+              {%- endcase -%}
+
+              <a
+                href="/collections/{{ vendor_slug }}"
+                class="shrink-0 w-[160px] h-[160px] bg-white rounded-[20px] border border-black/[0.04] shadow-[0px_2px_12px_rgba(0,0,0,0.06)] box-border flex flex-col items-center pt-5 pb-4 px-4 hover:shadow-[0px_4px_20px_rgba(0,0,0,0.12)] transition-shadow"
+              >
+                <div
+                  class="w-16 h-16 rounded-[16px] flex items-center justify-center text-white font-display text-[22px] leading-[33px] tracking-[2.64px]"
+                  style="background-color: {{ brand_color }};"
+                >
+                  <span>{{ product.vendor | slice: 0 }}</span>
+                </div>
+
+                <div class="mt-4 text-center">
+                  <p class="font-condensed text-sm font-bold tracking-[1.4px] text-[#0D0D0D]">
+                    {{ product.vendor | upcase }}
+                  </p>
+                </div>
+              </a>
+
+              {%- assign all_vendors = all_vendors | append: product.vendor | append: ',' -%}
+              {%- assign brand_count = brand_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brands Section",
+  "tag": "section",
+  "class": "section-brands",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "FEATURED BRANDS"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading Line 1",
+      "default": "200+ BRANDS"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading Line 2",
+      "default": "ONE PLATFORM"
+    },
+    {
+      "type": "header",
+      "content": "Brands Settings"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Source Collection",
+      "info": "Select a collection to pull brands from (uses all products if empty)"
+    },
+    {
+      "type": "range",
+      "id": "brand_limit",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "label": "Number of Brands",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "All Brands Link"
+    },
+    {
+      "type": "text",
+      "id": "all_brands_text",
+      "label": "Link Text",
+      "default": "All brands"
+    },
+    {
+      "type": "url",
+      "id": "all_brands_link",
+      "label": "Link URL",
+      "info": "Link to your brands page"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands Section"
+    }
+  ]
+}
+{% endschema %}

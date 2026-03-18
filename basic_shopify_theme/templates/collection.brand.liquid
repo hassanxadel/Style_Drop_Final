@@ -1,0 +1,156 @@
+{% comment %}
+  StyleDrop Brand Products Template
+  Converted from: src/pages/BrandProducts.tsx
+  
+  Custom collection template for brand-specific pages
+  Displays products from a specific vendor with brand hero section
+  
+  To use: Assign this template to a collection via "collection.brand.liquid"
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+
+<div class="bg-background min-h-screen">
+  {%- comment -%} Brand Hero Section {%- endcomment -%}
+  <div class="relative h-[400px] md:h-[500px] overflow-hidden">
+    {%- comment -%} Background Image {%- endcomment -%}
+    {%- if collection.image -%}
+      <img
+        src="{{ collection.image | image_url: width: 1600 }}"
+        alt="{{ collection.title }}"
+        class="w-full h-full object-cover opacity-80"
+        loading="eager"
+      />
+    {%- else -%}
+      <div class="w-full h-full bg-gradient-to-br from-primary to-accent opacity-20"></div>
+    {%- endif -%}
+
+    {%- comment -%} Overlay Gradient {%- endcomment -%}
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+
+    {%- comment -%} Brand Info Overlay {%- endcomment -%}
+    <div class="absolute bottom-8 left-8 md:left-12 z-10">
+      {%- comment -%} Official Brand Badge {%- endcomment -%}
+      <div class="inline-block mb-3 px-3 py-1.5 bg-[#F5C800] rounded font-condensed text-[10px] font-extrabold uppercase tracking-[1.4px] text-[#0D0D0D]">
+        OFFICIAL BRAND PAGE
+      </div>
+
+      {%- comment -%} Brand Name {%- endcomment -%}
+      <h1 class="font-display text-5xl md:text-7xl font-normal text-white mb-2">
+        {{ collection.title | upcase }}
+      </h1>
+
+      {%- comment -%} "All Products" Button {%- endcomment -%}
+      <a
+        href="#products"
+        class="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-white text-[#0D0D0D] rounded-full font-condensed text-xs font-bold tracking-wider uppercase hover:bg-white/90 transition-colors"
+      >
+        VIEW ALL PRODUCTS
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  {%- comment -%} Brand Info Section (Black Background) {%- endcomment -%}
+  {%- if collection.description != blank or collection.metafields.custom.brand_info != blank -%}
+    <div class="bg-[#0D0D0D] text-white py-12">
+      <div class="container px-4 md:px-8">
+        <div class="max-w-3xl">
+          <h2 class="text-2xl font-display font-normal mb-4">About {{ collection.title }}</h2>
+          
+          {%- if collection.metafields.custom.brand_info != blank -%}
+            <div class="text-white/80 leading-relaxed">
+              {{ collection.metafields.custom.brand_info }}
+            </div>
+          {%- elsif collection.description != blank -%}
+            <div class="text-white/80 leading-relaxed">
+              {{ collection.description }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Products Section {%- endcomment -%}
+  <div id="products" class="container px-4 md:px-8 py-12">
+    {%- comment -%} Section Header {%- endcomment -%}
+    <div class="mb-8">
+      <h2 class="text-3xl font-display font-normal mb-2">
+        {{ collection.title }} Collection
+      </h2>
+      <p class="text-muted-foreground">
+        {{ collection.products_count }} product{{ collection.products_count | pluralize: '', 's' }} available
+      </p>
+    </div>
+
+    {%- comment -%} Collection Filters Bar {%- endcomment -%}
+    {% render 'collection-filters', collection: collection, product_count: collection.products_count %}
+
+    {%- comment -%} Product Grid {%- endcomment -%}
+    <div class="product-grid-container mt-8">
+      {% render 'product-grid', products: collection.products, columns: 4 %}
+    </div>
+
+    {%- comment -%} Pagination {%- endcomment -%}
+    {%- if paginate.pages > 1 -%}
+      <div class="mt-12 flex items-center justify-center gap-2">
+        {%- if paginate.previous -%}
+          <a
+            href="{{ paginate.previous.url }}"
+            class="w-10 h-10 flex items-center justify-center border border-border rounded-lg hover:bg-muted transition-colors"
+            aria-label="Previous page"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a
+              href="{{ part.url }}"
+              class="w-10 h-10 flex items-center justify-center border border-border rounded-lg hover:bg-muted transition-colors text-sm font-medium"
+            >
+              {{ part.title }}
+            </a>
+          {%- else -%}
+            <span class="w-10 h-10 flex items-center justify-center bg-primary text-primary-foreground rounded-lg text-sm font-medium">
+              {{ part.title }}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+          <a
+            href="{{ paginate.next.url }}"
+            class="w-10 h-10 flex items-center justify-center border border-border rounded-lg hover:bg-muted transition-colors"
+            aria-label="Next page"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+/* Smooth scroll for "View All Products" button */
+html {
+  scroll-behavior: smooth;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Brand Products",
+  "tag": "section",
+  "class": "section-brand-products"
+}
+{% endschema %}
