@@ -1,0 +1,442 @@
+{% comment %}
+  StyleDrop Cart Template
+  Converted from: src/pages/Cart.tsx
+  
+  Features:
+  - Cream background (#F5F0EB)
+  - Mobile: Compact card layout
+  - Desktop: Table layout with columns (Product, Price, Quantity, Total)
+  - Promo code card
+  - Order notes card
+  - Dark order summary sidebar with free shipping progress
+  - Circular quantity buttons
+  - Trash icon with underlined remove button
+  - Fast Drop badge (desktop only)
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+
+{%- comment -%} Back Navigation - On Cream Background {%- endcomment -%}
+<div class="bg-[#F5F0EB] border-b border-[#0D0D0D]/10">
+  <div class="container py-4">
+    <a
+      href="/collections/all"
+      class="inline-flex items-center gap-2 text-sm text-foreground hover:text-accent transition-colors"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Continue Shopping
+    </a>
+  </div>
+</div>
+
+{%- comment -%} Page Header - On Cream Background {%- endcomment -%}
+<div class="bg-[#F5F0EB]">
+  <div class="container py-6 md:py-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
+      <h1 class="font-display text-4xl md:text-6xl">
+        SHOPPING
+        <br />
+        <span class="text-accent">CART</span>
+      </h1>
+      <span class="text-sm font-sans text-muted-foreground">
+        ({{ cart.item_count }} item{{ cart.item_count | pluralize: '', 's' }})
+      </span>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} Main Content - Cream Background {%- endcomment -%}
+<div class="bg-[#F5F0EB] pb-16">
+  <div class="container px-4 md:px-8">
+    {%- if cart.item_count > 0 -%}
+      <div class="grid lg:grid-cols-[1fr_420px] gap-6 lg:gap-8">
+        {%- comment -%} Left: Cart Items {%- endcomment -%}
+        <div class="space-y-6">
+          {%- comment -%} Card 1: Cart Items {%- endcomment -%}
+          <div class="bg-white rounded-2xl border border-[#0D0D0D]/10 overflow-hidden">
+            {%- comment -%} Desktop Table Header {%- endcomment -%}
+            <div class="hidden md:grid md:grid-cols-[2fr_1fr_1fr_1fr] gap-4 px-6 py-4 bg-[#F5F0EB] border-b border-[#0D0D0D]/10">
+              <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground">PRODUCT</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground">PRICE</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground">QUANTITY</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground text-right">TOTAL</div>
+            </div>
+
+            {%- comment -%} Cart Items {%- endcomment -%}
+            <div class="divide-y divide-border">
+              {%- for item in cart.items -%}
+                <div class="p-4 sm:p-5 md:px-6 md:py-6">
+                  {%- comment -%} Mobile: Compact Card Layout {%- endcomment -%}
+                  <div class="flex gap-4 md:hidden">
+                    {%- comment -%} Product Image {%- endcomment -%}
+                    <div class="w-24 h-28 rounded-xl overflow-hidden bg-muted shrink-0">
+                      {%- if item.image -%}
+                        <img
+                          src="{{ item.image | image_url: width: 200 }}"
+                          alt="{{ item.product.title | escape }}"
+                          class="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+                      {%- endif -%}
+                    </div>
+
+                    {%- comment -%} Product Details {%- endcomment -%}
+                    <div class="flex-1 flex flex-col justify-between min-w-0">
+                      <div>
+                        <p class="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 font-semibold">
+                          {{ item.vendor }}
+                        </p>
+                        <h3 class="font-bold text-base mb-2">
+                          {{ item.product.title }}
+                        </h3>
+                        {%- if item.variant.title != 'Default Title' -%}
+                          <div class="flex items-center gap-2 mb-2">
+                            <span class="text-sm text-muted-foreground">
+                              {{ item.variant.title }}
+                            </span>
+                          </div>
+                        {%- endif -%}
+                      </div>
+
+                      {%- comment -%} Bottom Section: Price, Quantity {%- endcomment -%}
+                      <div class="space-y-2">
+                        {%- comment -%} Price Row {%- endcomment -%}
+                        <div class="flex items-baseline gap-2">
+                          <p class="font-bold text-lg">{{ item.price | money }}</p>
+                          {%- if item.original_price > item.price -%}
+                            <p class="text-sm text-muted-foreground line-through">
+                              {{ item.original_price | money }}
+                            </p>
+                          {%- endif -%}
+                        </div>
+
+                        {%- comment -%} Quantity & Remove Row {%- endcomment -%}
+                        <div class="flex items-center justify-between gap-4">
+                          {%- comment -%} Quantity Control {%- endcomment -%}
+                          <div class="inline-flex items-center gap-2 bg-[#F5F0EB] rounded-full px-2 py-1">
+                            <button
+                              type="button"
+                              class="w-8 h-8 flex items-center justify-center hover:bg-[#E8E6E3] text-foreground rounded-full transition-colors cart-qty-btn"
+                              data-line="{{ forloop.index }}"
+                              data-qty="{{ item.quantity | minus: 1 }}"
+                              aria-label="Decrease quantity"
+                            >
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                              </svg>
+                            </button>
+                            <span class="min-w-[1.5rem] flex items-center justify-center font-bold text-sm text-foreground">
+                              {{ item.quantity }}
+                            </span>
+                            <button
+                              type="button"
+                              class="w-8 h-8 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black rounded-full transition-colors cart-qty-btn"
+                              data-line="{{ forloop.index }}"
+                              data-qty="{{ item.quantity | plus: 1 }}"
+                              aria-label="Increase quantity"
+                            >
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                              </svg>
+                            </button>
+                          </div>
+
+                          {%- comment -%} Remove Button {%- endcomment -%}
+                          <button
+                            type="button"
+                            class="text-sm text-accent hover:opacity-80 flex items-center gap-2 underline decoration-accent cart-remove-btn"
+                            data-line="{{ forloop.index }}"
+                          >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {%- comment -%} Desktop: Table Row Layout {%- endcomment -%}
+                  <div class="hidden md:grid md:grid-cols-[2fr_1fr_1fr_1fr] gap-4 items-center">
+                    {%- comment -%} Product Column {%- endcomment -%}
+                    <div class="flex gap-4 items-start">
+                      <div class="w-24 h-28 rounded-xl overflow-hidden bg-muted shrink-0">
+                        {%- if item.image -%}
+                          <img
+                            src="{{ item.image | image_url: width: 200 }}"
+                            alt="{{ item.product.title | escape }}"
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        {%- else -%}
+                          {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+                        {%- endif -%}
+                      </div>
+                      <div class="flex-1">
+                        <p class="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 font-semibold">
+                          {{ item.vendor }}
+                        </p>
+                        <h3 class="font-bold text-base mb-2">
+                          {{ item.product.title }}
+                        </h3>
+                        {%- if item.variant.title != 'Default Title' -%}
+                          <div class="flex items-center gap-2 mb-2">
+                            <span class="text-sm text-muted-foreground">
+                              {{ item.variant.title }}
+                            </span>
+                          </div>
+                        {%- endif -%}
+                        {%- comment -%} Fast Drop Badge - Desktop Only {%- endcomment -%}
+                        {%- if item.product.tags contains 'fast-drop' -%}
+                          <div class="mt-2">
+                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-[#F5C800] rounded text-[9px] font-bold text-[#0D0D0D] uppercase">
+                              ⚡ FAST DROP
+                            </span>
+                          </div>
+                        {%- endif -%}
+                        {%- comment -%} Remove Button - Desktop {%- endcomment -%}
+                        <button
+                          type="button"
+                          class="mt-3 text-sm text-accent hover:opacity-80 flex items-center gap-2 underline decoration-accent cart-remove-btn"
+                          data-line="{{ forloop.index }}"
+                        >
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+
+                    {%- comment -%} Price Column {%- endcomment -%}
+                    <div class="flex flex-col">
+                      <p class="font-bold text-base">{{ item.price | money }}</p>
+                      {%- if item.original_price > item.price -%}
+                        <p class="text-sm text-muted-foreground line-through">
+                          {{ item.original_price | money }}
+                        </p>
+                      {%- endif -%}
+                    </div>
+
+                    {%- comment -%} Quantity Column {%- endcomment -%}
+                    <div>
+                      <div class="inline-flex items-center gap-2 bg-[#F5F0EB] rounded-full px-2 py-1">
+                        <button
+                          type="button"
+                          class="w-8 h-8 flex items-center justify-center hover:bg-[#E8E6E3] text-foreground rounded-full transition-colors cart-qty-btn"
+                          data-line="{{ forloop.index }}"
+                          data-qty="{{ item.quantity | minus: 1 }}"
+                          aria-label="Decrease quantity"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                          </svg>
+                        </button>
+                        <span class="min-w-[1.5rem] flex items-center justify-center font-bold text-sm text-foreground">
+                          {{ item.quantity }}
+                        </span>
+                        <button
+                          type="button"
+                          class="w-8 h-8 flex items-center justify-center bg-[#0D0D0D] text-white hover:bg-black rounded-full transition-colors cart-qty-btn"
+                          data-line="{{ forloop.index }}"
+                          data-qty="{{ item.quantity | plus: 1 }}"
+                          aria-label="Increase quantity"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    {%- comment -%} Total Column {%- endcomment -%}
+                    <div class="text-right">
+                      <p class="font-bold text-lg">{{ item.line_price | money }}</p>
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- comment -%} Card 2: Promo Code {%- endcomment -%}
+          <div class="bg-white rounded-2xl border border-[#0D0D0D]/10 p-4 sm:p-6">
+            <form method="post" action="/cart" class="flex flex-col sm:flex-row gap-3">
+              <div class="flex-1 flex items-center gap-2 px-4 py-3 bg-[#F5F0EB] rounded-lg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-muted-foreground">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+                <input
+                  type="text"
+                  name="note"
+                  placeholder="Promo code (try: DROP10)"
+                  value="{{ cart.note }}"
+                  class="flex-1 bg-transparent outline-none text-sm"
+                />
+              </div>
+              <button
+                type="submit"
+                name="update"
+                class="w-full sm:w-auto px-8 py-3 bg-[#0D0D0D] text-white rounded-lg font-bold text-sm uppercase hover:bg-black transition-colors"
+              >
+                APPLY CODE
+              </button>
+            </form>
+          </div>
+
+          {%- comment -%} Card 3: Order Notes {%- endcomment -%}
+          <div class="bg-white rounded-2xl border border-[#0D0D0D]/10 p-6">
+            <form method="post" action="/cart">
+              <label class="block text-sm font-semibold mb-3">
+                Order notes <span class="text-muted-foreground font-normal">(Optional)</span>
+              </label>
+              <textarea
+                name="note"
+                placeholder="Any special instructions or notes for your order..."
+                class="w-full px-4 py-3 bg-[#F5F0EB] rounded-lg text-sm outline-none focus:ring-2 focus:ring-accent/20 resize-none"
+                rows="4"
+              >{{ cart.note }}</textarea>
+              <button
+                type="submit"
+                name="update"
+                class="mt-3 text-sm text-accent hover:underline"
+              >
+                Update notes
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {%- comment -%} Right: Order Summary - Dark {%- endcomment -%}
+        <div>
+          <div class="bg-[#0D0D0D] text-white rounded-2xl p-6 sticky top-24">
+            {%- comment -%} Free Shipping Progress {%- endcomment -%}
+            {%- assign free_shipping_threshold = 97500 -%}
+            {%- assign shipping_progress = cart.total_price | times: 100 | divided_by: free_shipping_threshold -%}
+            {%- if shipping_progress > 100 -%}{%- assign shipping_progress = 100 -%}{%- endif -%}
+            {%- assign amount_until_free = free_shipping_threshold | minus: cart.total_price -%}
+            {%- assign is_free_shipping = false -%}
+            {%- if cart.total_price >= free_shipping_threshold -%}{%- assign is_free_shipping = true -%}{%- endif -%}
+
+            <div class="mb-6">
+              {%- if is_free_shipping -%}
+                <p class="text-sm font-semibold text-accent mb-3">
+                  🎉 You've unlocked Free Shipping!
+                </p>
+              {%- else -%}
+                <p class="text-sm font-semibold mb-3">
+                  You're {{ amount_until_free | money }} away from Free Shipping!
+                </p>
+              {%- endif -%}
+              
+              {%- comment -%} Progress Bar {%- endcomment -%}
+              <div class="relative h-2 bg-white/10 rounded-full overflow-hidden">
+                <div
+                  class="absolute inset-y-0 left-0 bg-accent rounded-full transition-all duration-500"
+                  style="width: {{ shipping_progress }}%;"
+                ></div>
+              </div>
+            </div>
+
+            {%- comment -%} Subtotal {%- endcomment -%}
+            <div class="mb-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm uppercase tracking-wider">SUBTOTAL</span>
+                <span class="text-2xl font-bold text-[#F5C800]">
+                  {{ cart.total_price | money }}
+                </span>
+              </div>
+              <p class="text-xs text-white/50">
+                Taxes and shipping calculated at checkout
+              </p>
+            </div>
+
+            {%- comment -%} Checkout Button {%- endcomment -%}
+            <form action="/cart" method="post" novalidate>
+              <button
+                type="submit"
+                name="checkout"
+                class="w-full btn-accent h-14 rounded-lg font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2"
+              >
+                CHECKOUT
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      {%- comment -%} Empty Cart State {%- endcomment -%}
+      <div class="text-center py-20">
+        <h2 class="font-display text-3xl mb-4">Your cart is empty</h2>
+        <p class="text-muted-foreground mb-8">Start shopping to add items to your cart.</p>
+        <a href="/collections/all" class="btn-accent inline-block">
+          Continue Shopping
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+// Cart quantity update
+document.querySelectorAll('.cart-qty-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const line = this.dataset.line;
+    const qty = parseInt(this.dataset.qty);
+    
+    if (qty < 1) return;
+    
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ line: line, quantity: qty })
+    })
+    .then(res => res.json())
+    .then(cart => {
+      window.location.reload();
+    })
+    .catch(err => {
+      console.error('Error updating cart:', err);
+    });
+  });
+});
+
+// Cart remove item
+document.querySelectorAll('.cart-remove-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const line = this.dataset.line;
+    
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ line: line, quantity: 0 })
+    })
+    .then(res => res.json())
+    .then(cart => {
+      window.location.reload();
+    })
+    .catch(err => {
+      console.error('Error removing item:', err);
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "class": "section-cart"
+}
+{% endschema %}
