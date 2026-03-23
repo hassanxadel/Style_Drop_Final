@@ -6,7 +6,7 @@
         "vendor": {
           "type": "text",
           "settings": {
-            "text": "{{ product.vendor }}",
+            "text": "",
             "text_style": "uppercase"
           }
         },
@@ -16,7 +16,7 @@
         "caption": {
           "type": "text",
           "settings": {
-            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text": "",
             "text_style": "subtitle"
           }
         },
