@@ -1,0 +1,33 @@
+{% comment %}
+  Input Snippet — sd-input.liquid
+  Converted from: src/components/ui/input.tsx
+  Valgara Pattern: No Tailwind. styledrop-input BEM only.
+
+  Usage:
+  {% render 'sd-input', type: 'email', name: 'email', placeholder: 'Enter email', id: 'email-field' %}
+
+  Params:
+    type:        'text' | 'email' | 'password' | 'number' | 'tel' | 'search' (default: 'text')
+    name:        Input name attribute
+    id:          Input id attribute
+    placeholder: Placeholder text
+    value:       Pre-filled value
+    required:    Boolean
+    disabled:    Boolean
+    autocomplete: Autocomplete attribute
+    class:       Extra BEM modifier classes
+{% endcomment %}
+
+{{ 'styledrop-input.css' | asset_url | stylesheet_tag }}
+
+<input
+  type="{{ type | default: 'text' }}"
+  {% if name != blank %}name="{{ name }}"{% endif %}
+  {% if id != blank %}id="{{ id }}"{% endif %}
+  {% if placeholder != blank %}placeholder="{{ placeholder }}"{% endif %}
+  {% if value != blank %}value="{{ value }}"{% endif %}
+  {% if autocomplete != blank %}autocomplete="{{ autocomplete }}"{% endif %}
+  class="styledrop-input{% if class != blank %} {{ class }}{% endif %}"
+  {% if required %}required{% endif %}
+  {% if disabled %}disabled{% endif %}
+/>

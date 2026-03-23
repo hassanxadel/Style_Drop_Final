@@ -1,0 +1,488 @@
+/* styledrop-hero-section.css
+ * Valgara-isolated stylesheet for HeroSection
+ * Converted from: src/sections/HeroSection.tsx
+ * Every rule is scoped to .hero-section or .sd-hero__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ */
+
+/* ─── Section shell ──────────────────────────────────────────────────────── */
+.hero-section {
+  background-color: #F5F0EB;
+}
+
+.hero-section__main {
+  min-height: 702px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-section__main {
+    padding-top: 0;
+  }
+}
+
+/* ─── Content wrap (px-8 equivalent) ────────────────────────────────────── */
+.sd-hero__content-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ─── Tagline row (desktop only) ─────────────────────────────────────────── */
+.sd-hero__tagline-row {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__tagline-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 82px;
+    flex-shrink: 0;
+  }
+}
+
+.sd-hero__tagline-text {
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 2.4px;
+  color: rgba(13, 13, 13, 0.4);
+  text-transform: uppercase;
+}
+
+/* ─── Content row (text + image) ─────────────────────────────────────────── */
+.sd-hero__content-row {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__content-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+    padding-bottom: 0;
+  }
+}
+
+/* ─── Left column ────────────────────────────────────────────────────────── */
+.sd-hero__left-col {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+}
+
+/* ─── Same-day delivery badge ────────────────────────────────────────────── */
+.sd-hero__delivery-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 9999px;
+  width: fit-content;
+  height: 22px;
+  padding: 0 0.5rem;
+  background-color: #DC2626;
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__delivery-badge {
+    height: 28.5px;
+    gap: 8px;
+    padding: 0 0.75rem;
+  }
+}
+
+.sd-hero__delivery-badge-icon {
+  width: 9px;
+  height: 9px;
+  fill: #ffffff;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__delivery-badge-icon {
+    width: 11px;
+    height: 11px;
+  }
+}
+
+.sd-hero__delivery-badge-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1rem;
+  letter-spacing: 0.72px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__delivery-badge-text {
+    font-size: 11px;
+    letter-spacing: 0.88px;
+  }
+}
+
+/* ─── Headline (existing rules kept, extended) ───────────────────────────── */
+.hero-section__headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 50px;
+  letter-spacing: 2.8px;
+  color: #0D0D0D;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .hero-section__headline {
+    font-size: 99px;
+    line-height: 87px;
+    letter-spacing: 3.6px;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.hero-section__headline-line--red {
+  color: #DC2626;
+}
+
+/* ─── Description ────────────────────────────────────────────────────────── */
+.hero-section__description {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.25rem;
+  color: rgba(13, 13, 13, 0.55);
+  max-width: 320px;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-section__description {
+    font-size: 15px;
+    line-height: 1.5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ─── CTA row ────────────────────────────────────────────────────────────── */
+.sd-hero__cta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__cta-row {
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
+  }
+}
+
+/* ─── Primary button ─────────────────────────────────────────────────────── */
+.sd-hero__btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.68px;
+  height: 44px;
+  padding: 0 1.25rem;
+  border-radius: 9999px;
+  background-color: #DC2626;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sd-hero__btn-primary:hover {
+  background-color: #b91c1c;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__btn-primary {
+    font-size: 1rem;
+    letter-spacing: 1.92px;
+    height: 52px;
+    padding: 0 1.75rem;
+  }
+}
+
+/* ─── Secondary link ─────────────────────────────────────────────────────── */
+.sd-hero__btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0D0D0D;
+  border-bottom: 1px solid #0D0D0D;
+  padding-bottom: 2px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.sd-hero__btn-secondary:hover {
+  opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__btn-secondary {
+    font-size: 0.875rem;
+  }
+}
+
+/* ─── Right column ───────────────────────────────────────────────────────── */
+.sd-hero__right-col {
+  position: relative;
+  width: 100%;
+  max-width: 570px;
+  aspect-ratio: 480 / 620;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__right-col {
+    aspect-ratio: auto;
+    height: 620px;
+  }
+}
+
+/* ─── Hero image ─────────────────────────────────────────────────────────── */
+.sd-hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+
+.sd-hero__img-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e5e7eb;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+/* ─── Fast Drop badge ────────────────────────────────────────────────────── */
+.sd-hero__fast-drop-badge {
+  position: absolute;
+  left: -15px;
+  top: 1.25rem;
+  padding: 0.5rem 1rem 0.5rem 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: 9999px;
+  background-color: #0D0D0D;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.sd-hero__fast-drop-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sd-hero__fast-drop-icon {
+  color: #ffffff;
+  font-size: 1.125rem;
+  line-height: 27px;
+}
+
+.sd-hero__fast-drop-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0.6px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.sd-hero__fast-drop-sub {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 9px;
+  line-height: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ─── Featured product card overlay (desktop only) ───────────────────────── */
+.sd-hero__product-card {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__product-card {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 340px;
+    top: 367.5px;
+    width: 160px;
+    min-height: 192px;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 0.75rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+}
+
+.sd-hero__product-card-img {
+  width: 136px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  align-self: flex-start;
+}
+
+.sd-hero__product-card-vendor {
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 1px;
+  color: rgba(13, 13, 13, 0.5);
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+.sd-hero__product-card-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #0D0D0D;
+  margin-top: 0.25rem;
+}
+
+.sd-hero__product-card-price-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.sd-hero__product-card-price {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25rem;
+  color: #0D0D0D;
+}
+
+.sd-hero__product-card-rtn {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.45px;
+  color: #0D0D0D;
+  padding: 1.8px 6px;
+  border-radius: 9999px;
+  background-color: #F5F0EB;
+  text-transform: uppercase;
+}
+
+/* ─── Trust bar ──────────────────────────────────────────────────────────── */
+.hero-section__trust-bar {
+  background-color: #0D0D0D;
+  color: #ffffff;
+}
+
+.sd-hero__trust-inner {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.sd-hero__trust-grid {
+  width: 100%;
+  max-width: 1141px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .sd-hero__trust-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.sd-hero__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sd-hero__trust-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sd-hero__trust-icon-svg {
+  width: 20px;
+  height: 20px;
+  color: #DC2626;
+}
+
+/* ─── Trust text (existing rules kept) ──────────────────────────────────── */
+.hero-section__trust-title {
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.hero-section__trust-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 17px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 2px;
+}

@@ -1,0 +1,187 @@
+/* styledrop-collection-filters.css
+ * Valgara-isolated stylesheet for CollectionFilters
+ * Converted from: src/components/CollectionFilters.tsx
+ * All visual rules scoped to .styledrop-collection-filters__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ */
+
+/* ─── Outer wrapper ──────────────────────────────────────────────────────── */
+.styledrop-collection-filters {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .styledrop-collection-filters {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* ─── Left group ─────────────────────────────────────────────────────────── */
+.styledrop-collection-filters__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.styledrop-collection-filters__count {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.styledrop-collection-filters__count-num {
+  font-weight: 600;
+  color: #0D0D0D;
+}
+
+/* ─── View toggle ────────────────────────────────────────────────────────── */
+.styledrop-collection-filters__view-toggle {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .styledrop-collection-filters__view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 4px;
+  }
+}
+
+.styledrop-collection-filters__view-btn {
+  padding: 6px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.styledrop-collection-filters__view-btn:hover {
+  background-color: #f3f4f6;
+  color: #0D0D0D;
+}
+
+.styledrop-collection-filters__view-btn--active {
+  background-color: #f3f4f6;
+  color: #0D0D0D;
+}
+
+/* ─── Right group ────────────────────────────────────────────────────────── */
+.styledrop-collection-filters__right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .styledrop-collection-filters__right {
+    width: auto;
+  }
+}
+
+/* ─── Sort wrapper ───────────────────────────────────────────────────────── */
+.styledrop-collection-filters__sort-wrap {
+  position: relative;
+  flex: 1;
+}
+
+@media (min-width: 640px) {
+  .styledrop-collection-filters__sort-wrap {
+    flex: initial;
+  }
+}
+
+.styledrop-collection-filters__sort-select {
+  width: 100%;
+  appearance: none;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 40px 8px 16px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  color: #0D0D0D;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.styledrop-collection-filters__sort-select:focus {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.15);
+}
+
+@media (min-width: 640px) {
+  .styledrop-collection-filters__sort-select {
+    width: auto;
+  }
+}
+
+.styledrop-collection-filters__sort-caret {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #6b7280;
+}
+
+/* ─── Mobile filter button ───────────────────────────────────────────────── */
+.styledrop-collection-filters__filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0D0D0D;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  white-space: nowrap;
+}
+
+.styledrop-collection-filters__filter-btn:hover {
+  background-color: #f9fafb;
+}
+
+@media (min-width: 768px) {
+  .styledrop-collection-filters__filter-btn {
+    display: none;
+  }
+}
+
+/* ─── Product grid view modifiers (set by JS via sdToggleView) ───────────── */
+.sd-grid--grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+  .sd-grid--grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.sd-grid--list {
+  display: grid;
+  grid-template-columns: 1fr;
+}

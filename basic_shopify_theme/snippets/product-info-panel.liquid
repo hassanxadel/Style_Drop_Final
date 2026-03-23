@@ -17,26 +17,26 @@
   {% render 'product-info-panel', product: product %}
 {% endcomment %}
 
-<div class="space-y-6">
+<div class="styledrop-product-info-panel">
   {%- comment -%} Product Title & Rating {%- endcomment -%}
   <div class="mb-4">
     {%- comment -%} Brand/Vendor {%- endcomment -%}
     {%- if product.vendor != blank -%}
-      <p class="text-[10px] text-muted-foreground tracking-[0.15em] uppercase mb-2">
+      <p class="styledrop-product-info-panel__vendor">
         {{ product.vendor }}
       </p>
     {%- endif -%}
 
     {%- comment -%} Product Title {%- endcomment -%}
-    <h1 class="font-display text-4xl md:text-5xl mb-3">
+    <h1 class="styledrop-product-info-panel__title">
       {{ product.title }}
     </h1>
 
     {%- comment -%} Rating & Reviews {%- endcomment -%}
     {%- if product.metafields.reviews.rating != blank -%}
-      <div class="flex items-center gap-3 text-sm">
+      <div class="styledrop-product-info-panel__rating-row styledrop-product-info-panel__rating-count">
         {%- comment -%} Star Rating Display {%- endcomment -%}
-        <div class="flex items-center gap-1">
+        <div class="styledrop-product-info-panel__rating-stars flex items-center gap-1">
           {%- assign rating = product.metafields.reviews.rating | times: 1.0 -%}
           {%- assign full_stars = rating | floor -%}
           {%- assign empty_stars = 5 | minus: full_stars -%}
@@ -57,7 +57,7 @@
 
         {%- comment -%} Review count {%- endcomment -%}
         {%- if product.metafields.reviews.count != blank -%}
-          <span class="text-muted-foreground">
+            <span class="styledrop-product-info-panel__rating-count">
             {{ product.metafields.reviews.count | default: 0 }} reviews
           </span>
         {%- endif -%}
@@ -67,28 +67,28 @@
 
   {%- comment -%} Product Description {%- endcomment -%}
   {%- if product.description != blank -%}
-    <div class="text-sm text-muted-foreground leading-relaxed mb-6">
+    <div class="styledrop-product-info-panel__description">
       {{ product.description | strip_html | truncatewords: 50 }}
     </div>
   {%- endif -%}
 
   {%- comment -%} Price Section {%- endcomment -%}
-  <div class="flex items-center gap-3 mb-6">
+  <div class="styledrop-product-info-panel__price-row">
     {%- comment -%} Current Price {%- endcomment -%}
-    <span class="font-display text-3xl" id="product-price">
+    <span class="styledrop-product-info-panel__price" id="product-price">
       {{ product.selected_or_first_available_variant.price | money }}
     </span>
 
     {%- comment -%} Compare At Price (Original Price) {%- endcomment -%}
     {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-      <span class="text-lg text-muted-foreground line-through">
+      <span class="styledrop-product-info-panel__compare">
         {{ product.selected_or_first_available_variant.compare_at_price | money }}
       </span>
 
       {%- comment -%} Discount Percentage Badge {%- endcomment -%}
       {%- assign savings = product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price -%}
       {%- assign percentage = savings | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | round -%}
-      <span class="badge-accent text-[10px]">
+      <span class="styledrop-product-info-panel__discount-badge">
         -{{ percentage }}% OFF
       </span>
     {%- endif -%}

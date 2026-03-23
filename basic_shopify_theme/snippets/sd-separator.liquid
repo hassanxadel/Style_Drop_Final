@@ -1,0 +1,24 @@
+{% comment %}
+  Separator Snippet — sd-separator.liquid
+  Converted from: src/components/ui/separator.tsx (Radix SeparatorPrimitive)
+  Valgara Pattern: No Tailwind. styledrop-separator BEM only.
+
+  Usage:
+  {% render 'sd-separator' %}
+  {% render 'sd-separator', orientation: 'vertical' %}
+
+  Params:
+    orientation: 'horizontal' (default) | 'vertical'
+    decorative:  Boolean (default: true) — adds role="none" if true
+{% endcomment %}
+
+{{ 'styledrop-separator.css' | asset_url | stylesheet_tag }}
+
+{%- assign sep_orientation = orientation | default: 'horizontal' -%}
+{%- assign sep_decorative  = decorative  | default: true -%}
+
+<div
+  class="styledrop-separator styledrop-separator--{{ sep_orientation }}"
+  {% if sep_decorative %}role="none" aria-hidden="true"{% else %}role="separator"{% endif %}
+  {% if sep_orientation == 'vertical' %}aria-orientation="vertical"{% endif %}
+></div>

@@ -1,0 +1,62 @@
+/* Styledrop Sale Banner Section (Valgara-style isolated CSS) */
+
+.styledrop-sale-banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .styledrop-sale-banner {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
+
+.styledrop-sale-banner__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.4), transparent);
+}
+
+.styledrop-sale-banner__content {
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.styledrop-sale-banner__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .styledrop-sale-banner__title {
+    font-size: 3.75rem;
+  }
+}
+
+.styledrop-sale-banner__subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .styledrop-sale-banner__subtitle {
+    font-size: 0.875rem;
+  }
+}
+

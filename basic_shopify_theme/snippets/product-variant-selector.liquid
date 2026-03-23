@@ -16,6 +16,8 @@
 {% endcomment %}
 
 {%- comment -%} Get available variants {%- endcomment -%}
+{{ 'styledrop-product-variant-selector.css' | asset_url | stylesheet_tag }}
+
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
 {%- comment -%} Color Selection {%- endcomment -%}
@@ -25,15 +27,15 @@
     {%- if option.name == 'Color' or option.name == 'color' -%}
       {%- assign color_option_index = forloop.index0 -%}
       
-      <div class="mb-6">
-        <label class="text-sm font-semibold mb-3 block">
+      <div class="styledrop-product-variant-selector__section">
+        <label class="styledrop-product-variant-selector__label">
           Color: 
-          <span class="text-muted-foreground font-normal" id="selected-color">
+          <span class="styledrop-product-variant-selector__selected-color" id="selected-color">
             {{ current_variant.options[color_option_index] }}
           </span>
         </label>
         
-        <div class="flex gap-2 flex-wrap">
+        <div class="styledrop-product-variant-selector__swatch-list">
           {%- for value in option.values -%}
             {%- comment -%} Get color hex from metafields if available {%- endcomment -%}
             {%- assign color_key = value | handle -%}
@@ -41,8 +43,8 @@
             
             <button
               type="button"
-              class="color-swatch w-10 h-10 rounded-full border-2 transition-all hover:scale-110
-                     {% if current_variant.options[color_option_index] == value %}border-primary ring-2 ring-primary ring-offset-2{% else %}border-border{% endif %}"
+              class="color-swatch styledrop-product-variant-selector__swatch
+                     {% if current_variant.options[color_option_index] == value %}styledrop-product-variant-selector__swatch--active{% endif %}"
               style="background-color: {{ color_hex }};"
               data-color="{{ value }}"
               data-option-index="{{ color_option_index | plus: 1 }}"
@@ -51,7 +53,7 @@
             >
               {%- comment -%} Hidden checkmark for selected state {%- endcomment -%}
               {% if current_variant.options[color_option_index] == value %}
-                <svg class="w-4 h-4 text-white mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="styledrop-product-variant-selector__swatch-check text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
               {% endif %}
@@ -70,14 +72,14 @@
     {%- if option.name == 'Size' or option.name == 'size' -%}
       {%- assign size_option_index = forloop.index0 -%}
       
-      <div class="mb-6">
+      <div class="styledrop-product-variant-selector__section">
         {%- comment -%} Size Label with Links {%- endcomment -%}
-        <div class="flex items-center justify-between mb-3">
-          <label class="text-sm font-semibold">Size:</label>
+        <div class="styledrop-product-variant-selector__size-header">
+          <label class="styledrop-product-variant-selector__size-header-label">Size:</label>
           <div class="flex items-center gap-2">
             <button 
               type="button"
-              class="text-xs text-accent hover:underline"
+              class="styledrop-product-variant-selector__link"
               onclick="openSizeGuide()"
             >
               Size Guide
@@ -85,7 +87,7 @@
             <span class="text-xs text-muted-foreground">|</span>
             <button
               type="button"
-              class="text-xs text-accent hover:underline flex items-center gap-1"
+              class="styledrop-product-variant-selector__link"
               onclick="openSizePredictor()"
             >
               {%- comment -%} Zap Icon SVG {%- endcomment -%}
@@ -98,7 +100,7 @@
         </div>
         
         {%- comment -%} Size Buttons {%- endcomment -%}
-        <div class="flex gap-3 flex-wrap">
+        <div class="styledrop-product-variant-selector__size-list">
           {%- for value in option.values -%}
             {%- comment -%} Check if this size is available {%- endcomment -%}
             {%- assign size_available = false -%}
@@ -111,13 +113,13 @@
             
             <button
               type="button"
-              class="size-button px-5 py-2 border rounded-full text-xs font-semibold tracking-[0.12em] transition-all
+              class="size-button styledrop-product-variant-selector__size-button
                      {% if current_variant.options[size_option_index] == value %}
-                       bg-[#0D0D0D] text-white border-[#0D0D0D]
+                       styledrop-product-variant-selector__size-button--active styledrop-product-variant-selector__size-button--available
                      {% elsif size_available %}
-                       border-border text-[#0D0D0D] hover:border-[#0D0D0D]
+                       styledrop-product-variant-selector__size-button--available
                      {% else %}
-                       border-border text-muted-foreground opacity-50 cursor-not-allowed
+                       styledrop-product-variant-selector__size-button--unavailable
                      {% endif %}"
               data-size="{{ value }}"
               data-option-index="{{ size_option_index | plus: 1 }}"
@@ -174,11 +176,9 @@
         
         // Update active state
         document.querySelectorAll('.color-swatch').forEach(btn => {
-          btn.classList.remove('border-primary', 'ring-2', 'ring-primary', 'ring-offset-2');
-          btn.classList.add('border-border');
+          btn.classList.remove('styledrop-product-variant-selector__swatch--active');
         });
-        this.classList.remove('border-border');
-        this.classList.add('border-primary', 'ring-2', 'ring-primary', 'ring-offset-2');
+        this.classList.add('styledrop-product-variant-selector__swatch--active');
         
         updateVariant();
       });
@@ -193,11 +193,9 @@
         
         // Update active state
         document.querySelectorAll('.size-button').forEach(btn => {
-          btn.classList.remove('bg-[#0D0D0D]', 'text-white', 'border-[#0D0D0D]');
-          btn.classList.add('border-border', 'text-[#0D0D0D]');
+          btn.classList.remove('styledrop-product-variant-selector__size-button--active');
         });
-        this.classList.remove('border-border', 'text-[#0D0D0D]');
-        this.classList.add('bg-[#0D0D0D]', 'text-white', 'border-[#0D0D0D]');
+        this.classList.add('styledrop-product-variant-selector__size-button--active');
         
         updateVariant();
       });

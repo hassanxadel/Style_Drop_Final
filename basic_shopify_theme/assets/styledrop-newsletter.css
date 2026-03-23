@@ -1,0 +1,90 @@
+/* Styledrop Newsletter Section (Valgara-style isolated CSS) */
+
+.styledrop-newsletter {
+  background-color: var(--sd-background, #F5F0EB);
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.styledrop-newsletter__card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background-color: var(--sd-accent, #DC2626);
+  padding: 3rem;
+}
+
+@media (min-width: 768px) {
+  .styledrop-newsletter__card {
+    padding: 4rem;
+  }
+}
+
+.styledrop-newsletter__drop-word {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.styledrop-newsletter__drop-word-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 200px;
+  line-height: 1;
+  color: #FFFFFF;
+}
+
+@media (min-width: 768px) {
+  .styledrop-newsletter__drop-word-text {
+    font-size: 300px;
+  }
+}
+
+.styledrop-newsletter__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.styledrop-newsletter__badge-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.54px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.styledrop-newsletter__heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 1.1;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .styledrop-newsletter__heading {
+    font-size: 4.5rem;
+  }
+}
+
+.styledrop-newsletter__description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  margin-bottom: 2rem;
+  max-width: 32rem;
+}
+
+.styledrop-newsletter__privacy {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 1rem;
+}
+

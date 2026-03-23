@@ -1,108 +1,71 @@
 {% comment %}
   StyleDrop Brands Listing Page Template
   Converted from: src/pages/Brands.tsx
-  
-  Displays all brands as clickable cards
-  To use: Create a page in Shopify and assign this template
+  Valgara Pattern: All Tailwind stripped. styledrop-brands__* BEM classes only.
 {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+{{ 'styledrop-brands.css' | asset_url | stylesheet_tag }}
 
-<div class="bg-[#F5F0EB] min-h-screen py-12">
-  <div class="container px-4 md:px-8">
+<div class="styledrop-brands">
+  <div class="container">
+
     {%- comment -%} Page Header {%- endcomment -%}
-    <div class="mb-12 text-center">
-      <h1 class="font-display text-5xl md:text-7xl font-normal mb-4">
-        ALL BRANDS
+    <div class="styledrop-brands__header">
+      <h1 class="styledrop-brands__title">
+        {{ section.settings.heading | default: 'ALL BRANDS' }}
       </h1>
-      <p class="text-muted-foreground max-w-2xl mx-auto">
-        Discover our curated collection of 200+ premium brands from around the world
+      <p class="styledrop-brands__subtitle">
+        {{ section.settings.description | default: 'Discover our curated collection of 200+ premium brands from around the world' }}
       </p>
     </div>
 
     {%- comment -%} Brands Grid {%- endcomment -%}
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-      {%- comment -%} Get all unique vendors from products {%- endcomment -%}
+    <div class="styledrop-brands__grid">
       {%- assign all_vendors = '' -%}
       {%- assign vendor_count = 0 -%}
-      
+
       {%- for product in collections.all.products limit: 200 -%}
         {%- unless all_vendors contains product.vendor -%}
           {%- assign all_vendors = all_vendors | append: product.vendor | append: ',' -%}
           {%- assign vendor_slug = product.vendor | handleize -%}
-          
-          {%- comment -%} Brand Color (alternating) {%- endcomment -%}
-          {%- assign brand_color = '#DC2626' -%}
-          {%- assign color_index = vendor_count | modulo: 6 -%}
-          {%- case color_index -%}
-            {%- when 0 -%}{%- assign brand_color = '#DC2626' -%}
-            {%- when 1 -%}{%- assign brand_color = '#0D0D0D' -%}
-            {%- when 2 -%}{%- assign brand_color = '#2563EB' -%}
-            {%- when 3 -%}{%- assign brand_color = '#059669' -%}
-            {%- when 4 -%}{%- assign brand_color = '#7C3AED' -%}
-            {%- when 5 -%}{%- assign brand_color = '#EA580C' -%}
-          {%- endcase -%}
 
-          {%- comment -%} Brand Card {%- endcomment -%}
-          <a
-            href="/collections/{{ vendor_slug }}"
-            class="bg-white rounded-2xl border border-black/[0.04] shadow-[0px_2px_12px_rgba(0,0,0,0.06)] p-6 flex flex-col items-center justify-center hover:shadow-[0px_4px_20px_rgba(0,0,0,0.12)] transition-shadow group"
-          >
-            {%- comment -%} Brand Logo/Initial {%- endcomment -%}
-            <div
-              class="w-20 h-20 rounded-2xl flex items-center justify-center text-white font-display text-2xl tracking-wider mb-4 group-hover:scale-105 transition-transform"
-              style="background-color: {{ brand_color }};"
-            >
+          {%- assign brand_colors = '#DC2626,#0D0D0D,#2563EB,#059669,#7C3AED,#EA580C' | split: ',' -%}
+          {%- assign color_index = vendor_count | modulo: 6 -%}
+          {%- assign brand_color = brand_colors[color_index] -%}
+
+          <a href="/collections/{{ vendor_slug }}" class="styledrop-brands__card">
+            <div class="styledrop-brands__card-logo" style="background-color: {{ brand_color }};">
               {%- if product.featured_image -%}
-                <img
-                  src="{{ product.featured_image | image_url: width: 80 }}"
-                  alt="{{ product.vendor }}"
-                  class="w-14 h-14 object-contain"
-                  loading="lazy"
-                />
+                <img src="{{ product.featured_image | image_url: width: 80 }}" alt="{{ product.vendor }}"
+                  class="styledrop-brands__card-img" width="80" height="80" loading="lazy"/>
               {%- else -%}
-                <span>{{ product.vendor | slice: 0 }}</span>
+                <span class="styledrop-brands__card-initial">{{ product.vendor | slice: 0 }}</span>
               {%- endif -%}
             </div>
-
-            {%- comment -%} Brand Name {%- endcomment -%}
-            <p class="font-condensed text-sm font-bold tracking-[1.4px] text-[#0D0D0D] text-center mb-2">
-              {{ product.vendor | upcase }}
-            </p>
-
-            {%- comment -%} Brand Note {%- endcomment -%}
-            <p class="text-xs text-muted-foreground text-center">
-              Premium Fashion
-            </p>
+            <p class="styledrop-brands__card-name">{{ product.vendor | upcase }}</p>
+            <p class="styledrop-brands__card-note">Premium Fashion</p>
           </a>
 
           {%- assign vendor_count = vendor_count | plus: 1 -%}
         {%- endunless -%}
       {%- endfor -%}
 
-      {%- comment -%} Fallback if no brands found {%- endcomment -%}
       {%- if vendor_count == 0 -%}
-        <div class="col-span-full text-center py-12">
-          <p class="text-muted-foreground">No brands available at the moment.</p>
-        </div>
+        <div class="styledrop-brands__empty"><p>No brands available at the moment.</p></div>
       {%- endif -%}
     </div>
 
     {%- comment -%} Bottom CTA {%- endcomment -%}
-    <div class="mt-16 text-center">
-      <p class="text-muted-foreground mb-4">
-        Can't find your favorite brand?
-      </p>
-      <a
-        href="{{ routes.root_url }}"
-        class="inline-flex items-center gap-2 px-8 py-3 bg-[#0D0D0D] text-white rounded-full font-condensed text-xs font-bold tracking-wider uppercase hover:bg-black transition-colors"
-      >
+    <div class="styledrop-brands__cta-section">
+      <p class="styledrop-brands__cta-text">Can't find your favorite brand?</p>
+      <a href="{{ routes.root_url }}" class="styledrop-brands__cta-btn">
         EXPLORE ALL PRODUCTS
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </a>
     </div>
+
   </div>
 </div>
 
@@ -112,22 +75,10 @@
   "tag": "section",
   "class": "section-brands-page",
   "settings": [
-    {
-      "type": "header",
-      "content": "Page Settings"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Page Heading",
-      "default": "ALL BRANDS"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Page Description",
-      "default": "Discover our curated collection of 200+ premium brands from around the world"
-    }
-  ]
+    { "type": "header", "content": "Page Settings" },
+    { "type": "text", "id": "heading", "label": "Page Heading", "default": "ALL BRANDS" },
+    { "type": "textarea", "id": "description", "label": "Page Description", "default": "Discover our curated collection of 200+ premium brands from around the world" }
+  ],
+  "presets": [{ "name": "Brands Page" }]
 }
 {% endschema %}

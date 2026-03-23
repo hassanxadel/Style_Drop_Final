@@ -1,29 +1,32 @@
 {% comment %}
   StyleDrop Collection Filters Section
   Converted from: src/components/CollectionFilters.tsx
-  
+
   Top bar with view toggle, sorting, and filter button
-  
+
   Usage:
   {% render 'collection-filters', collection: collection, product_count: collection.products_count %}
 {% endcomment %}
 
-<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+{{ 'styledrop-collection-filters.css' | asset_url | stylesheet_tag }}
+
+<div class="styledrop-collection-filters">
+
   {%- comment -%} Left: Product Count & View Toggle {%- endcomment -%}
-  <div class="flex items-center gap-4">
-    <p class="text-sm text-muted-foreground">
-      <span class="font-semibold text-foreground">{{ product_count | default: 0 }}</span> 
+  <div class="styledrop-collection-filters__left">
+    <p class="styledrop-collection-filters__count">
+      <span class="styledrop-collection-filters__count-num">{{ product_count | default: 0 }}</span>
       product{{ product_count | default: 0 | pluralize: '', 's' }}
     </p>
 
-    {%- comment -%} View Toggle (Grid/List) {%- endcomment -%}
-    <div class="hidden md:flex items-center gap-1 border border-border rounded-lg p-1">
+    {%- comment -%} View Toggle (Grid/List) — desktop only {%- endcomment -%}
+    <div class="styledrop-collection-filters__view-toggle">
       <button
         type="button"
-        class="p-1.5 rounded hover:bg-muted transition-colors view-toggle active"
+        class="styledrop-collection-filters__view-btn styledrop-collection-filters__view-btn--active"
         data-view="grid"
         aria-label="Grid view"
-        onclick="toggleView('grid')"
+        onclick="sdToggleView('grid')"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="3" y="3" width="7" height="7"></rect>
@@ -34,10 +37,10 @@
       </button>
       <button
         type="button"
-        class="p-1.5 rounded hover:bg-muted transition-colors view-toggle"
+        class="styledrop-collection-filters__view-btn"
         data-view="list"
         aria-label="List view"
-        onclick="toggleView('list')"
+        onclick="sdToggleView('list')"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="3" y="3" width="7" height="7"></rect>
@@ -50,12 +53,13 @@
   </div>
 
   {%- comment -%} Right: Sort & Filter {%- endcomment -%}
-  <div class="flex items-center gap-2 w-full sm:w-auto">
+  <div class="styledrop-collection-filters__right">
+
     {%- comment -%} Sort Dropdown {%- endcomment -%}
-    <div class="relative flex-1 sm:flex-initial">
+    <div class="styledrop-collection-filters__sort-wrap">
       <select
-        class="w-full sm:w-auto appearance-none bg-card border border-border rounded-lg px-4 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-accent cursor-pointer"
-        onchange="handleSort(this.value)"
+        class="styledrop-collection-filters__sort-select"
+        onchange="sdHandleSort(this.value)"
       >
         <option value="">Sort by</option>
         <option value="manual">Featured</option>
@@ -67,16 +71,16 @@
         <option value="created-ascending">Date, Old to New</option>
         <option value="created-descending">Date, New to Old</option>
       </select>
-      <svg class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <svg class="styledrop-collection-filters__sort-caret" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </div>
 
-    {%- comment -%} Filter Button (Mobile) {%- endcomment -%}
+    {%- comment -%} Filter Button — Mobile only {%- endcomment -%}
     <button
       type="button"
-      class="md:hidden flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
-      onclick="toggleMobileFilters()"
+      class="styledrop-collection-filters__filter-btn"
+      onclick="sdToggleMobileFilters()"
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -87,65 +91,48 @@
 </div>
 
 <script>
-function handleSort(sortValue) {
+function sdHandleSort(sortValue) {
   if (!sortValue) return;
-  
   const params = new URLSearchParams(window.location.search);
   params.set('sort_by', sortValue);
   window.location.search = params.toString();
 }
 
-function toggleView(viewType) {
-  // Toggle active state
-  document.querySelectorAll('.view-toggle').forEach(btn => {
-    btn.classList.remove('active', 'bg-muted');
+// Valgara-compliant: uses BEM modifiers, not Tailwind grid-cols-* class names
+function sdToggleView(viewType) {
+  document.querySelectorAll('.styledrop-collection-filters__view-btn').forEach(function(btn) {
+    btn.classList.remove('styledrop-collection-filters__view-btn--active');
   });
-  
-  const activeBtn = document.querySelector(`[data-view="${viewType}"]`);
-  if (activeBtn) {
-    activeBtn.classList.add('active', 'bg-muted');
-  }
-  
-  // Update grid layout
+  const activeBtn = document.querySelector('[data-view="' + viewType + '"]');
+  if (activeBtn) activeBtn.classList.add('styledrop-collection-filters__view-btn--active');
+
   const grid = document.querySelector('.product-grid-container');
   if (grid) {
     if (viewType === 'list') {
-      grid.classList.remove('grid-cols-2', 'md:grid-cols-3');
-      grid.classList.add('grid-cols-1');
+      grid.classList.remove('sd-grid--grid');
+      grid.classList.add('sd-grid--list');
     } else {
-      grid.classList.remove('grid-cols-1');
-      grid.classList.add('grid-cols-2', 'md:grid-cols-3');
+      grid.classList.remove('sd-grid--list');
+      grid.classList.add('sd-grid--grid');
     }
   }
-  
-  // Save preference
-  localStorage.setItem('preferredView', viewType);
+  localStorage.setItem('sdPreferredView', viewType);
 }
 
-function toggleMobileFilters() {
-  const sidebar = document.querySelector('.filter-sidebar-mobile');
-  if (sidebar) {
-    sidebar.classList.toggle('hidden');
-  }
+function sdToggleMobileFilters() {
+  const sidebar = document.querySelector('.styledrop-filter-sidebar-mobile');
+  if (sidebar) sidebar.classList.toggle('sd-sidebar--closed');
 }
 
-// Load saved view preference
 document.addEventListener('DOMContentLoaded', function() {
-  const savedView = localStorage.getItem('preferredView') || 'grid';
-  toggleView(savedView);
-  
-  // Set current sort value
+  const savedView = localStorage.getItem('sdPreferredView') || 'grid';
+  sdToggleView(savedView);
+
   const params = new URLSearchParams(window.location.search);
   const sortBy = params.get('sort_by');
   if (sortBy) {
-    const select = document.querySelector('select');
+    const select = document.querySelector('.styledrop-collection-filters__sort-select');
     if (select) select.value = sortBy;
   }
 });
 </script>
-
-<style>
-.view-toggle.active {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-</style>

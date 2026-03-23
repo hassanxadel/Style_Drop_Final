@@ -12,12 +12,12 @@
   This template displays all collection pages
 {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+{{ 'styledrop-collection.css' | asset_url | stylesheet_tag }}
 
-<div class="bg-background min-h-screen py-8">
-  <div class="container px-4 md:px-8">
+<div class="bg-background min-h-screen py-8 styledrop-collection">
+  <div class="styledrop-collection__container container">
     {%- comment -%} Breadcrumb Navigation {%- endcomment -%}
-    <nav class="flex items-center gap-2 text-sm mb-6">
+    <nav class="flex items-center gap-2 text-sm mb-6 styledrop-collection__breadcrumb">
       <a href="{{ routes.root_url }}" class="text-muted-foreground hover:text-foreground transition-colors">
         Home
       </a>
@@ -28,8 +28,8 @@
     </nav>
 
     {%- comment -%} Collection Header {%- endcomment -%}
-    <div class="mb-8">
-      <h1 class="text-4xl md:text-5xl font-display font-normal mb-2">
+    <div class="mb-8 styledrop-collection__header">
+      <h1 class="styledrop-collection__title">
         {{ collection.title }}
       </h1>
       {%- if collection.description != blank -%}
@@ -40,25 +40,25 @@
     </div>
 
     {%- comment -%} Main Content: Sidebar + Products {%- endcomment -%}
-    <div class="flex gap-8">
+    <div class="flex gap-8 styledrop-collection__layout">
       {%- comment -%} Desktop Sidebar {%- endcomment -%}
-      <aside class="hidden md:block w-64 shrink-0">
+      <aside class="styledrop-collection__sidebar">
         {% render 'filter-sidebar', collection: collection %}
       </aside>
 
       {%- comment -%} Products Section {%- endcomment -%}
-      <div class="flex-1">
+      <div class="flex-1 styledrop-collection__products">
         {%- comment -%} Collection Filters Bar {%- endcomment -%}
         {% render 'collection-filters', collection: collection, product_count: collection.products_count %}
 
         {%- comment -%} Product Grid {%- endcomment -%}
-        <div class="product-grid-container">
+        <div class="product-grid-container styledrop-collection__product-grid">
           {% render 'product-grid', products: collection.products, columns: 3 %}
         </div>
 
         {%- comment -%} Pagination {%- endcomment -%}
         {%- if paginate.pages > 1 -%}
-          <div class="mt-12 flex items-center justify-center gap-2">
+          <div class="mt-12 flex items-center justify-center gap-2 styledrop-collection__pagination">
             {%- if paginate.previous -%}
               <a
                 href="{{ paginate.previous.url }}"
@@ -105,8 +105,8 @@
 </div>
 
 {%- comment -%} Mobile Filter Sidebar (Overlay) {%- endcomment -%}
-<div class="md:hidden filter-sidebar-mobile fixed inset-0 z-50 bg-black/50 hidden" onclick="if(event.target === this) toggleMobileFilters()">
-  <div class="absolute right-0 top-0 h-full w-full max-w-sm bg-background overflow-y-auto p-6">
+<div class="styledrop-collection__mobile-overlay filter-sidebar-mobile" onclick="if(event.target === this) toggleMobileFilters()">
+  <div class="absolute right-0 top-0 h-full w-full max-w-sm bg-background overflow-y-auto p-6 styledrop-collection__mobile-panel">
     {% render 'filter-sidebar', collection: collection %}
   </div>
 </div>

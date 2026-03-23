@@ -1,0 +1,84 @@
+{% comment %}
+  Tabs Snippet — sd-tabs.liquid
+  Converted from: src/components/ui/tabs.tsx (Radix TabsPrimitive)
+  Valgara Pattern: No Tailwind. styledrop-tabs__* BEM only.
+
+  Usage:
+  {% assign my_tabs = 'Description,Reviews,Shipping' | split: ',' %}
+  {% render 'sd-tabs', tabs: my_tabs, contents: tab_contents_array, active: 'Description' %}
+
+  Or assemble manually with BEM classes:
+  <div class="styledrop-tabs">
+    <div class="styledrop-tabs__list" role="tablist">
+      <button class="styledrop-tabs__trigger styledrop-tabs__trigger--active" role="tab" data-tab="desc" aria-selected="true">Description</button>
+      <button class="styledrop-tabs__trigger" role="tab" data-tab="reviews" aria-selected="false">Reviews</button>
+    </div>
+    <div class="styledrop-tabs__content styledrop-tabs__content--active" data-tab-panel="desc" role="tabpanel">Content here</div>
+    <div class="styledrop-tabs__content" data-tab-panel="reviews" role="tabpanel" hidden>Reviews here</div>
+  </div>
+
+  Params:
+    tabs:     Array of tab label strings
+    contents: Array of HTML content strings (same order as tabs)
+    active:   Label of the default active tab (default: first tab)
+{% endcomment %}
+
+{{ 'styledrop-tabs.css' | asset_url | stylesheet_tag }}
+
+{%- assign active_tab = active | default: tabs[0] -%}
+
+<div class="styledrop-tabs">
+  <div class="styledrop-tabs__list" role="tablist" aria-label="Tabs">
+    {%- for tab in tabs -%}
+      {%- assign tab_id = tab | handle -%}
+      <button
+        class="styledrop-tabs__trigger{% if tab == active_tab %} styledrop-tabs__trigger--active{% endif %}"
+        role="tab"
+        aria-selected="{% if tab == active_tab %}true{% else %}false{% endif %}"
+        aria-controls="tab-panel-{{ tab_id }}"
+        id="tab-btn-{{ tab_id }}"
+        data-tab="{{ tab_id }}"
+        type="button"
+      >
+        {{ tab }}
+      </button>
+    {%- endfor -%}
+  </div>
+
+  {%- for tab in tabs -%}
+    {%- assign tab_id = tab | handle -%}
+    <div
+      class="styledrop-tabs__content{% if tab == active_tab %} styledrop-tabs__content--active{% endif %}"
+      role="tabpanel"
+      id="tab-panel-{{ tab_id }}"
+      aria-labelledby="tab-btn-{{ tab_id }}"
+      {% unless tab == active_tab %}hidden{% endunless %}
+    >
+      {{ contents[forloop.index0] }}
+    </div>
+  {%- endfor -%}
+</div>
+
+<script>
+(function() {
+  document.querySelectorAll('.styledrop-tabs').forEach(function(tabs) {
+    tabs.querySelectorAll('.styledrop-tabs__trigger').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var tabId = this.dataset.tab;
+        tabs.querySelectorAll('.styledrop-tabs__trigger').forEach(function(b) {
+          b.classList.remove('styledrop-tabs__trigger--active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        tabs.querySelectorAll('.styledrop-tabs__content').forEach(function(p) {
+          p.classList.remove('styledrop-tabs__content--active');
+          p.hidden = true;
+        });
+        this.classList.add('styledrop-tabs__trigger--active');
+        this.setAttribute('aria-selected', 'true');
+        var panel = tabs.querySelector('#tab-panel-' + tabId);
+        if (panel) { panel.classList.add('styledrop-tabs__content--active'); panel.hidden = false; }
+      });
+    });
+  });
+})();
+</script>

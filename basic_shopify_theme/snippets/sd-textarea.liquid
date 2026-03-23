@@ -1,0 +1,30 @@
+{% comment %}
+  Textarea Snippet — sd-textarea.liquid
+  Converted from: src/components/ui/textarea.tsx
+  Valgara Pattern: No Tailwind. styledrop-textarea BEM only.
+
+  Usage:
+  {% render 'sd-textarea', name: 'message', placeholder: 'Your message...', rows: 4 %}
+
+  Params:
+    name:        Textarea name attribute
+    id:          Textarea id attribute
+    placeholder: Placeholder text
+    value:       Pre-filled value
+    rows:        Number of rows (default: 4)
+    required:    Boolean
+    disabled:    Boolean
+    class:       Extra BEM modifier classes
+{% endcomment %}
+
+{{ 'styledrop-textarea.css' | asset_url | stylesheet_tag }}
+
+<textarea
+  {% if name != blank %}name="{{ name }}"{% endif %}
+  {% if id != blank %}id="{{ id }}"{% endif %}
+  {% if placeholder != blank %}placeholder="{{ placeholder }}"{% endif %}
+  rows="{{ rows | default: 4 }}"
+  class="styledrop-textarea{% if class != blank %} {{ class }}{% endif %}"
+  {% if required %}required{% endif %}
+  {% if disabled %}disabled{% endif %}
+>{{ value }}</textarea>

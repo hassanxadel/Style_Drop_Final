@@ -1,0 +1,13 @@
+/* Styledrop Cart Main Footer (Valgara-style isolated CSS) */
+
+.styledrop-cart-main-footer__footer {
+  border-radius: 1.5rem;
+}
+
+.styledrop-cart-main-footer__checkout-btn {
+  border-radius: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+

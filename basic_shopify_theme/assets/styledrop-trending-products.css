@@ -1,0 +1,288 @@
+/* styledrop-trending-products.css
+ * Valgara-isolated stylesheet for TrendingSection
+ * Converted from: src/sections/TrendingSection.tsx
+ * All visual rules scoped to .styledrop-trending__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ */
+
+/* ─── Section shell ──────────────────────────────────────────────────────── */
+.styledrop-trending {
+  background-color: #0D0D0D;
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.styledrop-trending__container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ─── Section header ─────────────────────────────────────────────────────── */
+.styledrop-trending__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.styledrop-trending__badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #0D0D0D;
+  background-color: #F5C800;
+  border-radius: 9999px;
+  padding: 3px 10px;
+  margin-bottom: 0.5rem;
+}
+
+.styledrop-trending__heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  line-height: 38px;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .styledrop-trending__heading {
+    font-size: 64px;
+    line-height: 58px;
+    letter-spacing: 2.5px;
+  }
+}
+
+.styledrop-trending__heading-line--red {
+  color: #DC2626;
+}
+
+.styledrop-trending__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-bottom: 0.25rem;
+  transition: opacity 0.2s;
+}
+
+.styledrop-trending__view-all:hover {
+  opacity: 0.75;
+}
+
+.styledrop-trending__view-all-arrow {
+  font-size: 1rem;
+}
+
+/* ─── Product grid ───────────────────────────────────────────────────────── */
+.styledrop-trending__grid {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+
+.styledrop-trending__grid::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .styledrop-trending__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+}
+
+/* ─── Product card ───────────────────────────────────────────────────────── */
+.styledrop-trending__card {
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 6px);
+  flex-shrink: 0;
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.styledrop-trending__card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 768px) {
+  .styledrop-trending__card {
+    width: 100%;
+    flex-shrink: unset;
+  }
+}
+
+/* ─── Card media (image + overlays) ─────────────────────────────────────── */
+.styledrop-trending__card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 270 / 280;
+  overflow: hidden;
+}
+
+.styledrop-trending__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.styledrop-trending__card:hover .styledrop-trending__card-img {
+  transform: scale(1.05);
+}
+
+/* ─── Badge container ────────────────────────────────────────────────────── */
+.styledrop-trending__badge-wrap {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.styledrop-trending__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+}
+
+.styledrop-trending__status-badge--red {
+  background-color: #DC2626;
+  color: #ffffff;
+}
+
+.styledrop-trending__status-badge--dark {
+  background-color: #0D0D0D;
+  color: #ffffff;
+  letter-spacing: 0.72px;
+}
+
+.styledrop-trending__fast-icon {
+  width: 8px;
+  height: 8px;
+  fill: #ffffff;
+}
+
+/* ─── Wishlist button ────────────────────────────────────────────────────── */
+.styledrop-trending__wishlist-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0D0D0D;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.styledrop-trending__wishlist-btn:hover,
+.styledrop-trending__wishlist-btn--active {
+  background-color: #DC2626;
+  color: #ffffff;
+}
+
+.styledrop-trending__wishlist-icon {
+  width: 15px;
+  height: 15px;
+}
+
+/* ─── Card info panel ────────────────────────────────────────────────────── */
+.styledrop-trending__card-info {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.styledrop-trending__card-vendor {
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: rgba(13, 13, 13, 0.45);
+  text-transform: uppercase;
+}
+
+.styledrop-trending__card-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0D0D0D;
+  margin-top: 4px;
+}
+
+.styledrop-trending__price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.styledrop-trending__price {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+  color: #0D0D0D;
+}
+
+.styledrop-trending__rtn-badge {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.45px;
+  color: #0D0D0D;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  background-color: #F5F0EB;
+}
+
+/* ─── Empty state ────────────────────────────────────────────────────────── */
+.styledrop-trending__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+}

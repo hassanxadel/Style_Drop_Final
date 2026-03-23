@@ -20,60 +20,59 @@
 {% endcomment %}
 
 {%- comment -%} Modal HTML Structure {%- endcomment -%}
-<div id="size-predictor-modal" class="hidden">
+{{ 'styledrop-size-predictor-modal.css' | asset_url | stylesheet_tag }}
+
+<div id="size-predictor-modal" class="hidden styledrop-size-predictor-modal">
   {%- comment -%} Backdrop {%- endcomment -%}
-  <div 
-    class="fixed inset-0 bg-black/50 z-50 animate-in fade-in duration-200" 
-    onclick="closeSizePredictor()"
-  ></div>
+  <div class="styledrop-size-predictor-modal__backdrop" onclick="closeSizePredictor()"></div>
 
   {%- comment -%} Modal Container {%- endcomment -%}
-  <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90%] sm:w-full max-w-lg bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200">
+  <div class="styledrop-size-predictor-modal__panel">
     
     {%- comment -%} Header {%- endcomment -%}
-    <div class="flex items-center justify-between p-4 sm:p-6 border-b border-border">
-      <div class="flex items-center gap-2 sm:gap-3">
-        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/10 flex items-center justify-center">
+    <div class="styledrop-size-predictor-modal__header">
+      <div class="styledrop-size-predictor-modal__header-left">
+        <div class="styledrop-size-predictor-modal__header-icon">
           {%- comment -%} Zap Icon {%- endcomment -%}
-          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-accent" fill="currentColor" viewBox="0 0 24 24">
+          <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
           </svg>
         </div>
         <div>
-          <h2 class="font-display text-lg sm:text-2xl text-[#0D0D0D]">Find Your Perfect Size</h2>
-          <p class="text-[10px] sm:text-xs text-muted-foreground">Get personalized size recommendation</p>
+          <h2 class="styledrop-size-predictor-modal__title">Find Your Perfect Size</h2>
+          <p class="styledrop-size-predictor-modal__subtitle">Get personalized size recommendation</p>
         </div>
       </div>
       <button
         onclick="closeSizePredictor()"
-        class="w-7 h-7 sm:w-8 sm:h-8 rounded-full hover:bg-black/5 flex items-center justify-center transition-colors"
+        class="styledrop-size-predictor-modal__close-btn"
         aria-label="Close"
       >
         {%- comment -%} X Icon {%- endcomment -%}
-        <svg class="w-4 h-4 sm:w-[18px] sm:h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
 
     {%- comment -%} Content {%- endcomment -%}
-    <div class="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[60vh] sm:max-h-[70vh] overflow-y-auto">
+    <div class="styledrop-size-predictor-modal__content">
       
       {%- comment -%} Category Toggle {%- endcomment -%}
-      <div>
-        <label class="text-sm font-semibold mb-3 block">Product Category</label>
-        <div class="flex gap-2">
+      <div class="styledrop-size-predictor-modal__section">
+        <label class="styledrop-size-predictor-modal__label">Product Category</label>
+        <div class="styledrop-size-predictor-modal__category-row">
           <button
             id="category-tops"
             onclick="switchCategory('tops')"
-            class="flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all bg-[#0D0D0D] text-white"
+            class="styledrop-size-predictor-modal__category-btn styledrop-size-predictor-modal__category-btn--active"
           >
             TOPS
           </button>
           <button
             id="category-pants"
             onclick="switchCategory('pants')"
-            class="flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all border border-border text-[#0D0D0D] hover:border-[#0D0D0D]"
+            class="styledrop-size-predictor-modal__category-btn"
           >
             PANTS
           </button>
@@ -81,87 +80,85 @@
       </div>
 
       {%- comment -%} Input Fields {%- endcomment -%}
-      <div class="space-y-4">
-        {%- comment -%} Height {%- endcomment -%}
-        <div>
-          <label for="sp-height" class="text-sm font-semibold mb-2 block">
-            Height <span class="text-accent">*</span>
-          </label>
-          <div class="relative">
-            <input
-              id="sp-height"
-              type="number"
-              placeholder="170"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:border-accent focus:outline-none text-sm"
-            />
-            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">cm</span>
-          </div>
+      {%- comment -%} Height {%- endcomment -%}
+      <div class="styledrop-size-predictor-modal__section">
+        <label for="sp-height" class="styledrop-size-predictor-modal__label">
+          Height <span style="color: var(--sd-accent);">*</span>
+        </label>
+        <div class="styledrop-size-predictor-modal__input-wrap">
+          <input
+            id="sp-height"
+            type="number"
+            placeholder="170"
+            class="styledrop-size-predictor-modal__input"
+          />
+          <span class="styledrop-size-predictor-modal__unit">cm</span>
         </div>
+      </div>
 
-        {%- comment -%} Weight {%- endcomment -%}
-        <div>
-          <label for="sp-weight" class="text-sm font-semibold mb-2 block">
-            Weight <span class="text-accent">*</span>
-          </label>
-          <div class="relative">
-            <input
-              id="sp-weight"
-              type="number"
-              placeholder="70"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:border-accent focus:outline-none text-sm"
-            />
-            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">kg</span>
-          </div>
+      {%- comment -%} Weight {%- endcomment -%}
+      <div class="styledrop-size-predictor-modal__section">
+        <label for="sp-weight" class="styledrop-size-predictor-modal__label">
+          Weight <span style="color: var(--sd-accent);">*</span>
+        </label>
+        <div class="styledrop-size-predictor-modal__input-wrap">
+          <input
+            id="sp-weight"
+            type="number"
+            placeholder="70"
+            class="styledrop-size-predictor-modal__input"
+          />
+          <span class="styledrop-size-predictor-modal__unit">kg</span>
         </div>
+      </div>
 
-        {%- comment -%} Shoulder Width (Tops only) {%- endcomment -%}
-        <div id="shoulder-field">
-          <label for="sp-shoulder" class="text-sm font-semibold mb-2 block">
-            Shoulder Width <span class="text-muted-foreground text-xs">(optional)</span>
-          </label>
-          <div class="relative">
-            <input
-              id="sp-shoulder"
-              type="number"
-              placeholder="44"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:border-accent focus:outline-none text-sm"
-            />
-            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">cm</span>
-          </div>
+      {%- comment -%} Shoulder Width (Tops only) {%- endcomment -%}
+      <div id="shoulder-field" class="styledrop-size-predictor-modal__section">
+        <label for="sp-shoulder" class="styledrop-size-predictor-modal__label">
+          Shoulder Width <span class="styledrop-size-predictor-modal__label-optional">(optional)</span>
+        </label>
+        <div class="styledrop-size-predictor-modal__input-wrap">
+          <input
+            id="sp-shoulder"
+            type="number"
+            placeholder="44"
+            class="styledrop-size-predictor-modal__input"
+          />
+          <span class="styledrop-size-predictor-modal__unit">cm</span>
         </div>
+      </div>
 
-        {%- comment -%} Waist Size (Pants only) {%- endcomment -%}
-        <div id="waist-field" class="hidden">
-          <label for="sp-waist" class="text-sm font-semibold mb-2 block">
-            Waist Size <span class="text-muted-foreground text-xs">(optional)</span>
-          </label>
-          <div class="relative">
-            <input
-              id="sp-waist"
-              type="number"
-              placeholder="86"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:border-accent focus:outline-none text-sm"
-            />
-            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">cm</span>
-          </div>
+      {%- comment -%} Waist Size (Pants only) {%- endcomment -%}
+      <div id="waist-field" class="styledrop-size-predictor-modal__section hidden">
+        <label for="sp-waist" class="styledrop-size-predictor-modal__label">
+          Waist Size <span class="styledrop-size-predictor-modal__label-optional">(optional)</span>
+        </label>
+        <div class="styledrop-size-predictor-modal__input-wrap">
+          <input
+            id="sp-waist"
+            type="number"
+            placeholder="86"
+            class="styledrop-size-predictor-modal__input"
+          />
+          <span class="styledrop-size-predictor-modal__unit">cm</span>
         </div>
       </div>
 
       {%- comment -%} Result Display {%- endcomment -%}
-      <div id="size-result" class="hidden bg-accent/10 rounded-xl p-5 border border-accent/20">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+      <div id="size-result" class="hidden styledrop-size-predictor-modal__result">
+        <div class="styledrop-size-predictor-modal__result-top">
+          <div class="styledrop-size-predictor-modal__result-icon">
             {%- comment -%} TrendingUp Icon {%- endcomment -%}
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
             </svg>
           </div>
           <div>
-            <p class="text-xs text-muted-foreground uppercase tracking-wider">Recommended Size</p>
-            <p id="recommended-size" class="font-display text-3xl text-[#0D0D0D]"></p>
+            <p class="styledrop-size-predictor-modal__result-badge">Recommended Size</p>
+            <p id="recommended-size" class="styledrop-size-predictor-modal__result-size"></p>
           </div>
         </div>
-        <p class="text-xs text-muted-foreground leading-relaxed">
+        <p class="styledrop-size-predictor-modal__result-text">
           Based on your measurements, we recommend size <strong id="recommended-size-text"></strong>. 
           This is an estimate - individual fit may vary by brand and style.
         </p>
@@ -169,35 +166,35 @@
     </div>
 
     {%- comment -%} Footer Actions {%- endcomment -%}
-    <div class="p-4 sm:p-6 border-t border-border flex gap-2 sm:gap-3">
-      <div id="initial-buttons" class="flex gap-2 sm:gap-3 w-full">
+    <div class="styledrop-size-predictor-modal__footer">
+      <div id="initial-buttons" class="styledrop-size-predictor-modal__footer-btns">
         <button
           onclick="closeSizePredictor()"
-          class="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 border border-border rounded-full text-xs sm:text-sm font-semibold hover:border-[#0D0D0D] transition-colors"
+          class="styledrop-size-predictor-modal__btn"
         >
           Cancel
         </button>
         <button
           onclick="calculateSize()"
-          class="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-accent text-white rounded-full text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
+          class="styledrop-size-predictor-modal__btn styledrop-size-predictor-modal__btn--primary"
         >
-          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
+          <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
           </svg>
           Calculate Size
         </button>
       </div>
       
-      <div id="result-buttons" class="hidden gap-2 sm:gap-3 w-full">
+      <div id="result-buttons" class="hidden styledrop-size-predictor-modal__footer-btns">
         <button
           onclick="resetCalculator()"
-          class="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 border border-border rounded-full text-xs sm:text-sm font-semibold hover:border-[#0D0D0D] transition-colors"
+          class="styledrop-size-predictor-modal__btn"
         >
           Try Again
         </button>
         <button
           onclick="closeSizePredictor()"
-          class="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-accent text-white rounded-full text-xs sm:text-sm font-semibold hover:bg-accent/90 transition-colors"
+          class="styledrop-size-predictor-modal__btn styledrop-size-predictor-modal__btn--primary"
         >
           Got It!
         </button>
@@ -245,13 +242,13 @@
     
     // Update button states
     if (category === 'tops') {
-      document.getElementById('category-tops').className = 'flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all bg-[#0D0D0D] text-white';
-      document.getElementById('category-pants').className = 'flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all border border-border text-[#0D0D0D] hover:border-[#0D0D0D]';
+      document.getElementById('category-tops').classList.add('styledrop-size-predictor-modal__category-btn--active');
+      document.getElementById('category-pants').classList.remove('styledrop-size-predictor-modal__category-btn--active');
       document.getElementById('shoulder-field').classList.remove('hidden');
       document.getElementById('waist-field').classList.add('hidden');
     } else {
-      document.getElementById('category-pants').className = 'flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all bg-[#0D0D0D] text-white';
-      document.getElementById('category-tops').className = 'flex-1 px-4 py-2.5 rounded-full text-sm font-semibold tracking-wider transition-all border border-border text-[#0D0D0D] hover:border-[#0D0D0D]';
+      document.getElementById('category-pants').classList.add('styledrop-size-predictor-modal__category-btn--active');
+      document.getElementById('category-tops').classList.remove('styledrop-size-predictor-modal__category-btn--active');
       document.getElementById('shoulder-field').classList.add('hidden');
       document.getElementById('waist-field').classList.remove('hidden');
     }

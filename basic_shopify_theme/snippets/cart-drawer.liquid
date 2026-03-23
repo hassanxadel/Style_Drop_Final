@@ -7,6 +7,7 @@
 
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'styledrop-cart-drawer.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
@@ -17,11 +18,11 @@
   }
 </style>
 
-<cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
-  <div id="CartDrawer" class="cart-drawer">
+<cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %} styledrop-cart-drawer">
+  <div id="CartDrawer" class="cart-drawer styledrop-cart-drawer__panel">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
     <div
-      class="drawer__inner gradient color-{{ settings.cart_color_scheme }}"
+      class="drawer__inner gradient color-{{ settings.cart_color_scheme }} styledrop-cart-drawer__panel"
       role="dialog"
       aria-modal="true"
       aria-label="{{ 'sections.cart.title' | t }}"
@@ -283,7 +284,7 @@
                               <div class="quantity-popover-container{% if has_qty_rules or has_vol_pricing %} quantity-popover-container--hover{% endif %}">
                                 <quantity-input class="quantity cart-quantity">
                                   <button
-                                    class="quantity__button"
+                                    class="quantity__button styledrop-cart-drawer__qty-btn"
                                     name="minus"
                                     type="button"
                                     {% if item.instructions and item.instructions.can_update_quantity == false %}
@@ -302,7 +303,7 @@
                                     </span>
                                   </button>
                                   <input
-                                    class="quantity__input"
+                                    class="quantity__input styledrop-cart-drawer__qty-input"
                                     type="number"
                                     data-quantity-variant-id="{{ item.variant.id }}"
                                     name="updates[]"
@@ -324,7 +325,7 @@
                                     {% endif %}
                                   >
                                   <button
-                                    class="quantity__button"
+                                    class="quantity__button styledrop-cart-drawer__qty-btn"
                                     name="plus"
                                     type="button"
                                     {% if item.instructions and item.instructions.can_update_quantity == false %}
@@ -350,16 +351,14 @@
                               >
                                 <button
                                   type="button"
-                                  class="button button--tertiary cart-remove-button"
+                                  class="button button--tertiary cart-remove-button styledrop-cart-drawer__remove-btn{% if item.instructions and item.instructions.can_remove == false %} hidden{% endif %}"
                                   aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
                                   data-variant-id="{{ item.variant.id }}"
-                                  {% if item.instructions and item.instructions.can_remove == false %}
-                                    class="hidden"
-                                  {% endif %}
                                 >
                                   <span class="svg-wrapper">
                                     {{- 'icon-remove.svg' | inline_asset_content -}}
                                   </span>
+                                  <span class="styledrop-cart-drawer__remove-text">Remove</span>
                                 </button>
                               </cart-remove-button>
                             </div>

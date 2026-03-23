@@ -1,0 +1,74 @@
+/* Styledrop Related Products ("Complete the Look") - Valgara-style CSS */
+
+.styledrop-related-products {
+  background-color: #F5F0EB;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.styledrop-related-products__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.styledrop-related-products__card {
+  background-color: #0D0D0D;
+  border-radius: 1.5rem;
+  padding: 2.5rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .styledrop-related-products__card {
+    padding: 3rem 2.5rem;
+  }
+}
+
+.styledrop-related-products__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.styledrop-related-products__badge {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  background-color: #F5C800;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.54px;
+  text-transform: uppercase;
+  color: #0D0D0D;
+}
+
+.styledrop-related-products__heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  color: #FFFFFF;
+}
+
+@media (min-width: 768px) {
+  .styledrop-related-products__heading {
+    font-size: 3rem;
+  }
+}
+
+.styledrop-related-products__view-all {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.styledrop-related-products__view-all:hover {
+  color: #FFFFFF;
+}
+

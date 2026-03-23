@@ -1,0 +1,35 @@
+{% comment %}
+  Accordion Snippet — sd-accordion.liquid
+  Converted from: src/components/ui/accordion.tsx
+  Valgara Pattern: No Tailwind. styledrop-accordion__* BEM only.
+
+  Usage:
+  {% render 'sd-accordion', items: accordion_items %}
+  Where accordion_items is an array of objects: [{ title: '', content: '' }]
+
+  Or use raw HTML with the BEM classes directly for static content.
+{% endcomment %}
+
+{{ 'styledrop-accordion.css' | asset_url | stylesheet_tag }}
+
+{%- if items -%}
+  <div class="styledrop-accordion" role="list">
+    {%- for item in items -%}
+      <details class="styledrop-accordion__item" {% if item.open %}open{% endif %}>
+        <summary class="styledrop-accordion__trigger" role="listitem">
+          <span class="styledrop-accordion__trigger-text">{{ item.title }}</span>
+          <svg class="styledrop-accordion__chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </summary>
+        <div class="styledrop-accordion__content">
+          <div class="styledrop-accordion__content-inner">
+            {{ item.content }}
+          </div>
+        </div>
+      </details>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

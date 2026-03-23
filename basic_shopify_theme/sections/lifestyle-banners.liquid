@@ -15,53 +15,57 @@
   - Images, text, badges, CTAs all configurable
 {% endcomment %}
 
-<section class="bg-background py-14">
-  <div class="container grid md:grid-cols-2 gap-6">
+{{ 'styledrop-lifestyle-banners.css' | asset_url | stylesheet_tag }}
+
+<section class="styledrop-lifestyle">
+  <div class="container styledrop-lifestyle__grid">
     
     {%- comment -%} Left Banner (Streetwear/Men's) {%- endcomment -%}
-    <a 
+    <a
       href="{{ section.settings.banner_1_link | default: '/collections/all' }}"
-      class="relative rounded-2xl overflow-hidden group cursor-pointer h-[400px] block"
+      class="styledrop-lifestyle__banner styledrop-lifestyle__banner--left"
     >
       {%- comment -%} Background Image {%- endcomment -%}
       {%- if section.settings.banner_1_image != blank -%}
         <img
           src="{{ section.settings.banner_1_image | image_url: width: 800 }}"
           alt="{{ section.settings.banner_1_title }}"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          class="styledrop-lifestyle__banner-img"
+          width="800"
+          height="400"
           loading="lazy"
         />
       {%- else -%}
-        <div class="w-full h-full bg-gray-300"></div>
+        <div class="styledrop-lifestyle__placeholder"></div>
       {%- endif -%}
 
       {%- comment -%} Gradient Overlay {%- endcomment -%}
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+      <div class="styledrop-lifestyle__gradient-overlay"></div>
 
       {%- comment -%} Content - Bottom Left {%- endcomment -%}
-      <div class="absolute bottom-8 left-8">
+      <div class="styledrop-lifestyle__content styledrop-lifestyle__content--bottom-left">
         {%- comment -%} Badge {%- endcomment -%}
         {%- if section.settings.banner_1_badge != blank -%}
-          <span class="inline-block mb-3 px-3 py-1.5 bg-[#F5C800] rounded font-condensed text-[10px] font-extrabold uppercase tracking-[1.4px] text-[#0D0D0D]">
+          <span class="styledrop-lifestyle__badge-yellow">
             {{ section.settings.banner_1_badge }}
           </span>
         {%- endif -%}
 
         {%- comment -%} Eyebrow Text {%- endcomment -%}
         {%- if section.settings.banner_1_eyebrow != blank -%}
-          <p class="font-condensed text-[10px] font-bold tracking-[1.4px] uppercase text-white/60 mb-2">
+          <p class="styledrop-lifestyle__eyebrow">
             {{ section.settings.banner_1_eyebrow }}
           </p>
         {%- endif -%}
 
         {%- comment -%} Title {%- endcomment -%}
-        <h3 class="font-display text-5xl font-normal text-white mb-4" style="letter-spacing: 0.02em;">
+        <h3 class="styledrop-lifestyle__title-left mb-4">
           {{ section.settings.banner_1_title | newline_to_br }}
         </h3>
 
         {%- comment -%} CTA Button {%- endcomment -%}
         {%- if section.settings.banner_1_button_text != blank -%}
-          <span class="px-6 py-2.5 bg-white text-[#0D0D0D] rounded-full font-condensed text-xs font-bold tracking-wider uppercase hover:bg-white/90 transition-colors inline-block">
+          <span class="styledrop-lifestyle__cta">
             {{ section.settings.banner_1_button_text }}
           </span>
         {%- endif -%}
@@ -71,48 +75,50 @@
     {%- comment -%} Right Banner (Comfort Redefined) {%- endcomment -%}
     <a
       href="{{ section.settings.banner_2_link | default: '/collections/all' }}"
-      class="relative rounded-2xl overflow-hidden group cursor-pointer h-[400px] bg-black block"
+      class="styledrop-lifestyle__banner styledrop-lifestyle__banner--right"
     >
       {%- comment -%} Background Image {%- endcomment -%}
       {%- if section.settings.banner_2_image != blank -%}
         <img
           src="{{ section.settings.banner_2_image | image_url: width: 800 }}"
           alt="{{ section.settings.banner_2_title }}"
-          class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500"
+          class="styledrop-lifestyle__banner-img styledrop-lifestyle__banner-img--muted"
+          width="800"
+          height="400"
           loading="lazy"
         />
       {%- else -%}
-        <div class="w-full h-full bg-gray-400"></div>
+        <div class="styledrop-lifestyle__placeholder styledrop-lifestyle__placeholder--right"></div>
       {%- endif -%}
 
       {%- comment -%} Overlay {%- endcomment -%}
-      <div class="absolute inset-0 bg-black/30"></div>
+      <div class="styledrop-lifestyle__overlay"></div>
 
       {%- comment -%} Content - Center {%- endcomment -%}
-      <div class="absolute inset-0 flex flex-col items-center justify-center p-8">
+      <div class="styledrop-lifestyle__content styledrop-lifestyle__content--center">
         {%- comment -%} Badge - Top Left {%- endcomment -%}
         {%- if section.settings.banner_2_badge != blank -%}
           <div class="absolute top-8 left-8">
-            <span class="inline-block px-3 py-1.5 bg-accent rounded font-condensed text-[10px] font-extrabold uppercase tracking-[1.4px] text-white">
+            <span class="styledrop-lifestyle__badge-accent">
               {{ section.settings.banner_2_badge }}
             </span>
           </div>
         {%- endif -%}
 
         {%- comment -%} Center Content {%- endcomment -%}
-        <div class="text-center">
+        <div class="styledrop-lifestyle__center-content">
           {%- comment -%} Eyebrow {%- endcomment -%}
           {%- if section.settings.banner_2_eyebrow != blank -%}
-            <p class="font-condensed text-[10px] font-bold tracking-[1.4px] uppercase text-white/70 mb-2">
+            <p class="styledrop-lifestyle__eyebrow">
               {{ section.settings.banner_2_eyebrow }}
             </p>
           {%- endif -%}
 
           {%- comment -%} Title {%- endcomment -%}
-          <h3 class="font-display text-6xl font-normal text-white mb-2" style="letter-spacing: 0.02em;">
+          <h3 class="styledrop-lifestyle__title-right-main mb-2">
             {{ section.settings.banner_2_title_line1 | default: "COMFORT" }}
           </h3>
-          <h3 class="font-display text-6xl font-normal text-accent mb-6" style="letter-spacing: 0.02em;">
+          <h3 class="styledrop-lifestyle__title-right-accent mb-6">
             {{ section.settings.banner_2_title_line2 | default: "REDEFINED" }}
           </h3>
 

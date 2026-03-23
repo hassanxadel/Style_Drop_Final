@@ -1,0 +1,23 @@
+{% comment %}
+  Label Snippet — sd-label.liquid
+  Converted from: src/components/ui/label.tsx
+  Valgara Pattern: No Tailwind. styledrop-label BEM only.
+
+  Usage:
+  {% render 'sd-label', for_id: 'email-field', text: 'Email address' %}
+
+  Params:
+    for_id:   The "for" attribute (links to input id)
+    text:     Label text (required)
+    required: Boolean — appends required asterisk
+{% endcomment %}
+
+{{ 'styledrop-label.css' | asset_url | stylesheet_tag }}
+
+<label
+  {% if for_id != blank %}for="{{ for_id }}"{% endif %}
+  class="styledrop-label"
+>
+  {{ text }}
+  {%- if required -%}<span class="styledrop-label__required" aria-hidden="true"> *</span>{%- endif -%}
+</label>

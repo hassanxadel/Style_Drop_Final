@@ -1,0 +1,39 @@
+{% comment %}
+  Card Snippet — sd-card.liquid
+  Converted from: src/components/ui/card.tsx
+  Valgara Pattern: No Tailwind. styledrop-card__* BEM only.
+
+  Usage:
+  {% render 'sd-card', title: 'Order Summary', description: 'Review your items', content: 'HTML content here', footer: 'Footer HTML' %}
+
+  Or use the individual classes directly in your Liquid without the snippet:
+  <div class="styledrop-card">
+    <div class="styledrop-card__header">
+      <h3 class="styledrop-card__title">Title</h3>
+      <p class="styledrop-card__description">Description</p>
+    </div>
+    <div class="styledrop-card__content">Content</div>
+    <div class="styledrop-card__footer">Footer</div>
+  </div>
+{% endcomment %}
+
+{{ 'styledrop-card.css' | asset_url | stylesheet_tag }}
+
+<div class="styledrop-card">
+  {%- if title != blank or description != blank -%}
+    <div class="styledrop-card__header">
+      {%- if title != blank -%}
+        <h3 class="styledrop-card__title">{{ title }}</h3>
+      {%- endif -%}
+      {%- if description != blank -%}
+        <p class="styledrop-card__description">{{ description }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  {%- if content != blank -%}
+    <div class="styledrop-card__content">{{ content }}</div>
+  {%- endif -%}
+  {%- if footer != blank -%}
+    <div class="styledrop-card__footer">{{ footer }}</div>
+  {%- endif -%}
+</div>

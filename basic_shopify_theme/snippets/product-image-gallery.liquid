@@ -17,21 +17,25 @@
 {% endcomment %}
 
 {%- comment -%} Image Gallery Container {%- endcomment -%}
-<div class="flex flex-col-reverse md:flex-row gap-3 md:gap-6 mb-8 lg:mb-0">
+{{ 'styledrop-product-image-gallery.css' | asset_url | stylesheet_tag }}
+
+<div class="styledrop-product-gallery">
   
   {%- comment -%} Thumbnails - Row on mobile, Column on desktop {%- endcomment -%}
-  <div class="flex md:flex-col gap-2 md:gap-3 md:w-auto w-full overflow-x-auto pb-1">
+  <div class="styledrop-product-gallery__thumbnails">
     {%- for image in product.images limit: 6 -%}
       <button
         type="button"
-        class="thumbnail-btn rounded-lg overflow-hidden border-2 {% if forloop.first %}border-accent{% else %}border-border{% endif %} w-20 h-24 md:w-16 md:h-20 flex-shrink-0 hover:border-accent transition-colors"
+        class="thumbnail-btn styledrop-product-gallery__thumbnail {% if forloop.first %}styledrop-product-gallery__thumbnail--active{% endif %}"
         data-image-index="{{ forloop.index0 }}"
         aria-label="View image {{ forloop.index }}"
       >
         <img 
           src="{{ image | img_url: '200x' }}" 
           alt="{{ product.title }} - Image {{ forloop.index }}" 
-          class="w-full h-full object-cover"
+          class="styledrop-product-gallery__thumbnail-img"
+          width="200"
+          height="267"
           loading="lazy"
         />
       </button>
@@ -39,31 +43,32 @@
   </div>
 
   {%- comment -%} Main Image Container {%- endcomment -%}
-  <div class="flex-1 relative min-w-0">
-    <div class="main-image-container w-full aspect-[3/4] rounded-lg overflow-hidden bg-muted relative group">
+  <div class="styledrop-product-gallery__main-wrap">
+    <div class="styledrop-product-gallery__main-media">
       
       {%- comment -%} Main Product Image {%- endcomment -%}
       <img
         id="mainProductImage"
         src="{{ product.featured_image | img_url: '1200x' }}"
         alt="{{ product.title }}"
-        class="w-full h-full object-cover"
+        width="1200"
+        height="1600"
       />
       
       {%- comment -%} Badges - Top Left {%- endcomment -%}
-      <div class="absolute top-4 left-4 flex flex-col gap-2 z-10">
+      <div class="styledrop-product-gallery__badges">
         
         {%- comment -%} Best Seller Badge - Check if product has 'bestseller' tag {%- endcomment -%}
         {%- if product.tags contains 'bestseller' or product.tags contains 'best-seller' -%}
-          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-black/90 backdrop-blur rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
-            <span class="inline-block w-1.5 h-1.5 rounded-full bg-white"></span>
+          <span class="styledrop-product-gallery__badge styledrop-product-gallery__badge--bestseller">
+            <span class="styledrop-product-gallery__badge-dot" style="background: #ffffff;"></span>
             BEST SELLER
           </span>
         {%- endif -%}
 
         {%- comment -%} Fast Drop Badge - Check if product has 'fast-drop' tag {%- endcomment -%}
         {%- if product.tags contains 'fast-drop' or product.tags contains 'fastdrop' -%}
-          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#F5C800] rounded-full text-[10px] font-bold text-[#0D0D0D] uppercase tracking-wider">
+          <span class="styledrop-product-gallery__badge styledrop-product-gallery__badge--fast-drop">
             <span>⚡</span>
             FAST DROP
           </span>
@@ -72,8 +77,8 @@
         {%- comment -%} New Badge - Check if product is new (created in last 30 days) {%- endcomment -%}
         {%- assign days_since_creation = 'now' | date: '%s' | minus: product.created_at | date: '%s' | divided_by: 86400 -%}
         {%- if days_since_creation < 30 or product.tags contains 'new' -%}
-          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#0D0D0D] rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
-            <span class="inline-block w-1.5 h-1.5 rounded-full bg-white"></span>
+          <span class="styledrop-product-gallery__badge styledrop-product-gallery__badge--new">
+            <span class="styledrop-product-gallery__badge-dot" style="background: #ffffff;"></span>
             NEW
           </span>
         {%- endif -%}
@@ -82,14 +87,14 @@
       {%- comment -%} Magnifier Icon - Top Right (triggers zoom modal) {%- endcomment -%}
       <button
         type="button"
-        class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md z-10"
+        class="styledrop-product-gallery__zoom"
         aria-label="Zoom image"
         onclick="openImageZoom()"
       >
-        <svg 
-          class="w-5 h-5 text-[#0D0D0D]" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          class="styledrop-product-gallery__zoom-icon"
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <circle cx="11" cy="11" r="8" stroke-width="2"/>
@@ -102,10 +107,10 @@
         {%- comment -%} Previous Image Button {%- endcomment -%}
         <button
           type="button"
-          class="prev-image-btn absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          class="prev-image-btn styledrop-product-gallery__arrow styledrop-product-gallery__arrow--prev"
           aria-label="Previous image"
         >
-          <svg class="w-5 h-5 text-[#0D0D0D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="styledrop-product-gallery__arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
@@ -113,20 +118,20 @@
         {%- comment -%} Next Image Button {%- endcomment -%}
         <button
           type="button"
-          class="next-image-btn absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          class="next-image-btn styledrop-product-gallery__arrow styledrop-product-gallery__arrow--next"
           aria-label="Next image"
         >
-          <svg class="w-5 h-5 text-[#0D0D0D] rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="styledrop-product-gallery__arrow-icon styledrop-product-gallery__arrow-icon--flipped" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
 
         {%- comment -%} Dot Indicators - Bottom Center {%- endcomment -%}
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <div class="styledrop-product-gallery__dots">
           {%- for image in product.images limit: 6 -%}
             <button
               type="button"
-              class="dot-indicator w-2 h-2 rounded-full transition-all {% if forloop.first %}bg-accent w-6{% else %}bg-white/50{% endif %}"
+              class="dot-indicator styledrop-product-gallery__dot {% if forloop.first %}styledrop-product-gallery__dot--active{% endif %}"
               data-image-index="{{ forloop.index0 }}"
               aria-label="Go to image {{ forloop.index }}"
             ></button>
@@ -145,7 +150,8 @@
 <script>
   (function() {
     let currentImageIndex = 0;
-    const productImages = {{ product.images | json }};
+    const productImagesAll = {{ product.images | json }};
+    const productImages = productImagesAll.slice(0, 6);
     
     // Thumbnail click handler
     document.querySelectorAll('.thumbnail-btn').forEach((btn, index) => {
@@ -193,24 +199,14 @@
     function updateActiveStates() {
       // Update thumbnails
       document.querySelectorAll('.thumbnail-btn').forEach((btn, index) => {
-        if (parseInt(btn.dataset.imageIndex) === currentImageIndex) {
-          btn.classList.remove('border-border');
-          btn.classList.add('border-accent');
-        } else {
-          btn.classList.remove('border-accent');
-          btn.classList.add('border-border');
-        }
+        const idx = parseInt(btn.dataset.imageIndex);
+        btn.classList.toggle('styledrop-product-gallery__thumbnail--active', idx === currentImageIndex);
       });
 
       // Update dots
       document.querySelectorAll('.dot-indicator').forEach((dot, index) => {
-        if (parseInt(dot.dataset.imageIndex) === currentImageIndex) {
-          dot.classList.remove('bg-white/50', 'w-2');
-          dot.classList.add('bg-accent', 'w-6');
-        } else {
-          dot.classList.remove('bg-accent', 'w-6');
-          dot.classList.add('bg-white/50', 'w-2');
-        }
+        const idx = parseInt(dot.dataset.imageIndex);
+        dot.classList.toggle('styledrop-product-gallery__dot--active', idx === currentImageIndex);
       });
     }
 

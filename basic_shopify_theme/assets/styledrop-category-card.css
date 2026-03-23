@@ -1,0 +1,65 @@
+/* styledrop-category-card.css
+ * Valgara-isolated stylesheet for CategoryCard
+ * Converted from: src/components/CategoryCard.tsx
+ * All visual rules scoped to .styledrop-category-card__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ */
+
+/* ─── Card base ──────────────────────────────────────────────────────────── */
+.styledrop-category-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+}
+
+/* ─── Grid span modifiers ────────────────────────────────────────────────── */
+/* Default: small (1x1) — inherits grid placement from parent */
+.styledrop-category-card--tall {
+  grid-row: span 2;
+}
+
+.styledrop-category-card--wide {
+  grid-column: span 2;
+}
+
+/* ─── Image ──────────────────────────────────────────────────────────────── */
+.styledrop-category-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.styledrop-category-card:hover .styledrop-category-card__img {
+  transform: scale(1.05);
+}
+
+/* ─── Placeholder ────────────────────────────────────────────────────────── */
+.styledrop-category-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #d1d5db;
+}
+
+/* ─── Gradient overlay ───────────────────────────────────────────────────── */
+.styledrop-category-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13, 13, 13, 0.7) 0%, transparent 60%);
+}
+
+/* ─── Category name ──────────────────────────────────────────────────────── */
+.styledrop-category-card__name {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: #ffffff;
+  letter-spacing: 1px;
+}

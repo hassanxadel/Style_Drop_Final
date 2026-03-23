@@ -1,0 +1,52 @@
+/* Styledrop Cart Drawer (Valgara-style isolated CSS) */
+
+.styledrop-cart-drawer .drawer__inner {
+  background-color: #F5F0EB;
+}
+
+.styledrop-cart-drawer__panel {
+  background-color: #F5F0EB;
+}
+
+.styledrop-cart-drawer .drawer__header {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.styledrop-cart-drawer .cart-items {
+  width: 100%;
+}
+
+.styledrop-cart-drawer .cart-item__image-container {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.styledrop-cart-drawer .styledrop-cart-drawer__qty-btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: none;
+  background-color: rgba(245, 240, 235, 1);
+}
+
+.styledrop-cart-drawer .styledrop-cart-drawer__qty-btn:hover {
+  background-color: rgba(232, 230, 227, 1);
+}
+
+.styledrop-cart-drawer .styledrop-cart-drawer__qty-input {
+  width: 3rem;
+}
+
+.styledrop-cart-drawer .styledrop-cart-drawer__remove-btn {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.styledrop-cart-drawer .styledrop-cart-drawer__remove-text {
+  font-size: 0.875rem;
+}
+

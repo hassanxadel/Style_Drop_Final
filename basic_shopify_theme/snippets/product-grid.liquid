@@ -9,19 +9,22 @@
 {% endcomment %}
 
 {%- assign grid_columns = columns | default: 3 -%}
-
-{%- assign grid_classes = 'grid-cols-2 md:grid-cols-3' -%}
+{%- assign grid_modifier = 'styledrop-product-grid__grid--cols-2-md3' -%}
 {%- if grid_columns == 2 -%}
-  {%- assign grid_classes = 'grid-cols-2 md:grid-cols-2' -%}
+  {%- assign grid_modifier = 'styledrop-product-grid__grid--cols-2-md2' -%}
 {%- elsif grid_columns == 4 -%}
-  {%- assign grid_classes = 'grid-cols-2 md:grid-cols-4' -%}
+  {%- assign grid_modifier = 'styledrop-product-grid__grid--cols-2-md4' -%}
 {%- endif -%}
 
-<div class="grid gap-5 {{ grid_classes }}">
+{{ 'styledrop-product-card.css' | asset_url | stylesheet_tag }}
+
+{{ 'styledrop-product-grid.css' | asset_url | stylesheet_tag }}
+
+<div class="styledrop-product-grid__grid {{ grid_modifier }}">
   {%- for product in products -%}
     {% render 'product-card', product: product %}
   {%- else -%}
-    <p class="col-span-full text-center py-12 text-muted-foreground">
+    <p class="styledrop-product-grid__empty">
       No products found.
     </p>
   {%- endfor -%}

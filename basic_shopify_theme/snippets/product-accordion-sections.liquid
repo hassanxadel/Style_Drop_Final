@@ -16,13 +16,15 @@
 {% endcomment %}
 
 {%- comment -%} Accordion Container {%- endcomment -%}
-<div class="product-accordion">
+{{ 'styledrop-product-accordion.css' | asset_url | stylesheet_tag }}
+
+<div class="styledrop-product-accordion">
   
   {%- comment -%} Section 1: Size Guide {%- endcomment -%}
-  <div class="accordion-item border-b border-border">
+  <div class="styledrop-product-accordion__item">
     <button
       type="button"
-      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      class="accordion-toggle styledrop-product-accordion__toggle"
       data-accordion="size-guide"
       aria-expanded="false"
       aria-controls="size-guide-content"
@@ -30,7 +32,7 @@
       <span>Size Guide</span>
       {%- comment -%} ChevronDown Icon {%- endcomment -%}
       <svg 
-        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        class="accordion-icon styledrop-product-accordion__icon" 
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24"
@@ -40,7 +42,7 @@
     </button>
     <div 
       id="size-guide-content" 
-      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+      class="accordion-content styledrop-product-accordion__content hidden"
       aria-labelledby="size-guide"
     >
       {%- if product.metafields.custom.size_guide != blank -%}
@@ -53,17 +55,17 @@
   </div>
 
   {%- comment -%} Section 2: Shipping Information {%- endcomment -%}
-  <div class="accordion-item border-b border-border">
+  <div class="styledrop-product-accordion__item">
     <button
       type="button"
-      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      class="accordion-toggle styledrop-product-accordion__toggle"
       data-accordion="shipping"
       aria-expanded="false"
       aria-controls="shipping-content"
     >
       <span>Shipping Information</span>
       <svg 
-        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        class="accordion-icon styledrop-product-accordion__icon" 
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24"
@@ -73,7 +75,7 @@
     </button>
     <div 
       id="shipping-content" 
-      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+      class="accordion-content styledrop-product-accordion__content hidden"
     >
       {%- if product.metafields.custom.shipping_info != blank -%}
         {{ product.metafields.custom.shipping_info }}
@@ -86,17 +88,17 @@
   </div>
 
   {%- comment -%} Section 3: Fabric & Care {%- endcomment -%}
-  <div class="accordion-item border-b border-border">
+  <div class="styledrop-product-accordion__item">
     <button
       type="button"
-      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      class="accordion-toggle styledrop-product-accordion__toggle"
       data-accordion="fabric"
       aria-expanded="false"
       aria-controls="fabric-content"
     >
       <span>Fabric & Care</span>
       <svg 
-        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        class="accordion-icon styledrop-product-accordion__icon" 
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24"
@@ -106,7 +108,7 @@
     </button>
     <div 
       id="fabric-content" 
-      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+      class="accordion-content styledrop-product-accordion__content hidden"
     >
       {%- if product.metafields.custom.fabric_care != blank -%}
         {{ product.metafields.custom.fabric_care }}
@@ -124,17 +126,17 @@
   </div>
 
   {%- comment -%} Section 4: FAQ {%- endcomment -%}
-  <div class="accordion-item border-b border-border">
+  <div class="styledrop-product-accordion__item">
     <button
       type="button"
-      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      class="accordion-toggle styledrop-product-accordion__toggle"
       data-accordion="faq"
       aria-expanded="false"
       aria-controls="faq-content"
     >
       <span>FAQ</span>
       <svg 
-        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        class="accordion-icon styledrop-product-accordion__icon" 
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24"
@@ -144,7 +146,7 @@
     </button>
     <div 
       id="faq-content" 
-      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+      class="accordion-content styledrop-product-accordion__content hidden"
     >
       {%- if product.metafields.custom.faq != blank -%}
         {{ product.metafields.custom.faq }}
@@ -164,17 +166,17 @@
   </div>
 
   {%- comment -%} Section 5: Return Policy {%- endcomment -%}
-  <div class="accordion-item border-b border-border">
+  <div class="styledrop-product-accordion__item">
     <button
       type="button"
-      class="accordion-toggle w-full flex items-center justify-between py-4 text-sm font-semibold hover:text-accent transition-colors"
+      class="accordion-toggle styledrop-product-accordion__toggle"
       data-accordion="returns"
       aria-expanded="false"
       aria-controls="returns-content"
     >
       <span>Return Policy</span>
       <svg 
-        class="accordion-icon w-4 h-4 transition-transform duration-200" 
+        class="accordion-icon styledrop-product-accordion__icon" 
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24"
@@ -184,7 +186,7 @@
     </button>
     <div 
       id="returns-content" 
-      class="accordion-content hidden pb-4 text-sm text-muted-foreground leading-relaxed"
+      class="accordion-content styledrop-product-accordion__content hidden"
     >
       {%- if product.metafields.custom.return_policy != blank -%}
         {{ product.metafields.custom.return_policy }}
@@ -224,7 +226,7 @@
             
             otherToggle.setAttribute('aria-expanded', 'false');
             otherContent.classList.add('hidden');
-            otherIcon.classList.remove('rotate-180');
+            otherIcon.classList.remove('styledrop-product-accordion__icon--open');
           }
         });
 
@@ -233,12 +235,12 @@
           // Close
           this.setAttribute('aria-expanded', 'false');
           content.classList.add('hidden');
-          icon.classList.remove('rotate-180');
+        icon.classList.remove('styledrop-product-accordion__icon--open');
         } else {
           // Open
           this.setAttribute('aria-expanded', 'true');
           content.classList.remove('hidden');
-          icon.classList.add('rotate-180');
+        icon.classList.add('styledrop-product-accordion__icon--open');
         }
       });
     });

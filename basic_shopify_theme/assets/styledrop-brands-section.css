@@ -1,0 +1,147 @@
+/* styledrop-brands-section.css
+ * Valgara-isolated stylesheet for BrandsSection
+ * Converted from: src/sections/BrandsSection.tsx
+ * All visual rules scoped to .styledrop-brands__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ */
+
+/* ─── Section shell ──────────────────────────────────────────────────────── */
+.styledrop-brands {
+  background-color: #ffffff;
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.styledrop-brands__container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ─── Section header ─────────────────────────────────────────────────────── */
+.styledrop-brands__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.styledrop-brands__badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #0D0D0D;
+  background-color: #F5C800;
+  border-radius: 9999px;
+  padding: 3px 10px;
+  margin-bottom: 0.5rem;
+}
+
+.styledrop-brands__heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  line-height: 38px;
+  letter-spacing: 2px;
+  color: #0D0D0D;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .styledrop-brands__heading {
+    font-size: 56px;
+    line-height: 50px;
+  }
+}
+
+.styledrop-brands__all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0D0D0D;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-bottom: 0.25rem;
+  transition: opacity 0.2s;
+}
+
+.styledrop-brands__all-link:hover {
+  opacity: 0.7;
+}
+
+/* ─── Horizontal scroll row ──────────────────────────────────────────────── */
+.styledrop-brands__scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.styledrop-brands__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Brand card ─────────────────────────────────────────────────────────── */
+.styledrop-brands__card {
+  flex-shrink: 0;
+  width: 160px;
+  height: 160px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px 16px;
+  text-decoration: none;
+  transition: box-shadow 0.2s;
+}
+
+.styledrop-brands__card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ─── Brand logo circle ──────────────────────────────────────────────────── */
+.styledrop-brands__logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  line-height: 33px;
+  letter-spacing: 2.64px;
+}
+
+.styledrop-brands__logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* ─── Brand name ─────────────────────────────────────────────────────────── */
+.styledrop-brands__name-wrap {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.styledrop-brands__name {
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: #0D0D0D;
+  text-transform: uppercase;
+}

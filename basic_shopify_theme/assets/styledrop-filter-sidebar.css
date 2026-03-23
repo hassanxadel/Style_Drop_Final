@@ -1,0 +1,229 @@
+/* styledrop-filter-sidebar.css
+ * Valgara-isolated stylesheet for FilterSidebar
+ * Converted from: src/components/FilterSidebar.tsx
+ * All visual rules scoped to .styledrop-filter-sidebar__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ */
+
+/* ─── Sidebar shell ──────────────────────────────────────────────────────── */
+.styledrop-filter-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ─── Mobile header row ──────────────────────────────────────────────────── */
+.styledrop-filter-sidebar__mobile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+@media (min-width: 768px) {
+  .styledrop-filter-sidebar__mobile-header {
+    display: none;
+  }
+}
+
+.styledrop-filter-sidebar__mobile-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0D0D0D;
+  margin: 0;
+}
+
+.styledrop-filter-sidebar__close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0D0D0D;
+  transition: background-color 0.15s;
+}
+
+.styledrop-filter-sidebar__close-btn:hover {
+  background-color: #f3f4f6;
+}
+
+/* ─── Filter groups ──────────────────────────────────────────────────────── */
+.styledrop-filter-sidebar__group {
+  padding-bottom: 1.5rem;
+}
+
+.styledrop-filter-sidebar__group--bordered {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1.5rem;
+}
+
+/* ─── Group title / accordion trigger ───────────────────────────────────── */
+.styledrop-filter-sidebar__group-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0D0D0D;
+  margin: 0 0 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.styledrop-filter-sidebar__chevron {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  color: #6b7280;
+}
+
+/* ─── Options list ───────────────────────────────────────────────────────── */
+.styledrop-filter-sidebar__options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.styledrop-filter-sidebar__options--scroll {
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+/* ─── Checkbox label row ─────────────────────────────────────────────────── */
+.styledrop-filter-sidebar__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.styledrop-filter-sidebar__checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1.5px solid #d1d5db;
+  accent-color: #DC2626;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.styledrop-filter-sidebar__label-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  color: #4b5563;
+  transition: color 0.15s;
+}
+
+.styledrop-filter-sidebar__label:hover .styledrop-filter-sidebar__label-text {
+  color: #0D0D0D;
+}
+
+/* ─── Size chips ─────────────────────────────────────────────────────────── */
+.styledrop-filter-sidebar__size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.styledrop-filter-sidebar__size-label {
+  cursor: pointer;
+}
+
+/* Visually hide actual checkbox — accessible */
+.styledrop-filter-sidebar__size-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.styledrop-filter-sidebar__size-btn {
+  display: block;
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  color: #0D0D0D;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.styledrop-filter-sidebar__size-btn:hover {
+  border-color: #0D0D0D;
+}
+
+.styledrop-filter-sidebar__size-input:checked + .styledrop-filter-sidebar__size-btn {
+  background-color: #0D0D0D;
+  color: #ffffff;
+  border-color: #0D0D0D;
+}
+
+/* ─── Color swatches ─────────────────────────────────────────────────────── */
+.styledrop-filter-sidebar__color-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.styledrop-filter-sidebar__color-label {
+  cursor: pointer;
+}
+
+.styledrop-filter-sidebar__color-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.styledrop-filter-sidebar__color-swatch {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.15s;
+  /* Color is set via inline style= — this is intentional: hex values are data, not presentation */
+}
+
+.styledrop-filter-sidebar__color-input:checked + .styledrop-filter-sidebar__color-swatch {
+  border-color: #DC2626;
+}
+
+/* ─── Clear All button ───────────────────────────────────────────────────── */
+.styledrop-filter-sidebar__clear-btn {
+  width: 100%;
+  padding: 0.625rem 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #DC2626;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.15s;
+  margin-top: 0.5rem;
+}
+
+.styledrop-filter-sidebar__clear-btn:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}

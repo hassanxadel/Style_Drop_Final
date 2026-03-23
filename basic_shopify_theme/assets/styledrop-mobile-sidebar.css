@@ -1,0 +1,141 @@
+/* styledrop-mobile-sidebar.css
+ * Valgara-isolated stylesheet for MobileSidebar
+ * Converted from: src/components/MobileSidebar.tsx
+ * All visual rules scoped to .sd-mobile-sidebar__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ *
+ * NOTE: Open/close state classes (sd-sidebar--closed, sd-sidebar-backdrop--hidden)
+ * are defined in styledrop-header.css — they must live there so the header JS
+ * toggle can reference a single CSS source of truth.
+ */
+
+/* ─── Backdrop ───────────────────────────────────────────────────────────── */
+.sd-mobile-sidebar__backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+  transition: opacity 0.3s ease;
+}
+
+/* ─── Sidebar panel ──────────────────────────────────────────────────────── */
+.sd-mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 280px;
+  background-color: #ffffff;
+  z-index: 50;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header row ─────────────────────────────────────────────────────────── */
+.sd-mobile-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ─── Logo ───────────────────────────────────────────────────────────────── */
+.sd-mobile-sidebar__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.sd-mobile-sidebar__logo-img {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+}
+
+.sd-mobile-sidebar__logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: -0.025em;
+  color: #0D0D0D;
+}
+
+/* ─── Close button ───────────────────────────────────────────────────────── */
+.sd-mobile-sidebar__close-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0D0D0D;
+  transition: background-color 0.15s;
+}
+
+.sd-mobile-sidebar__close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ─── Navigation ─────────────────────────────────────────────────────────── */
+.sd-mobile-sidebar__nav {
+  padding: 1.25rem;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.sd-mobile-sidebar__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sd-mobile-sidebar__nav-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: #0D0D0D;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s;
+}
+
+.sd-mobile-sidebar__nav-link:hover {
+  background-color: #f9fafb;
+}
+
+.sd-mobile-sidebar__nav-link--sale {
+  color: #DC2626;
+  background-color: #fef2f2;
+}
+
+.sd-mobile-sidebar__nav-link--sale:hover {
+  background-color: #fee2e2;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+.sd-mobile-sidebar__footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

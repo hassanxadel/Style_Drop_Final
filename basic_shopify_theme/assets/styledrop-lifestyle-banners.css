@@ -1,0 +1,68 @@
+/* Styledrop Lifestyle Banners Section (Valgara-style isolated CSS) */
+
+.styledrop-lifestyle {
+  background-color: var(--sd-background, #F5F0EB);
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.styledrop-lifestyle__grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .styledrop-lifestyle__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.styledrop-lifestyle__badge-yellow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  background-color: #F5C800;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #0D0D0D;
+}
+
+.styledrop-lifestyle__eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.styledrop-lifestyle__title-left {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 1.1;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+}
+
+.styledrop-lifestyle__title-right-main {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 3.75rem;
+  line-height: 1.1;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+}
+
+.styledrop-lifestyle__title-right-accent {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 3.75rem;
+  line-height: 1.1;
+  color: var(--sd-accent, #DC2626);
+  letter-spacing: 0.02em;
+}
+

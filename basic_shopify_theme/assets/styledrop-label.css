@@ -1,0 +1,38 @@
+/* styledrop-label.css
+ * Valgara-isolated styles for sd-label.liquid
+ * Converted from: src/components/ui/label.tsx
+ *
+ * React token map:
+ *   text-sm font-medium leading-none
+ *   peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+ *
+ *   Resolved:
+ *     text-sm       → font-size: 14px
+ *     font-medium   → font-weight: 500
+ *     leading-none  → line-height: 1
+ */
+
+.styledrop-label {
+  display: inline-block;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  color: #0D0D0D;
+  cursor: default;
+  user-select: none;
+}
+
+/* Mirrors peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+   Applied when sibling input is disabled — use :has() */
+.styledrop-label:has(+ input:disabled),
+.styledrop-label:has(+ select:disabled),
+.styledrop-label:has(+ textarea:disabled) {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.styledrop-label__required {
+  color: #DC2626;
+  font-weight: 600;
+}

@@ -1,0 +1,35 @@
+{% comment %}
+  Tooltip Snippet — sd-tooltip.liquid
+  Converted from: src/components/ui/tooltip.tsx (Radix TooltipPrimitive)
+  Valgara Pattern: No Tailwind. styledrop-tooltip__* BEM only.
+
+  Note: Radix Tooltip uses a portal + JS for positioning. In Shopify Liquid,
+  we use a pure CSS hover tooltip — same visual result, zero JS dependency.
+
+  Usage:
+  {% render 'sd-tooltip', trigger: 'Hover me', content: 'Tooltip text', side: 'top' %}
+
+  Params:
+    trigger:  The visible element that triggers the tooltip (HTML string or text)
+    content:  The tooltip text/HTML
+    side:     'top' (default) | 'bottom' | 'left' | 'right'
+    class:    Extra class on the wrapper
+{% endcomment %}
+
+{{ 'styledrop-tooltip.css' | asset_url | stylesheet_tag }}
+
+{%- assign tooltip_side = side | default: 'top' -%}
+
+<span class="styledrop-tooltip__wrap{% if class != blank %} {{ class }}{% endif %}">
+  <span class="styledrop-tooltip__trigger" tabindex="0" aria-describedby="tt-{{ content | handle }}">
+    {{ trigger }}
+  </span>
+  <span
+    class="styledrop-tooltip__content styledrop-tooltip__content--{{ tooltip_side }}"
+    role="tooltip"
+    id="tt-{{ content | handle }}"
+    aria-hidden="true"
+  >
+    {{ content }}
+  </span>
+</span>

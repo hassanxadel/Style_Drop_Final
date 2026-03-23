@@ -1,0 +1,45 @@
+/* Styledrop Product Grid (Valgara-style isolated CSS) */
+
+.styledrop-product-grid__grid {
+  display: grid;
+  gap: 1.25rem; /* ~gap-5 */
+}
+
+.styledrop-product-grid__grid--cols-2-md2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .styledrop-product-grid__grid--cols-2-md2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.styledrop-product-grid__grid--cols-2-md3 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .styledrop-product-grid__grid--cols-2-md3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.styledrop-product-grid__grid--cols-2-md4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .styledrop-product-grid__grid--cols-2-md4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.styledrop-product-grid__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding-top: 3rem; /* ~py-12 */
+  padding-bottom: 3rem;
+  color: var(--sd-muted-foreground);
+}
+

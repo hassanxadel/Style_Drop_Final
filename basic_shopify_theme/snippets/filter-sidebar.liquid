@@ -1,7 +1,7 @@
 {% comment %}
   StyleDrop Filter Sidebar Snippet
   Converted from: src/components/FilterSidebar.tsx
-  
+
   Features:
   - Category filters
   - Brand filters (from vendors)
@@ -9,19 +9,22 @@
   - Size filters
   - Color filters
   - Mobile responsive with close button
-  
+
   Usage:
   {% render 'filter-sidebar', collection: collection %}
 {% endcomment %}
 
-<div class="bg-card rounded-2xl p-6 sticky top-24 space-y-6">
+{{ 'styledrop-filter-sidebar.css' | asset_url | stylesheet_tag }}
+
+<div class="styledrop-filter-sidebar">
+
   {%- comment -%} Mobile Close Button {%- endcomment -%}
-  <div class="flex md:hidden justify-between items-center mb-4 pb-4 border-b border-border">
-    <h3 class="text-lg font-semibold">Filters</h3>
+  <div class="styledrop-filter-sidebar__mobile-header">
+    <h3 class="styledrop-filter-sidebar__mobile-title">Filters</h3>
     <button
       type="button"
-      class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted"
-      onclick="closeMobileFilters()"
+      class="styledrop-filter-sidebar__close-btn"
+      onclick="sdCloseFilterSidebar()"
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -31,26 +34,26 @@
   </div>
 
   {%- comment -%} Categories {%- endcomment -%}
-  <div class="filter-group">
-    <h3 class="font-semibold text-sm mb-3 flex items-center justify-between cursor-pointer" onclick="toggleFilterSection(this)">
+  <div class="styledrop-filter-sidebar__group">
+    <h3 class="styledrop-filter-sidebar__group-title" onclick="sdToggleFilterSection(this)">
       CATEGORY
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="transform transition-transform">
+      <svg class="styledrop-filter-sidebar__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </h3>
-    <div class="filter-options space-y-2">
+    <div class="styledrop-filter-sidebar__options">
       {%- for link in linklists['main-menu'].links -%}
         {%- if link.type == 'collection_link' -%}
-          <label class="flex items-center gap-2 cursor-pointer group">
+          <label class="styledrop-filter-sidebar__label">
             <input
               type="checkbox"
               name="category"
               value="{{ link.object.handle }}"
-              class="w-4 h-4 rounded border-border text-accent focus:ring-accent"
+              class="styledrop-filter-sidebar__checkbox"
               {% if collection.handle == link.object.handle %}checked{% endif %}
-              onchange="applyFilters()"
+              onchange="sdApplyFilters()"
             />
-            <span class="text-sm group-hover:text-foreground transition-colors">
+            <span class="styledrop-filter-sidebar__label-text">
               {{ link.title }} ({{ link.object.products_count }})
             </span>
           </label>
@@ -60,184 +63,129 @@
   </div>
 
   {%- comment -%} Price Range {%- endcomment -%}
-  <div class="filter-group border-t border-border pt-6">
-    <h3 class="font-semibold text-sm mb-3 flex items-center justify-between cursor-pointer" onclick="toggleFilterSection(this)">
+  <div class="styledrop-filter-sidebar__group styledrop-filter-sidebar__group--bordered">
+    <h3 class="styledrop-filter-sidebar__group-title" onclick="sdToggleFilterSection(this)">
       PRICE RANGE
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="transform transition-transform">
+      <svg class="styledrop-filter-sidebar__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </h3>
-    <div class="filter-options space-y-2">
-      <label class="flex items-center gap-2 cursor-pointer group">
-        <input type="checkbox" name="price" value="0-500" class="w-4 h-4 rounded border-border text-accent focus:ring-accent" onchange="applyFilters()" />
-        <span class="text-sm group-hover:text-foreground transition-colors">Under EGP 500</span>
-      </label>
-      <label class="flex items-center gap-2 cursor-pointer group">
-        <input type="checkbox" name="price" value="500-1000" class="w-4 h-4 rounded border-border text-accent focus:ring-accent" onchange="applyFilters()" />
-        <span class="text-sm group-hover:text-foreground transition-colors">EGP 500 - 1,000</span>
-      </label>
-      <label class="flex items-center gap-2 cursor-pointer group">
-        <input type="checkbox" name="price" value="1000-2000" class="w-4 h-4 rounded border-border text-accent focus:ring-accent" onchange="applyFilters()" />
-        <span class="text-sm group-hover:text-foreground transition-colors">EGP 1,000 - 2,000</span>
-      </label>
-      <label class="flex items-center gap-2 cursor-pointer group">
-        <input type="checkbox" name="price" value="2000-5000" class="w-4 h-4 rounded border-border text-accent focus:ring-accent" onchange="applyFilters()" />
-        <span class="text-sm group-hover:text-foreground transition-colors">EGP 2,000 - 5,000</span>
-      </label>
-      <label class="flex items-center gap-2 cursor-pointer group">
-        <input type="checkbox" name="price" value="5000+" class="w-4 h-4 rounded border-border text-accent focus:ring-accent" onchange="applyFilters()" />
-        <span class="text-sm group-hover:text-foreground transition-colors">Over EGP 5,000</span>
-      </label>
+    <div class="styledrop-filter-sidebar__options">
+      {%- assign price_ranges = 'Under EGP 500|0-500,EGP 500 - 1,000|500-1000,EGP 1,000 - 2,000|1000-2000,EGP 2,000 - 5,000|2000-5000,Over EGP 5,000|5000+' | split: ',' -%}
+      {%- for range in price_ranges -%}
+        {%- assign parts = range | split: '|' -%}
+        <label class="styledrop-filter-sidebar__label">
+          <input type="checkbox" name="price" value="{{ parts[1] }}" class="styledrop-filter-sidebar__checkbox" onchange="sdApplyFilters()" />
+          <span class="styledrop-filter-sidebar__label-text">{{ parts[0] }}</span>
+        </label>
+      {%- endfor -%}
     </div>
   </div>
 
   {%- comment -%} Brands {%- endcomment -%}
-  <div class="filter-group border-t border-border pt-6">
-    <h3 class="font-semibold text-sm mb-3 flex items-center justify-between cursor-pointer" onclick="toggleFilterSection(this)">
+  <div class="styledrop-filter-sidebar__group styledrop-filter-sidebar__group--bordered">
+    <h3 class="styledrop-filter-sidebar__group-title" onclick="sdToggleFilterSection(this)">
       BRAND
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="transform transition-transform">
+      <svg class="styledrop-filter-sidebar__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </h3>
-    <div class="filter-options space-y-2 max-h-48 overflow-y-auto">
-      {%- assign all_vendors = '' | split: ',' -%}
+    <div class="styledrop-filter-sidebar__options styledrop-filter-sidebar__options--scroll">
+      {%- assign all_vendors = '' | split: '' -%}
       {%- for product in collection.products -%}
         {%- unless all_vendors contains product.vendor -%}
-          {%- assign all_vendors = all_vendors | push: product.vendor -%}
+          {%- assign all_vendors = all_vendors | append: product.vendor | append: ',' | split: ',' -%}
         {%- endunless -%}
       {%- endfor -%}
-      
       {%- for vendor in all_vendors -%}
-        <label class="flex items-center gap-2 cursor-pointer group">
-          <input type="checkbox" name="brand" value="{{ vendor | handleize }}" class="w-4 h-4 rounded border-border text-accent focus:ring-accent" onchange="applyFilters()" />
-          <span class="text-sm group-hover:text-foreground transition-colors">{{ vendor }}</span>
+        <label class="styledrop-filter-sidebar__label">
+          <input type="checkbox" name="brand" value="{{ vendor | handleize }}" class="styledrop-filter-sidebar__checkbox" onchange="sdApplyFilters()" />
+          <span class="styledrop-filter-sidebar__label-text">{{ vendor }}</span>
         </label>
       {%- endfor -%}
     </div>
   </div>
 
   {%- comment -%} Sizes {%- endcomment -%}
-  <div class="filter-group border-t border-border pt-6">
-    <h3 class="font-semibold text-sm mb-3 flex items-center justify-between cursor-pointer" onclick="toggleFilterSection(this)">
+  <div class="styledrop-filter-sidebar__group styledrop-filter-sidebar__group--bordered">
+    <h3 class="styledrop-filter-sidebar__group-title" onclick="sdToggleFilterSection(this)">
       SIZE
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="transform transition-transform">
+      <svg class="styledrop-filter-sidebar__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </h3>
-    <div class="filter-options flex flex-wrap gap-2">
+    <div class="styledrop-filter-sidebar__size-options">
       {%- assign sizes = 'XS,S,M,L,XL,XXL' | split: ',' -%}
       {%- for size in sizes -%}
-        <label class="cursor-pointer">
-          <input type="checkbox" name="size" value="{{ size }}" class="peer sr-only" onchange="applyFilters()" />
-          <span class="block px-3 py-1.5 border border-border rounded text-sm hover:border-foreground transition-colors peer-checked:bg-primary peer-checked:text-primary-foreground">
-            {{ size }}
-          </span>
+        <label class="styledrop-filter-sidebar__size-label">
+          <input type="checkbox" name="size" value="{{ size }}" class="styledrop-filter-sidebar__size-input" onchange="sdApplyFilters()" />
+          <span class="styledrop-filter-sidebar__size-btn">{{ size }}</span>
         </label>
       {%- endfor -%}
     </div>
   </div>
 
   {%- comment -%} Colors {%- endcomment -%}
-  <div class="filter-group border-t border-border pt-6">
-    <h3 class="font-semibold text-sm mb-3 flex items-center justify-between cursor-pointer" onclick="toggleFilterSection(this)">
+  <div class="styledrop-filter-sidebar__group styledrop-filter-sidebar__group--bordered">
+    <h3 class="styledrop-filter-sidebar__group-title" onclick="sdToggleFilterSection(this)">
       COLOR
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="transform transition-transform">
+      <svg class="styledrop-filter-sidebar__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </h3>
-    <div class="filter-options flex flex-wrap gap-2">
-      <label class="cursor-pointer group">
-        <input type="checkbox" name="color" value="black" class="peer sr-only" onchange="applyFilters()" />
-        <span class="block w-8 h-8 rounded-full bg-[#000000] border-2 border-transparent peer-checked:border-accent transition-all" title="Black"></span>
-      </label>
-      <label class="cursor-pointer group">
-        <input type="checkbox" name="color" value="white" class="peer sr-only" onchange="applyFilters()" />
-        <span class="block w-8 h-8 rounded-full bg-white border-2 border-border peer-checked:border-accent transition-all" title="White"></span>
-      </label>
-      <label class="cursor-pointer group">
-        <input type="checkbox" name="color" value="beige" class="peer sr-only" onchange="applyFilters()" />
-        <span class="block w-8 h-8 rounded-full bg-[#D4C5B9] border-2 border-transparent peer-checked:border-accent transition-all" title="Beige"></span>
-      </label>
-      <label class="cursor-pointer group">
-        <input type="checkbox" name="color" value="brown" class="peer sr-only" onchange="applyFilters()" />
-        <span class="block w-8 h-8 rounded-full bg-[#92400E] border-2 border-transparent peer-checked:border-accent transition-all" title="Brown"></span>
-      </label>
-      <label class="cursor-pointer group">
-        <input type="checkbox" name="color" value="blue" class="peer sr-only" onchange="applyFilters()" />
-        <span class="block w-8 h-8 rounded-full bg-[#2563EB] border-2 border-transparent peer-checked:border-accent transition-all" title="Blue"></span>
-      </label>
-      <label class="cursor-pointer group">
-        <input type="checkbox" name="color" value="green" class="peer sr-only" onchange="applyFilters()" />
-        <span class="block w-8 h-8 rounded-full bg-[#059669] border-2 border-transparent peer-checked:border-accent transition-all" title="Green"></span>
-      </label>
-      <label class="cursor-pointer group">
-        <input type="checkbox" name="color" value="red" class="peer sr-only" onchange="applyFilters()" />
-        <span class="block w-8 h-8 rounded-full bg-[#DC2626] border-2 border-transparent peer-checked:border-accent transition-all" title="Red"></span>
-      </label>
+    <div class="styledrop-filter-sidebar__color-options">
+      {%- assign color_swatches = 'black:#000000,white:#FFFFFF,beige:#D4C5B9,brown:#92400E,blue:#2563EB,green:#059669,red:#DC2626' | split: ',' -%}
+      {%- for swatch in color_swatches -%}
+        {%- assign swatch_parts = swatch | split: ':' -%}
+        <label class="styledrop-filter-sidebar__color-label">
+          <input type="checkbox" name="color" value="{{ swatch_parts[0] }}" class="styledrop-filter-sidebar__color-input" onchange="sdApplyFilters()" />
+          <span
+            class="styledrop-filter-sidebar__color-swatch"
+            style="background-color: {{ swatch_parts[1] }};"
+            title="{{ swatch_parts[0] | capitalize }}"
+          ></span>
+        </label>
+      {%- endfor -%}
     </div>
   </div>
 
-  {%- comment -%} Clear All Button {%- endcomment -%}
+  {%- comment -%} Clear All {%- endcomment -%}
   <button
     type="button"
-    class="w-full py-2.5 text-sm font-semibold text-accent hover:underline"
-    onclick="clearAllFilters()"
+    class="styledrop-filter-sidebar__clear-btn"
+    onclick="sdClearAllFilters()"
   >
     Clear All Filters
   </button>
 </div>
 
 <script>
-function toggleFilterSection(element) {
-  const svg = element.querySelector('svg');
-  const options = element.nextElementSibling;
-  
-  if (options.style.display === 'none') {
-    options.style.display = 'block';
-    svg.style.transform = 'rotate(0deg)';
-  } else {
-    options.style.display = 'none';
-    svg.style.transform = 'rotate(-90deg)';
-  }
+function sdToggleFilterSection(titleEl) {
+  const options = titleEl.nextElementSibling;
+  const chevron = titleEl.querySelector('.styledrop-filter-sidebar__chevron');
+  const isHidden = options.style.display === 'none';
+  options.style.display = isHidden ? '' : 'none';
+  chevron.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(-90deg)';
 }
 
-function applyFilters() {
-  // Get all checked filters
-  const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(el => el.value);
-  const prices = Array.from(document.querySelectorAll('input[name="price"]:checked')).map(el => el.value);
-  const brands = Array.from(document.querySelectorAll('input[name="brand"]:checked')).map(el => el.value);
-  const sizes = Array.from(document.querySelectorAll('input[name="size"]:checked')).map(el => el.value);
-  const colors = Array.from(document.querySelectorAll('input[name="color"]:checked')).map(el => el.value);
-  
-  // Build URL parameters
+function sdApplyFilters() {
   const params = new URLSearchParams(window.location.search);
-  
-  if (categories.length) params.set('category', categories.join(','));
-  else params.delete('category');
-  
-  if (prices.length) params.set('price', prices.join(','));
-  else params.delete('price');
-  
-  if (brands.length) params.set('brand', brands.join(','));
-  else params.delete('brand');
-  
-  if (sizes.length) params.set('size', sizes.join(','));
-  else params.delete('size');
-  
-  if (colors.length) params.set('color', colors.join(','));
-  else params.delete('color');
-  
-  // Reload page with filters
+  ['category', 'price', 'brand', 'size', 'color'].forEach(function(name) {
+    const vals = Array.from(document.querySelectorAll('.styledrop-filter-sidebar input[name="' + name + '"]:checked')).map(function(el) { return el.value; });
+    if (vals.length) params.set(name, vals.join(','));
+    else params.delete(name);
+  });
   window.location.search = params.toString();
 }
 
-function clearAllFilters() {
-  document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(el => el.checked = false);
-  applyFilters();
+function sdClearAllFilters() {
+  document.querySelectorAll('.styledrop-filter-sidebar input[type="checkbox"]').forEach(function(el) { el.checked = false; });
+  sdApplyFilters();
 }
 
-function closeMobileFilters() {
-  const sidebar = document.querySelector('.filter-sidebar-mobile');
-  if (sidebar) sidebar.classList.add('hidden');
+// Valgara-compliant close: uses sd-sidebar--closed BEM modifier, not 'hidden'
+function sdCloseFilterSidebar() {
+  const sidebar = document.querySelector('.styledrop-filter-sidebar-mobile');
+  if (sidebar) sidebar.classList.add('sd-sidebar--closed');
 }
 </script>

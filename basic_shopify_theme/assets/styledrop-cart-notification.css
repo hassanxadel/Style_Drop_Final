@@ -1,0 +1,58 @@
+/* Styledrop Cart Notification (Valgara-style isolated CSS) */
+
+.styledrop-cart-notification__wrapper {
+  width: 100%;
+}
+
+.styledrop-cart-notification__panel {
+  border-radius: 1.5rem; /* ~rounded-2xl */
+  overflow: hidden;
+}
+
+.styledrop-cart-notification__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.styledrop-cart-notification__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 800;
+}
+
+.styledrop-cart-notification__close {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+}
+
+.styledrop-cart-notification__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.styledrop-cart-notification__product {
+  margin-top: 1rem;
+}
+
+.styledrop-cart-notification-product__item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.styledrop-cart-notification-product__image {
+  flex-shrink: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.styledrop-cart-notification-product__name {
+  font-weight: 800;
+  line-height: 1.2;
+}
+

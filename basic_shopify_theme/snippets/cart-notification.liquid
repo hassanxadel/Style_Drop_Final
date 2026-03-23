@@ -10,23 +10,25 @@
 {% endcomment %}
 
 <cart-notification>
-  <div class="cart-notification-wrapper{% if desktop_menu_type != 'drawer' %} page-width{% endif %}">
+  {{ 'styledrop-cart-notification.css' | asset_url | stylesheet_tag }}
+
+  <div class="cart-notification-wrapper{% if desktop_menu_type != 'drawer' %} page-width{% endif %} styledrop-cart-notification__wrapper">
     <div
       id="cart-notification"
-      class="cart-notification focus-inset{% if color_scheme %} color-{{ color_scheme }} gradient{% endif %}"
+      class="cart-notification focus-inset{% if color_scheme %} color-{{ color_scheme }} gradient{% endif %} styledrop-cart-notification__panel"
       aria-modal="true"
       aria-label="{{ 'general.cart.item_added' | t }}"
       role="dialog"
       tabindex="-1"
     >
-      <div class="cart-notification__header">
-        <h2 class="cart-notification__heading caption-large text-body">
+      <div class="cart-notification__header styledrop-cart-notification__header">
+        <h2 class="cart-notification__heading caption-large text-body styledrop-cart-notification__heading">
           {{- 'icon-checkmark.svg' | inline_asset_content -}}
           {{ 'general.cart.item_added' | t }}
         </h2>
         <button
           type="button"
-          class="cart-notification__close modal__close-button link link--text focus-inset"
+          class="cart-notification__close modal__close-button link link--text focus-inset styledrop-cart-notification__close"
           aria-label="{{ 'accessibility.close' | t }}"
         >
           <span class="svg-wrapper">
@@ -35,7 +37,7 @@
         </button>
       </div>
       <div id="cart-notification-product" class="cart-notification-product"></div>
-      <div class="cart-notification__links">
+      <div class="cart-notification__links styledrop-cart-notification__links">
         <a
           href="{{ routes.cart_url }}"
           id="cart-notification-button"

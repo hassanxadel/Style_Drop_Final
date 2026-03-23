@@ -1,0 +1,49 @@
+/* styledrop-skeleton.css
+ * Valgara-isolated styles for sd-skeleton.liquid
+ * Converted from: src/components/ui/skeleton.tsx
+ *
+ * React token map:
+ *   animate-pulse rounded-md bg-muted
+ *   bg-muted = #F5F0EB (StyleDrop muted background)
+ *   rounded-md = border-radius: 6px
+ */
+
+@keyframes sd-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.styledrop-skeleton {
+  display: block;
+  background-color: #F5F0EB;
+  border-radius: 6px;
+  animation: sd-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ─── Text variant ────────────────────────────────────────────────────────── */
+.styledrop-skeleton--text {
+  height: 16px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}
+.styledrop-skeleton--text:last-child { margin-bottom: 0; }
+
+/* ─── Avatar variant ──────────────────────────────────────────────────────── */
+.styledrop-skeleton--avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+}
+
+/* ─── Card variant container ──────────────────────────────────────────────── */
+.styledrop-skeleton--card {
+  background: transparent;
+  animation: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}

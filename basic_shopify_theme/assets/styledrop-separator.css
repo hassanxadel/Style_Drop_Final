@@ -1,0 +1,29 @@
+/* styledrop-separator.css
+ * Valgara-isolated styles for sd-separator.liquid
+ * Converted from: src/components/ui/separator.tsx
+ *
+ * React token map:
+ *   shrink-0 bg-border
+ *   horizontal: h-[1px] w-full
+ *   vertical:   h-full w-[1px]
+ *
+ *   bg-border = #e5e7eb
+ */
+
+.styledrop-separator {
+  flex-shrink: 0;
+  background-color: #e5e7eb;
+}
+
+.styledrop-separator--horizontal {
+  height: 1px;
+  width: 100%;
+  display: block;
+}
+
+.styledrop-separator--vertical {
+  height: 100%;
+  width: 1px;
+  display: inline-block;
+  align-self: stretch;
+}

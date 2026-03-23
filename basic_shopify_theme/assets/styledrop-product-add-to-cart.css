@@ -1,0 +1,229 @@
+/* styledrop-product-add-to-cart.css
+ * Valgara-isolated stylesheet for ProductDetails Add-to-Cart zone
+ * Converted from: src/components/ProductDetails.tsx (lines 319-377)
+ * All visual rules scoped to .styledrop-product-purchase__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ */
+
+/* ─── Form shell ─────────────────────────────────────────────────────────── */
+.styledrop-product-purchase__form {
+  margin: 0;
+}
+
+/* ─── Qty + actions row ──────────────────────────────────────────────────── */
+.styledrop-product-purchase__qty-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Quantity selector ──────────────────────────────────────────────────── */
+.styledrop-product-purchase__qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  flex: none;
+  width: 40%;
+  max-width: 180px;
+}
+
+.styledrop-product-purchase__qty-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0D0D0D;
+  padding: 0;
+  transition: background-color 0.15s;
+}
+
+.styledrop-product-purchase__qty-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.styledrop-product-purchase__qty-icon {
+  width: 10px;
+  height: 10px;
+  display: block;
+}
+
+.styledrop-product-purchase__qty-input {
+  min-width: 2rem;
+  text-align: center;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  outline: none;
+  -moz-appearance: textfield;
+  appearance: none;
+  color: #0D0D0D;
+}
+
+.styledrop-product-purchase__qty-input::-webkit-outer-spin-button,
+.styledrop-product-purchase__qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ─── Actions container ──────────────────────────────────────────────────── */
+.styledrop-product-purchase__actions {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ─── Add to Cart button ─────────────────────────────────────────────────── */
+.styledrop-product-purchase__add-to-cart {
+  flex: 1;
+  height: 48px;
+  background-color: #DC2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.15s, opacity 0.15s;
+}
+
+.styledrop-product-purchase__add-to-cart:hover {
+  background-color: #b91c1c;
+}
+
+.styledrop-product-purchase__add-to-cart--sold-out {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #9ca3af;
+}
+
+.styledrop-product-purchase__add-to-cart--sold-out:hover {
+  background-color: #9ca3af;
+}
+
+.styledrop-product-purchase__cart-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ─── Wishlist button ────────────────────────────────────────────────────── */
+.styledrop-product-purchase__wishlist {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.styledrop-product-purchase__wishlist:hover {
+  border-color: #0D0D0D;
+  color: #0D0D0D;
+}
+
+/* Valgara-compliant: this modifier is toggled by JS instead of classList.add('text-accent') */
+.styledrop-product-purchase__wishlist--active {
+  border-color: #DC2626;
+  color: #DC2626;
+}
+
+.styledrop-product-purchase__wishlist-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* ─── Size predictor trigger ─────────────────────────────────────────────── */
+.styledrop-product-purchase__size-predictor-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #DC2626;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  margin-bottom: 1rem;
+  transition: opacity 0.15s;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.styledrop-product-purchase__size-predictor-trigger:hover {
+  opacity: 0.75;
+}
+
+.styledrop-product-purchase__size-predictor-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ─── Feature cards grid ─────────────────────────────────────────────────── */
+.styledrop-product-purchase__features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.styledrop-product-purchase__feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 0.75rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.styledrop-product-purchase__feature-icon {
+  width: 18px;
+  height: 18px;
+  color: #DC2626;
+  display: block;
+  flex-shrink: 0;
+}
+
+.styledrop-product-purchase__feature-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #4b5563;
+}

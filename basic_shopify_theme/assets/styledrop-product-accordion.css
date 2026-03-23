@@ -1,0 +1,42 @@
+/* Styledrop Product Accordion (Valgara-style isolated CSS) */
+
+.styledrop-product-accordion__item {
+  border-bottom: 1px solid var(--sd-border);
+}
+
+.styledrop-product-accordion__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0; /* ~py-4 */
+  font-size: 0.875rem; /* ~text-sm */
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--sd-black);
+  transition: color 0.2s ease;
+  background: transparent;
+  border: none;
+}
+
+.styledrop-product-accordion__toggle:hover {
+  color: var(--sd-accent);
+}
+
+.styledrop-product-accordion__icon {
+  width: 1rem; /* ~w-4 */
+  height: 1rem; /* ~h-4 */
+  transition: transform 0.2s ease;
+}
+
+.styledrop-product-accordion__icon--open {
+  transform: rotate(180deg);
+}
+
+.styledrop-product-accordion__content {
+  padding-bottom: 1rem; /* ~pb-4 */
+  font-size: 0.875rem; /* ~text-sm */
+  color: var(--sd-muted-foreground);
+  line-height: 1.6;
+}
+

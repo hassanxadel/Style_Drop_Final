@@ -1,0 +1,73 @@
+/* styledrop-select.css
+ * Valgara-isolated styles for sd-select.liquid
+ * Converted from: src/components/ui/select.tsx (Radix SelectPrimitive.Trigger)
+ *
+ * React token map (SelectTrigger):
+ *   flex h-10 w-full items-center justify-between rounded-md border border-input
+ *   bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground
+ *   focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
+ *   disabled:cursor-not-allowed disabled:opacity-50
+ *   [&>span]:line-clamp-1
+ *
+ *   ChevronDown: h-4 w-4 opacity-50 → 16px × 16px; opacity: 0.5
+ */
+
+.styledrop-select__wrap {
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+}
+
+.styledrop-select {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  padding: 0.5rem 2.5rem 0.5rem 0.75rem;  /* right padding for chevron */
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  color: #0D0D0D;
+  box-sizing: border-box;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.styledrop-select:focus,
+.styledrop-select:focus-visible {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+}
+
+.styledrop-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  background-color: #f9fafb;
+}
+
+.styledrop-select option {
+  color: #0D0D0D;
+  background-color: #ffffff;
+}
+
+.styledrop-select option:disabled {
+  color: #9ca3af;
+}
+
+/* ─── ChevronDown overlay (mirrors [&>SelectPrimitive.Icon]) ─────────────── */
+.styledrop-select__chevron {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+}

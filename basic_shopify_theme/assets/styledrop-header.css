@@ -1,0 +1,199 @@
+/* styledrop-header.css
+ * Valgara-isolated stylesheet for Header
+ * Converted from: src/components/Header.tsx
+ * All visual rules scoped to .styledrop-header__* BEM classes.
+ * No Tailwind utilities. No Dawn defaults.
+ */
+
+/* ─── Header shell ───────────────────────────────────────────────────────── */
+.styledrop-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(13, 13, 13, 0.06);
+}
+
+/* ─── Promo banner ───────────────────────────────────────────────────────── */
+.styledrop-header__promo {
+  background-color: #0D0D0D;
+  overflow: hidden;
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.styledrop-header__promo-text {
+  display: flex;
+  gap: 3rem;
+  white-space: nowrap;
+  animation: sd-marquee 30s linear infinite;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.styledrop-header__promo-text span {
+  flex-shrink: 0;
+}
+
+@keyframes sd-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── Main nav bar ───────────────────────────────────────────────────────── */
+.styledrop-header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ─── Logo ───────────────────────────────────────────────────────────────── */
+.styledrop-header__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.styledrop-header__logo:hover {
+  opacity: 0.9;
+}
+
+.styledrop-header__logo-img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+.styledrop-header__logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: -0.025em;
+  color: #0D0D0D;
+}
+
+/* ─── Desktop nav list ───────────────────────────────────────────────────── */
+.styledrop-header__nav-list {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .styledrop-header__nav-list {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.styledrop-header__nav-link {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.52px;
+  color: #0D0D0D;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.styledrop-header__nav-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.styledrop-header__nav-link--active {
+  color: #DC2626;
+  font-weight: 600;
+}
+
+/* ─── Action icons container ─────────────────────────────────────────────── */
+.styledrop-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ─── Individual action button / link ────────────────────────────────────── */
+.styledrop-header__action-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #0D0D0D;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.styledrop-header__action-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Desktop-only buttons (wishlist, account) */
+.styledrop-header__action-btn--desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .styledrop-header__action-btn--desktop {
+    display: flex;
+  }
+}
+
+/* Mobile-only button (hamburger) */
+.styledrop-header__action-btn--mobile {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .styledrop-header__action-btn--mobile {
+    display: none;
+  }
+}
+
+/* ─── Cart wrapper (position context for badge) ──────────────────────────── */
+.styledrop-header__cart-wrap {
+  position: relative;
+}
+
+/* ─── Cart count badge ───────────────────────────────────────────────────── */
+.styledrop-header__cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #DC2626;
+  color: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Mobile sidebar BEM state classes (used by JS toggle) ──────────────── */
+/* These replace the Tailwind -translate-x-full / pointer-events-none pattern */
+.sd-sidebar--closed {
+  transform: translateX(-100%);
+}
+
+.sd-sidebar-backdrop--hidden {
+  opacity: 0;
+  pointer-events: none;
+}

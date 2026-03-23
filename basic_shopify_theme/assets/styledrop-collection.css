@@ -1,0 +1,38 @@
+/* Styledrop Collection Template (Valgara-style isolated CSS) */
+
+.styledrop-collection {
+  min-height: 100vh;
+}
+
+.styledrop-collection__layout {
+  display: flex;
+  gap: 2rem; /* ~gap-8 */
+}
+
+.styledrop-collection__sidebar {
+  width: 16rem; /* ~w-64 */
+  flex: 0 0 auto;
+}
+
+.styledrop-collection__products {
+  flex: 1 1 auto;
+}
+
+.styledrop-collection__mobile-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.styledrop-collection__mobile-panel {
+  width: 100%;
+  max-width: 24rem;
+  background-color: #ffffff;
+  overflow-y: auto;
+}
+
+.styledrop-collection__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+

@@ -1,0 +1,36 @@
+/* styledrop-progress.css
+ * Valgara-isolated styles for sd-progress.liquid
+ * Converted from: src/components/ui/progress.tsx (Radix ProgressPrimitive)
+ *
+ * React token map:
+ *   Root:      relative h-4 w-full overflow-hidden rounded-full bg-secondary
+ *     → position: relative; height: 16px; width: 100%; overflow: hidden; border-radius: 9999px; bg: #F5F0EB
+ *   Indicator: h-full w-full flex-1 bg-primary transition-all
+ *     → height: 100%; width: 100%; background: #0D0D0D; transition: transform; transform: translateX(-N%)
+ */
+
+.styledrop-progress {
+  position: relative;
+  height: 16px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 9999px;
+  background-color: #F5F0EB;
+}
+
+.styledrop-progress__indicator {
+  height: 100%;
+  width: 100%;
+  background-color: #0D0D0D;
+  transition: transform 0.4s ease;
+  border-radius: 9999px;
+}
+
+/* ─── Variant: accent (for cart free-shipping progress) ──────────────────── */
+.styledrop-progress--accent .styledrop-progress__indicator {
+  background-color: #DC2626;
+}
+
+/* ─── Size variants ───────────────────────────────────────────────────────── */
+.styledrop-progress--sm { height: 8px; }
+.styledrop-progress--xs { height: 4px; }

@@ -1,0 +1,100 @@
+/* styledrop-tooltip.css
+ * Valgara-isolated styles for sd-tooltip.liquid
+ * Converted from: src/components/ui/tooltip.tsx (Radix TooltipPrimitive.Content)
+ *
+ * React token map (TooltipContent):
+ *   z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground
+ *   shadow-md animate-in fade-in-0 zoom-in-95
+ *   data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+ *   sideOffset=4
+ *
+ *   Resolved:
+ *     z-50         → z-index: 50
+ *     rounded-md   → border-radius: 6px
+ *     bg-popover   → background: #0D0D0D
+ *     px-3 py-1.5  → padding: 6px 12px
+ *     text-sm      → font-size: 14px
+ *     shadow-md    → box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1)
+ *     sideOffset=4 → 4px gap
+ */
+
+/* ─── Wrapper (position context) ─────────────────────────────────────────── */
+.styledrop-tooltip__wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ─── Trigger ─────────────────────────────────────────────────────────────── */
+.styledrop-tooltip__trigger {
+  cursor: default;
+}
+
+/* ─── Content (hidden by default) ────────────────────────────────────────── */
+.styledrop-tooltip__content {
+  position: absolute;
+  z-index: 50;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #0D0D0D;
+  padding: 6px 12px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  color: #ffffff;
+  white-space: nowrap;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+
+  /* Hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform-origin: center;
+  transform: scale(0.95);
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+}
+
+/* ─── Show on hover and keyboard focus ───────────────────────────────────── */
+.styledrop-tooltip__wrap:hover .styledrop-tooltip__content,
+.styledrop-tooltip__trigger:focus-visible + .styledrop-tooltip__content {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+/* ─── Side positions ──────────────────────────────────────────────────────── */
+.styledrop-tooltip__content--top {
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+}
+.styledrop-tooltip__wrap:hover .styledrop-tooltip__content--top {
+  transform: translateX(-50%) scale(1);
+}
+
+.styledrop-tooltip__content--bottom {
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+}
+.styledrop-tooltip__wrap:hover .styledrop-tooltip__content--bottom {
+  transform: translateX(-50%) scale(1);
+}
+
+.styledrop-tooltip__content--left {
+  right: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%) scale(0.95);
+}
+.styledrop-tooltip__wrap:hover .styledrop-tooltip__content--left {
+  transform: translateY(-50%) scale(1);
+}
+
+.styledrop-tooltip__content--right {
+  left: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%) scale(0.95);
+}
+.styledrop-tooltip__wrap:hover .styledrop-tooltip__content--right {
+  transform: translateY(-50%) scale(1);
+}

@@ -1,0 +1,56 @@
+{% comment %}
+  Select Snippet — sd-select.liquid
+  Converted from: src/components/ui/select.tsx (Radix SelectPrimitive)
+  Valgara Pattern: No Tailwind. styledrop-select__* BEM only.
+
+  Note: Radix SelectPrimitive.Root creates a custom dropdown portal.
+  In Shopify Liquid, we use a custom-styled native <select> — same visual result,
+  no JavaScript dependency, fully accessible by default.
+
+  Usage:
+  {% render 'sd-select', name: 'size', id: 'size-select', options: size_options, selected: selected_size, placeholder: 'Select size' %}
+
+  Params:
+    name:        Select name attribute
+    id:          Select id attribute
+    options:     Array of objects with { value, label } OR array of strings
+    selected:    Currently selected value
+    placeholder: Placeholder option text (renders as first disabled option)
+    disabled:    Boolean
+    required:    Boolean
+    class:       Extra class
+{% endcomment %}
+
+{{ 'styledrop-select.css' | asset_url | stylesheet_tag }}
+
+<div class="styledrop-select__wrap">
+  <select
+    {% if name != blank %}name="{{ name }}"{% endif %}
+    {% if id != blank %}id="{{ id }}"{% endif %}
+    class="styledrop-select{% if class != blank %} {{ class }}{% endif %}"
+    {% if disabled %}disabled{% endif %}
+    {% if required %}required{% endif %}
+  >
+    {%- if placeholder != blank -%}
+      <option value="" disabled {% unless selected %}selected{% endunless %}>
+        {{ placeholder }}
+      </option>
+    {%- endif -%}
+    {%- for option in options -%}
+      {%- if option.value != blank -%}
+        <option value="{{ option.value }}"{% if option.value == selected %} selected{% endif %}>
+          {{ option.label | default: option.value }}
+        </option>
+      {%- else -%}
+        <option value="{{ option }}"{% if option == selected %} selected{% endif %}>
+          {{ option }}
+        </option>
+      {%- endif -%}
+    {%- endfor -%}
+  </select>
+  <span class="styledrop-select__chevron" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </span>
+</div>

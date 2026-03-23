@@ -1,0 +1,53 @@
+/* styledrop-breadcrumb.css
+ * Valgara-isolated stylesheet for breadcrumb-product.liquid
+ * Converted from: src/pages/ProductDetails.tsx (lines 73-84)
+ */
+
+.styledrop-breadcrumb__bar {
+  background-color: #F5F0EB;
+  border-bottom: 1px solid rgba(13, 13, 13, 0.1);
+  padding: 1rem 0;
+}
+
+.styledrop-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
+  color: #6b7280;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.styledrop-breadcrumb__chevron {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: #9ca3af;
+}
+
+.styledrop-breadcrumb__link {
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.styledrop-breadcrumb__link:hover {
+  color: #0D0D0D;
+}
+
+.styledrop-breadcrumb__sep {
+  color: #d1d5db;
+  user-select: none;
+}
+
+.styledrop-breadcrumb__current {
+  color: #0D0D0D;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}

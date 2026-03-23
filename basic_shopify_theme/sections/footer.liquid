@@ -15,15 +15,17 @@
   - 3 link columns (Shop, Support, Quick Links)
 {% endcomment %}
 
-<footer class="bg-primary text-primary-foreground py-12">
+{{ 'styledrop-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="styledrop-footer">
   <div class="container">
     {%- comment -%} Main Footer Content {%- endcomment -%}
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div class="styledrop-footer__grid">
       
       {%- comment -%} Brand Column {%- endcomment -%}
       <div>
         {%- comment -%} Logo {%- endcomment -%}
-        <a href="{{ routes.root_url }}" class="inline-block mb-4">
+        <a href="{{ routes.root_url }}" class="styledrop-footer__logo-link">
           {%- if section.settings.footer_logo != blank -%}
             <img 
               src="{{ section.settings.footer_logo | image_url: width: 150 }}" 
@@ -41,7 +43,7 @@
 
         {%- comment -%} Brand Description {%- endcomment -%}
         {%- if section.settings.brand_description != blank -%}
-          <p class="text-xs text-primary-foreground/60 leading-relaxed">
+          <p class="styledrop-footer__brand-text">
             {{ section.settings.brand_description }}
           </p>
         {%- endif -%}
@@ -50,15 +52,15 @@
       {%- comment -%} Shop Column {%- endcomment -%}
       {%- if section.settings.menu_shop != blank -%}
         <div>
-          <h4 class="text-sm font-semibold mb-4">
+          <h4 class="styledrop-footer__column-title">
             {{ section.settings.menu_shop_title | default: "Shop" }}
           </h4>
-          <ul class="space-y-2">
+          <ul class="styledrop-footer__col-links">
             {%- for link in linklists[section.settings.menu_shop].links -%}
               <li>
                 <a
                   href="{{ link.url }}"
-                  class="text-xs text-primary-foreground/60 hover:text-accent transition-colors"
+                  class="styledrop-footer__link"
                 >
                   {{ link.title }}
                 </a>
@@ -71,15 +73,15 @@
       {%- comment -%} Support Column {%- endcomment -%}
       {%- if section.settings.menu_support != blank -%}
         <div>
-          <h4 class="text-sm font-semibold mb-4">
+          <h4 class="styledrop-footer__column-title">
             {{ section.settings.menu_support_title | default: "Support" }}
           </h4>
-          <ul class="space-y-2">
+          <ul class="styledrop-footer__col-links">
             {%- for link in linklists[section.settings.menu_support].links -%}
               <li>
                 <a
                   href="{{ link.url }}"
-                  class="text-xs text-primary-foreground/60 hover:text-accent transition-colors"
+                  class="styledrop-footer__link"
                 >
                   {{ link.title }}
                 </a>
@@ -92,15 +94,15 @@
       {%- comment -%} Quick Links Column {%- endcomment -%}
       {%- if section.settings.menu_quick != blank -%}
         <div>
-          <h4 class="text-sm font-semibold mb-4">
+          <h4 class="styledrop-footer__column-title">
             {{ section.settings.menu_quick_title | default: "Quick Links" }}
           </h4>
-          <ul class="space-y-2">
+          <ul class="styledrop-footer__col-links">
             {%- for link in linklists[section.settings.menu_quick].links -%}
               <li>
                 <a
                   href="{{ link.url }}"
-                  class="text-xs text-primary-foreground/60 hover:text-accent transition-colors"
+                  class="styledrop-footer__link"
                 >
                   {{ link.title }}
                 </a>
@@ -112,8 +114,8 @@
     </div>
 
     {%- comment -%} Footer Bottom - Copyright {%- endcomment -%}
-    <div class="mt-10 pt-6 border-t border-primary-foreground/10">
-      <p class="text-xs text-primary-foreground/40 text-center">
+    <div class="styledrop-footer__bottom">
+      <p>
         {%- if section.settings.copyright_text != blank -%}
           {{ section.settings.copyright_text }}
         {%- else -%}

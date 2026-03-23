@@ -1,0 +1,22 @@
+/* Styledrop Main Collection Product Grid (Valgara-style isolated CSS) */
+
+.styledrop-main-collection-product-grid {
+  /* no-op baseline: keep Dawn spacing/behavior */
+}
+
+.styledrop-main-collection-product-grid__filters {
+  /* optional hook for isolated filter styling */
+}
+
+.styledrop-main-collection-product-grid__grid-container {
+  /* optional hook for isolated grid styling */
+}
+
+.styledrop-main-collection-product-grid__grid {
+  /* optional hook for isolated grid styling */
+}
+
+.styledrop-main-collection-product-grid__empty-state {
+  text-align: center;
+}
+

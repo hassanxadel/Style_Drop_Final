@@ -1,5 +1,7 @@
+{%- comment -%} VALGARA GUARD: Dawn section retained. Real product loop (line ~121) uses Valgara snippets/product-card. Placeholder path below rerouted from card-product → product-card per Handover Section 4.3. {%- endcomment -%}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'styledrop-product-card.css' | asset_url | stylesheet_tag }}
 
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
@@ -117,18 +119,7 @@
                   style="--animation-order: {{ forloop.index }};"
                 {% endif %}
               >
-                {% render 'card-product',
-                  card_product: product,
-                  media_aspect_ratio: section.settings.image_ratio,
-                  image_shape: section.settings.image_shape,
-                  lazy_load: lazy_load,
-                  show_secondary_image: section.settings.show_secondary_image,
-                  show_vendor: section.settings.show_vendor,
-                  show_rating: section.settings.show_rating,
-                  skip_styles: skip_card_product_styles,
-                  section_id: section.id,
-                  quick_add: section.settings.quick_add
-                %}
+                {% render 'product-card', product: product %}
               </li>
               {%- assign skip_card_product_styles = true -%}
             {%- endfor -%}
@@ -152,13 +143,9 @@
                 endcase
               %}
               {%- assign placeholder_image = 'product-apparel-' | append: ridx -%}
-              {% render 'card-product',
-                show_vendor: section.settings.show_vendor,
-                media_aspect_ratio: section.settings.image_ratio,
-                image_shape: section.settings.image_shape,
-                lazy_load: false,
-                placeholder_image: placeholder_image
-              %}
+              {%- comment -%} Placeholder path: rerouted to Valgara product-card per Handover Section 4.3 {%- endcomment -%}
+              {%- assign placeholder_product = nil -%}
+              {% render 'product-card', product: placeholder_product %}
             </li>
           {%- endfor -%}
         {%- endif -%}

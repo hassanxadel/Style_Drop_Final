@@ -1,0 +1,30 @@
+{% comment %}
+  Badge Snippet — sd-badge.liquid
+  Converted from: src/components/ui/badge.tsx
+  Valgara Pattern: No Tailwind. styledrop-badge--* BEM modifiers only.
+
+  Usage:
+  {% render 'sd-badge', label: 'New', variant: 'default' %}
+  {% render 'sd-badge', label: 'Sale', variant: 'destructive' %}
+  {% render 'sd-badge', label: 'Info', variant: 'secondary' %}
+  {% render 'sd-badge', label: 'Draft', variant: 'outline' %}
+
+  Params:
+    label:   Badge text (required)
+    variant: 'default' | 'secondary' | 'destructive' | 'outline' (default: 'default')
+    href:    Optional — renders as <a> if provided
+{% endcomment %}
+
+{{ 'styledrop-badge.css' | asset_url | stylesheet_tag }}
+
+{%- assign badge_variant = variant | default: 'default' -%}
+
+{%- if href != blank -%}
+  <a href="{{ href }}" class="styledrop-badge styledrop-badge--{{ badge_variant }}">
+    {{ label }}
+  </a>
+{%- else -%}
+  <span class="styledrop-badge styledrop-badge--{{ badge_variant }}">
+    {{ label }}
+  </span>
+{%- endif -%}

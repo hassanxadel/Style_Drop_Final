@@ -1,7 +1,7 @@
 {% comment %}
   StyleDrop Header Section
   Converted from: src/components/Header.tsx
-  
+
   Features:
   - Promotional banner with scrolling messages
   - Logo (image-based)
@@ -9,20 +9,19 @@
   - Action icons: Search, Wishlist, Cart (with count), User, Mobile Menu
   - Mobile: Hamburger menu (rightmost), hidden wishlist
   - Cart count badge
-  
+
   Settings:
   - Promo messages (configurable)
   - Navigation links (uses Shopify menus)
   - Logo image
 {% endcomment %}
 
-{%- comment -%} Load custom StyleDrop CSS {%- endcomment -%}
-<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+{{ 'styledrop-header.css' | asset_url | stylesheet_tag }}
 
-<header class="sticky top-0 z-50 bg-white text-[#0D0D0D]" id="styledrop-header">
+<header class="styledrop-header" id="styledrop-header">
   {%- comment -%} Promotional Banner {%- endcomment -%}
-  <div class="bg-[#0D0D0D] h-[38px] flex items-center justify-center overflow-hidden">
-    <div class="animate-marquee whitespace-nowrap flex gap-8 text-white/90 text-xs font-normal tracking-[0.6px] leading-[18px]">
+  <div class="styledrop-header__promo">
+    <div class="styledrop-header__promo-text animate-marquee">
       {%- if section.settings.promo_message_1 != blank -%}
         <span>{{ section.settings.promo_message_1 }}</span>
       {%- endif -%}
@@ -46,24 +45,24 @@
   </div>
 
   {%- comment -%} Main Navigation Bar {%- endcomment -%}
-  <nav class="container flex items-center justify-between h-[72px] px-5">
+  <nav class="container styledrop-header__nav">
     {%- comment -%} Logo {%- endcomment -%}
-    <a 
-      href="{{ routes.root_url }}" 
-      class="flex items-center hover:opacity-90 transition-opacity"
+    <a
+      href="{{ routes.root_url }}"
+      class="styledrop-header__logo"
       aria-label="StyleDrop Home"
     >
       {%- if section.settings.logo != blank -%}
-        <img 
-          src="{{ section.settings.logo | image_url: width: 200 }}" 
-          alt="{{ shop.name }}" 
-          class="h-24 w-auto object-contain"
+        <img
+          src="{{ section.settings.logo | image_url: width: 200 }}"
+          alt="{{ shop.name }}"
+          class="styledrop-header__logo-img"
           width="200"
           height="96"
           loading="eager"
         />
       {%- else -%}
-        <span class="font-display text-2xl tracking-tight">
+        <span class="styledrop-header__logo-text">
           {{ shop.name }}
         </span>
       {%- endif -%}
@@ -71,12 +70,12 @@
 
     {%- comment -%} Desktop Navigation Links {%- endcomment -%}
     {%- if section.settings.menu != blank -%}
-      <ul class="hidden md:flex items-center gap-8 text-[13px] font-medium tracking-[0.52px] text-[#0D0D0D]">
+      <ul class="styledrop-header__nav-list">
         {%- for link in linklists[section.settings.menu].links -%}
           <li>
             <a
               href="{{ link.url }}"
-              class="transition-colors hover:underline underline-offset-4 {% if link.active %}text-[#DC2626] font-semibold{% endif %}"
+              class="styledrop-header__nav-link{% if link.active %} styledrop-header__nav-link--active{% endif %}"
             >
               {{ link.title }}
             </a>
@@ -86,10 +85,11 @@
     {%- endif -%}
 
     {%- comment -%} Action Icons {%- endcomment -%}
-    <div class="flex items-center gap-2">
+    <div class="styledrop-header__actions">
+
       {%- comment -%} Search Icon {%- endcomment -%}
-      <button 
-        class="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5"
+      <button
+        class="styledrop-header__action-btn"
         aria-label="Search"
         onclick="document.querySelector('.search-modal').classList.remove('hidden')"
       >
@@ -98,10 +98,10 @@
           <path d="m21 21-4.35-4.35"></path>
         </svg>
       </button>
-      
-      {%- comment -%} Wishlist Icon - Hidden on mobile {%- endcomment -%}
-      <button 
-        class="hidden md:flex w-[34px] h-[34px] items-center justify-center rounded-full hover:bg-black/5"
+
+      {%- comment -%} Wishlist Icon – Desktop only {%- endcomment -%}
+      <button
+        class="styledrop-header__action-btn styledrop-header__action-btn--desktop"
         aria-label="Wishlist"
         onclick="toggleWishlist()"
       >
@@ -111,9 +111,9 @@
       </button>
 
       {%- comment -%} Cart Icon with Badge {%- endcomment -%}
-      <a 
-        href="{{ routes.cart_url }}" 
-        class="w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5 relative"
+      <a
+        href="{{ routes.cart_url }}"
+        class="styledrop-header__action-btn styledrop-header__cart-wrap"
         aria-label="Cart"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -122,16 +122,16 @@
           <path d="M16 10a4 4 0 0 1-8 0"></path>
         </svg>
         {%- if cart.item_count > 0 -%}
-          <span class="absolute -top-0.5 -right-0.5 bg-[#DC2626] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+          <span class="styledrop-header__cart-badge">
             {{ cart.item_count }}
           </span>
         {%- endif -%}
       </a>
 
-      {%- comment -%} User Account Icon - Hidden on mobile {%- endcomment -%}
-      <a 
-        href="{{ routes.account_url }}" 
-        class="hidden md:flex w-[34px] h-[34px] items-center justify-center rounded-full hover:bg-black/5"
+      {%- comment -%} User Account Icon – Desktop only {%- endcomment -%}
+      <a
+        href="{{ routes.account_url }}"
+        class="styledrop-header__action-btn styledrop-header__action-btn--desktop"
         aria-label="Account"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -140,9 +140,9 @@
         </svg>
       </a>
 
-      {%- comment -%} Mobile Menu Button - Rightmost on mobile {%- endcomment -%}
-      <button 
-        class="md:hidden w-[34px] h-[34px] flex items-center justify-center rounded-full hover:bg-black/5"
+      {%- comment -%} Mobile Menu Button – Rightmost on mobile {%- endcomment -%}
+      <button
+        class="styledrop-header__action-btn styledrop-header__action-btn--mobile"
         aria-label="Menu"
         onclick="toggleMobileSidebar()"
         id="mobile-menu-btn"
@@ -162,22 +162,19 @@
 
 {%- comment -%} JavaScript for Header Interactions {%- endcomment -%}
 <script>
-  // Mobile Sidebar Toggle
+  // Mobile Sidebar Toggle — Valgara-compliant: uses sd-sidebar--closed BEM modifier
   function toggleMobileSidebar() {
     const sidebar = document.getElementById('mobile-sidebar');
     const backdrop = document.getElementById('mobile-sidebar-backdrop');
-    
+
     if (sidebar && backdrop) {
-      sidebar.classList.toggle('-translate-x-full');
-      backdrop.classList.toggle('opacity-0');
-      backdrop.classList.toggle('pointer-events-none');
-      
+      sidebar.classList.toggle('sd-sidebar--closed');
+      backdrop.classList.toggle('sd-sidebar-backdrop--hidden');
+
       // Prevent body scroll when sidebar is open
-      if (sidebar.classList.contains('-translate-x-full')) {
-        document.body.style.overflow = 'unset';
-      } else {
-        document.body.style.overflow = 'hidden';
-      }
+      document.body.style.overflow = sidebar.classList.contains('sd-sidebar--closed')
+        ? 'unset'
+        : 'hidden';
     }
   }
 
@@ -189,9 +186,8 @@
     }
   });
 
-  // Wishlist toggle (placeholder - implement with your wishlist app)
+  // Wishlist toggle (placeholder – implement with your wishlist app)
   function toggleWishlist() {
-    // Add your wishlist drawer/modal logic here
     console.log('Wishlist clicked');
   }
 </script>

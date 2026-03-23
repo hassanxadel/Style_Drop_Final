@@ -1,0 +1,66 @@
+/* styledrop-badge.css
+ * Valgara-isolated styles for sd-badge.liquid
+ * Converted from: src/components/ui/badge.tsx
+ *
+ * React token map:
+ *   Base: inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors
+ *     → display: inline-flex; align-items: center; border-radius: 9999px; border: 1px solid; padding: 2px 10px;
+ *       font-size: 12px; font-weight: 600; transition: color, background
+ *   default:     border-transparent bg-primary text-primary-foreground hover:bg-primary/80
+ *     → bg: #0D0D0D; text: #fff; hover: rgba(13,13,13,0.8)
+ *   secondary:   border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80
+ *     → bg: #F5F0EB; text: #0D0D0D; hover: rgba(245,240,235,0.8)
+ *   destructive: border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80
+ *     → bg: #DC2626; text: #fff; hover: rgba(220,38,38,0.8)
+ *   outline:     text-foreground (border stays visible)
+ *     → bg: transparent; text: #0D0D0D; border: #e5e7eb
+ */
+
+.styledrop-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  padding: 2px 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  cursor: default;
+}
+
+a.styledrop-badge { cursor: pointer; }
+
+/* ─── default ─────────────────────────────────────────────────────────────── */
+.styledrop-badge--default {
+  background-color: #0D0D0D;
+  color: #ffffff;
+  border-color: transparent;
+}
+.styledrop-badge--default:hover { background-color: rgba(13, 13, 13, 0.8); }
+
+/* ─── secondary ───────────────────────────────────────────────────────────── */
+.styledrop-badge--secondary {
+  background-color: #F5F0EB;
+  color: #0D0D0D;
+  border-color: transparent;
+}
+.styledrop-badge--secondary:hover { background-color: rgba(245, 240, 235, 0.8); }
+
+/* ─── destructive ─────────────────────────────────────────────────────────── */
+.styledrop-badge--destructive {
+  background-color: #DC2626;
+  color: #ffffff;
+  border-color: transparent;
+}
+.styledrop-badge--destructive:hover { background-color: rgba(220, 38, 38, 0.8); }
+
+/* ─── outline ─────────────────────────────────────────────────────────────── */
+.styledrop-badge--outline {
+  background-color: transparent;
+  color: #0D0D0D;
+  border-color: #e5e7eb;
+}

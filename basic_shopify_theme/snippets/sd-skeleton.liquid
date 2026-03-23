@@ -1,0 +1,47 @@
+{% comment %}
+  Skeleton Snippet — sd-skeleton.liquid
+  Converted from: src/components/ui/skeleton.tsx
+  Valgara Pattern: No Tailwind. styledrop-skeleton BEM only.
+
+  Usage (inline, no snippet needed for common cases):
+  <div class="styledrop-skeleton" style="width: 200px; height: 20px;"></div>
+
+  Or via snippet with named sizes:
+  {% render 'sd-skeleton', width: '200px', height: '20px', radius: '0.5rem' %}
+  {% render 'sd-skeleton', variant: 'text' %}      — single line of text
+  {% render 'sd-skeleton', variant: 'avatar' %}    — circular avatar placeholder
+  {% render 'sd-skeleton', variant: 'card' %}      — card block placeholder
+
+  Params:
+    variant: 'text' | 'avatar' | 'card' | 'custom'
+    width:   CSS width (when variant is custom)
+    height:  CSS height (when variant is custom)
+    radius:  CSS border-radius override
+{% endcomment %}
+
+{{ 'styledrop-skeleton.css' | asset_url | stylesheet_tag }}
+
+{%- assign sk_variant = variant | default: 'custom' -%}
+
+{%- if sk_variant == 'text' -%}
+  <div class="styledrop-skeleton styledrop-skeleton--text"></div>
+{%- elsif sk_variant == 'avatar' -%}
+  <div class="styledrop-skeleton styledrop-skeleton--avatar"></div>
+{%- elsif sk_variant == 'card' -%}
+  <div class="styledrop-skeleton styledrop-skeleton--card">
+    <div class="styledrop-skeleton styledrop-skeleton--text" style="width: 60%;"></div>
+    <div class="styledrop-skeleton styledrop-skeleton--text"></div>
+    <div class="styledrop-skeleton styledrop-skeleton--text" style="width: 80%;"></div>
+  </div>
+{%- else -%}
+  <div
+    class="styledrop-skeleton"
+    {%- if width != blank or height != blank or radius != blank -%}
+      style="
+        {%- if width  != blank -%}width: {{ width }};{%- endif -%}
+        {%- if height != blank -%}height: {{ height }};{%- endif -%}
+        {%- if radius != blank -%}border-radius: {{ radius }};{%- endif -%}
+      "
+    {%- endif -%}
+  ></div>
+{%- endif -%}

@@ -1,0 +1,70 @@
+/* styledrop-input.css
+ * Valgara-isolated styles for sd-input.liquid
+ * Converted from: src/components/ui/input.tsx
+ *
+ * React token map:
+ *   flex h-10 w-full rounded-md border border-input bg-background px-3 py-2
+ *   text-base ring-offset-background
+ *   file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground
+ *   placeholder:text-muted-foreground
+ *   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+ *   disabled:cursor-not-allowed disabled:opacity-50
+ *   md:text-sm
+ *
+ *   Resolved values:
+ *     h-10          → height: 40px
+ *     rounded-md    → border-radius: 6px
+ *     border-input  → border: 1px solid #e5e7eb
+ *     bg-background → background: #fff
+ *     px-3 py-2     → padding: 0.5rem 0.75rem
+ *     text-sm/base  → font-size: 14px
+ *     ring          → outline: 2px solid #DC2626
+ */
+
+.styledrop-input {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  padding: 0.5rem 0.75rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  color: #0D0D0D;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.styledrop-input::placeholder {
+  color: #9ca3af;
+}
+
+.styledrop-input:focus-visible,
+.styledrop-input:focus {
+  outline: none;
+  border-color: #DC2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+}
+
+.styledrop-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  background-color: #f9fafb;
+}
+
+/* File input reset */
+.styledrop-input[type="file"] {
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+}
+.styledrop-input[type="file"]::file-selector-button {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0D0D0D;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}

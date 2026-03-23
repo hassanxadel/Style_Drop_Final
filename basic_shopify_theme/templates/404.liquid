@@ -1,36 +1,18 @@
 {% comment %}
   StyleDrop 404 Not Found Template
   Converted from: src/pages/NotFound.tsx
-  
-  Features:
-  - Large "404" heading
-  - "PAGE NOT FOUND" title
-  - Error message
-  - "Back to Home" button
-  - Centered layout
+  Valgara Pattern: All Tailwind stripped. styledrop-404__* BEM classes only.
 {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+{{ 'styledrop-404.css' | asset_url | stylesheet_tag }}
 
-<div class="container min-h-[60vh] flex flex-col items-center justify-center text-center py-20">
-  {%- comment -%} 404 Heading {%- endcomment -%}
-  <h1 class="font-display text-9xl md:text-[12rem] text-muted-foreground/30">
-    404
-  </h1>
-
-  {%- comment -%} Error Message {%- endcomment -%}
-  <h2 class="font-display text-3xl md:text-5xl mb-4">
-    PAGE NOT FOUND
-  </h2>
-
-  <p class="text-muted-foreground mb-8 max-w-md">
+<div class="styledrop-404">
+  <h1 class="styledrop-404__number">404</h1>
+  <h2 class="styledrop-404__title">PAGE NOT FOUND</h2>
+  <p class="styledrop-404__message">
     The page you're looking for doesn't exist or has been moved.
   </p>
-
-  {%- comment -%} Back to Home Button {%- endcomment -%}
-  <a href="{{ routes.root_url }}" class="btn-accent">
-    Back to Home
-  </a>
+  <a href="{{ routes.root_url }}" class="styledrop-404__cta">Back to Home</a>
 </div>
 
 {% schema %}

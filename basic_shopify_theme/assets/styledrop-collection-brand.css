@@ -1,0 +1,37 @@
+/* Styledrop Brand Products Template (Valgara-style isolated CSS) */
+
+.styledrop-collection-brand {
+  min-height: 100vh;
+}
+
+.styledrop-collection-brand__hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.styledrop-collection-brand__hero-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.styledrop-collection-brand__hero-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.styledrop-collection-brand__section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.styledrop-collection-brand__products {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+/* Keep existing behavior: the "View All Products" link smooth-scrolls */
+html {
+  scroll-behavior: smooth;
+}
+

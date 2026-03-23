@@ -1,0 +1,31 @@
+{% comment %}
+  Alert Snippet — sd-alert.liquid
+  Converted from: src/components/ui/alert.tsx
+  Valgara Pattern: No Tailwind. styledrop-alert__* BEM only.
+
+  Usage:
+  {% render 'sd-alert', variant: 'default', title: 'Title', content: 'Message.' %}
+  {% render 'sd-alert', variant: 'destructive', title: 'Error', content: 'Something went wrong.' %}
+
+  Params:
+    variant: 'default' (default) | 'destructive'
+    title:   Alert title text (optional)
+    content: Alert body text or HTML
+    icon:    Optional SVG string for left icon
+{% endcomment %}
+
+{{ 'styledrop-alert.css' | asset_url | stylesheet_tag }}
+
+{%- assign alert_variant = variant | default: 'default' -%}
+
+<div class="styledrop-alert styledrop-alert--{{ alert_variant }}" role="alert">
+  {%- if icon != blank -%}
+    <span class="styledrop-alert__icon" aria-hidden="true">{{ icon }}</span>
+  {%- endif -%}
+  {%- if title != blank -%}
+    <h5 class="styledrop-alert__title">{{ title }}</h5>
+  {%- endif -%}
+  {%- if content != blank -%}
+    <div class="styledrop-alert__description">{{ content }}</div>
+  {%- endif -%}
+</div>

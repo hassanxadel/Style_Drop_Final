@@ -1,43 +1,47 @@
 {% comment %}
   StyleDrop Category Card Snippet
   Converted from: src/components/CategoryCard.tsx
-  
+
   Features:
   - Category image with hover zoom
   - Gradient overlay
   - Category name display
-  - Flexible grid span
-  
+  - Flexible grid span (small / tall / wide)
+
   Usage:
-  {% render 'category-card', 
+  {% render 'category-card',
     category_name: 'WOMEN',
     category_url: '/collections/women',
     category_image: section.settings.image,
-    grid_span: 'col-span-1 row-span-2'
+    grid_span: 'tall'
   %}
 {% endcomment %}
 
+{{ 'styledrop-category-card.css' | asset_url | stylesheet_tag }}
+
 <a
   href="{{ category_url | default: '/collections/all' }}"
-  class="relative rounded-lg overflow-hidden cursor-pointer group {{ grid_span | default: 'col-span-1' }}"
+  class="styledrop-category-card styledrop-category-card--{{ grid_span | default: 'small' }}"
 >
   {%- comment -%} Category Image {%- endcomment -%}
   {%- if category_image != blank -%}
     <img
       src="{{ category_image | image_url: width: 800 }}"
       alt="{{ category_name }}"
-      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      class="styledrop-category-card__img"
+      width="800"
+      height="600"
       loading="lazy"
     />
   {%- else -%}
-    <div class="w-full h-full bg-gray-300"></div>
+    <div class="styledrop-category-card__placeholder"></div>
   {%- endif -%}
 
   {%- comment -%} Gradient Overlay {%- endcomment -%}
-  <div class="absolute inset-0 bg-gradient-to-t from-primary/70 to-transparent"></div>
+  <div class="styledrop-category-card__overlay"></div>
 
   {%- comment -%} Category Name {%- endcomment -%}
-  <span class="absolute bottom-4 left-4 font-display text-2xl text-primary-foreground">
+  <span class="styledrop-category-card__name">
     {{ category_name }}
   </span>
 </a>

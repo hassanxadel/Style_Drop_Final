@@ -1,0 +1,177 @@
+/* styledrop-product-card.css
+ * Valgara-isolated stylesheet for ProductCard
+ * Converted from: src/components/ProductCard.tsx
+ */
+
+/* Styledrop Product Card (Valgara-style isolated CSS) */
+
+.styledrop-product-card {
+  display: block;
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  padding: 0.75rem;
+  padding-bottom: 1rem;
+  color: #0D0D0D;
+}
+
+.styledrop-product-card__media {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background-color: var(--sd-muted);
+  aspect-ratio: 3/4;
+}
+
+.styledrop-product-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.styledrop-product-card:hover .styledrop-product-card__img {
+  transform: scale(1.05);
+}
+
+.styledrop-product-card__badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 0.375rem 0.75rem;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.styledrop-product-card__badge--oos {
+  background-color: var(--sd-card);
+  color: #0D0D0D;
+  border: 1px solid var(--sd-border);
+}
+
+.styledrop-product-card__badge--new {
+  background-color: var(--sd-black);
+  color: #ffffff;
+}
+
+.styledrop-product-card__badge--sale {
+  background-color: var(--sd-accent);
+  color: #ffffff;
+}
+
+.styledrop-product-card__wishlist {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--sd-black);
+}
+
+.styledrop-product-card__wishlist:hover {
+  background-color: #ffffff;
+}
+
+.styledrop-product-card__quick-add {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background-color: #F36B4F;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  color: #ffffff;
+}
+
+.styledrop-product-card__wishlist svg,
+.styledrop-product-card__wishlist-icon {
+  color: var(--sd-black);
+}
+
+.styledrop-product-card__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styledrop-product-card__overlay-pill {
+  background-color: var(--sd-card);
+  color: var(--sd-foreground);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--sd-border);
+}
+
+.styledrop-product-card__info {
+  margin-top: 0.75rem;
+}
+
+.styledrop-product-card__brand {
+  font-size: 10px;
+  color: #B7A996;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+.styledrop-product-card__title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.styledrop-product-card__swatches {
+  display: flex;
+  gap: 0.375rem;
+  margin-top: 0.5rem;
+}
+
+.styledrop-product-card__swatch {
+  width: 0.875rem; /* ~w-3.5 */
+  height: 0.875rem; /* ~h-3.5 */
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: inline-block;
+}
+
+.styledrop-product-card__price-row {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.styledrop-product-card__price {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.styledrop-product-card__compare {
+  font-size: 12px;
+  color: var(--sd-muted-foreground);
+  text-decoration: line-through;
+}
+

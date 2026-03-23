@@ -1,0 +1,55 @@
+/* Styledrop Product Template (Valgara-style isolated CSS) */
+
+.styledrop-product {
+  background-color: #F5F0EB;
+  min-height: 100vh;
+}
+
+.styledrop-product__main {
+  padding-top: 2rem;   /* ~py-8 */
+  padding-bottom: 2.5rem; /* ~md:py-12 */
+}
+
+@media (min-width: 768px) {
+  .styledrop-product__main {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+.styledrop-product__panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* ~gap-8 */
+  background: #FFFFFF;
+  border-radius: 1.5rem; /* ~rounded-3xl */
+  padding: 1.5rem; /* ~p-6 */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+@media (min-width: 768px) {
+  .styledrop-product__panel {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem; /* ~md:gap-12 */
+    padding: 2.5rem; /* ~md:p-10 */
+  }
+}
+
+.styledrop-product__gallery {
+  min-width: 0;
+}
+
+/* Mobile: center content in product details */
+.styledrop-product__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* ~space-y-6 */
+}
+
+@media (max-width: 767.98px) {
+  .styledrop-product__info {
+    align-items: center;
+    text-align: center;
+  }
+}
+

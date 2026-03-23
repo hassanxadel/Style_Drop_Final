@@ -1,0 +1,123 @@
+/* Styledrop Product Variant Selector (Valgara-style isolated CSS) */
+
+.styledrop-product-variant-selector__section {
+  margin-bottom: 1.5rem; /* ~mb-6 */
+}
+
+.styledrop-product-variant-selector__label {
+  display: block;
+  font-size: 0.875rem; /* ~text-sm */
+  font-weight: 600;
+  margin-bottom: 0.75rem; /* ~mb-3 */
+}
+
+.styledrop-product-variant-selector__label span {
+  font-weight: 400;
+}
+
+.styledrop-product-variant-selector__selected-color {
+  color: var(--sd-muted-foreground);
+}
+
+.styledrop-product-variant-selector__swatch-list {
+  display: flex;
+  gap: 0.5rem; /* ~gap-2 */
+  flex-wrap: wrap;
+}
+
+.styledrop-product-variant-selector__swatch {
+  width: 2.5rem; /* ~w-10 */
+  height: 2.5rem; /* ~h-10 */
+  border-radius: 999px;
+  border: 2px solid var(--sd-border);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styledrop-product-variant-selector__swatch:hover {
+  transform: scale(1.1);
+  border-color: var(--sd-accent);
+}
+
+.styledrop-product-variant-selector__swatch--active {
+  border-color: var(--sd-accent);
+  box-shadow: 0 0 0 2px var(--sd-accent), 0 0 0 4px rgba(220, 38, 38, 0.15);
+}
+
+.styledrop-product-variant-selector__swatch-check {
+  width: 1rem; /* ~w-4 */
+  height: 1rem; /* ~h-4 */
+}
+
+.styledrop-product-variant-selector__size-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem; /* ~mb-3 */
+}
+
+.styledrop-product-variant-selector__size-header-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.styledrop-product-variant-selector__link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 0.75rem; /* ~text-xs */
+  color: var(--sd-accent);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.styledrop-product-variant-selector__link:hover {
+  text-decoration: underline;
+}
+
+.styledrop-product-variant-selector__size-list {
+  display: flex;
+  gap: 0.75rem; /* ~gap-3 */
+  flex-wrap: wrap;
+}
+
+.styledrop-product-variant-selector__size-button {
+  padding: 0.5rem 1.25rem; /* ~py-2 px-5 */
+  border-radius: 999px;
+  font-size: 0.75rem; /* ~text-xs */
+  font-weight: 600;
+  letter-spacing: 0.12em; /* ~tracking-[0.12em] */
+  border: 1px solid var(--sd-border);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.styledrop-product-variant-selector__size-button--available {
+  color: var(--sd-black);
+  background: transparent;
+}
+
+.styledrop-product-variant-selector__size-button--available:hover {
+  border-color: var(--sd-black);
+}
+
+.styledrop-product-variant-selector__size-button--unavailable {
+  color: var(--sd-muted-foreground);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.styledrop-product-variant-selector__size-button--active {
+  background: var(--sd-black);
+  color: #ffffff;
+  border-color: var(--sd-black);
+}
+

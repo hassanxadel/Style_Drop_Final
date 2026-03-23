@@ -12,26 +12,28 @@
   Or set as default template for all products by duplicating and renaming to product.liquid
 {% endcomment %}
 
-{%- comment -%} Load custom StyleDrop CSS {%- endcomment -%}
-<link rel="stylesheet" href="{{ 'style-drop-custom.css' | asset_url }}">
+{%- comment -%} Styledrop Product Template (Valgara-style isolated CSS) {%- endcomment -%}
+{{ 'styledrop-product.css' | asset_url | stylesheet_tag }}
+{{ 'styledrop-product-info-panel.css' | asset_url | stylesheet_tag }}
+{{ 'styledrop-product-add-to-cart.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%} Product Page Container {%- endcomment -%}
-<div class="bg-[#F5F0EB] min-h-screen">
+<div class="styledrop-product">
   
   {%- comment -%} 1. Breadcrumb Navigation {%- endcomment -%}
   {% render 'breadcrumb-product' %}
 
   {%- comment -%} 2. Main Product Section {%- endcomment -%}
-  <div class="container py-8 md:py-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 bg-white rounded-3xl p-6 md:p-10 shadow-sm">
+  <div class="container styledrop-product__main">
+    <div class="styledrop-product__panel">
       
       {%- comment -%} Left Column: Image Gallery {%- endcomment -%}
-      <div>
+      <div class="styledrop-product__gallery">
         {% render 'product-image-gallery', product: product %}
       </div>
 
       {%- comment -%} Right Column: Product Info & Purchase {%- endcomment -%}
-      <div class="space-y-6">
+      <div class="styledrop-product__info">
         {%- comment -%} Product Info (Title, Brand, Rating, Price) {%- endcomment -%}
         {% render 'product-info-panel', product: product %}
 

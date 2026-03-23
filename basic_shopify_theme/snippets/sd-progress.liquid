@@ -1,0 +1,35 @@
+{% comment %}
+  Progress Snippet — sd-progress.liquid
+  Converted from: src/components/ui/progress.tsx (Radix ProgressPrimitive)
+  Valgara Pattern: No Tailwind. styledrop-progress__* BEM only.
+
+  Usage:
+  {% render 'sd-progress', value: 75, max: 100, label: 'Loading...' %}
+
+  Params:
+    value:  Current progress value (0–100)
+    max:    Max value (default: 100)
+    label:  Accessible aria-label text
+{% endcomment %}
+
+{{ 'styledrop-progress.css' | asset_url | stylesheet_tag }}
+
+{%- assign progress_value = value | default: 0 | plus: 0 -%}
+{%- assign progress_max   = max   | default: 100 | plus: 0 -%}
+{%- assign progress_pct   = progress_value | times: 100.0 | divided_by: progress_max | round -%}
+{%- if progress_pct > 100 -%}{%- assign progress_pct = 100 -%}{%- endif -%}
+{%- assign translate_x = 100 | minus: progress_pct -%}
+
+<div
+  class="styledrop-progress"
+  role="progressbar"
+  aria-valuenow="{{ progress_value }}"
+  aria-valuemin="0"
+  aria-valuemax="{{ progress_max }}"
+  {% if label != blank %}aria-label="{{ label }}"{% endif %}
+>
+  <div
+    class="styledrop-progress__indicator"
+    style="transform: translateX(-{{ translate_x }}%);"
+  ></div>
+</div>

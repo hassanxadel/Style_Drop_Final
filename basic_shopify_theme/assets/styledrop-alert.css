@@ -1,0 +1,77 @@
+/* styledrop-alert.css
+ * Valgara-isolated styles for sd-alert.liquid
+ * Converted from: src/components/ui/alert.tsx
+ *
+ * React token map:
+ *   relative w-full rounded-lg border p-4   → position: relative; width: 100%; border-radius: 0.5rem; border: 1px solid; padding: 1rem
+ *   [&>svg~*]:pl-7                           → .styledrop-alert__description, .styledrop-alert__title when icon present: padding-left: 1.75rem
+ *   [&>svg]:absolute [&>svg]:left-4 top-4   → icon: position: absolute; left: 1rem; top: 1rem
+ *   default: bg-background text-foreground  → bg: #fff; color: #0D0D0D
+ *   destructive: border-destructive/50      → border-color: rgba(220,38,38,0.5); color: #DC2626
+ *   title: font-medium leading-none tracking-tight → font-weight:500; line-height:1; letter-spacing:-0.01em
+ *   description: text-sm                   → font-size: 14px
+ */
+
+/* ─── Base ────────────────────────────────────────────────────────────────── */
+.styledrop-alert {
+  position: relative;
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #ffffff;
+  color: #0D0D0D;
+  box-sizing: border-box;
+}
+
+/* ─── Variants ────────────────────────────────────────────────────────────── */
+.styledrop-alert--default {
+  background-color: #ffffff;
+  color: #0D0D0D;
+  border-color: #e5e7eb;
+}
+
+.styledrop-alert--destructive {
+  border-color: rgba(220, 38, 38, 0.5);
+  color: #DC2626;
+}
+
+.styledrop-alert--destructive .styledrop-alert__icon {
+  color: #DC2626;
+}
+
+/* ─── Icon (mirrors [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4) ─────────── */
+.styledrop-alert__icon {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: #0D0D0D;
+  display: flex;
+  align-items: center;
+}
+
+.styledrop-alert__icon ~ .styledrop-alert__title,
+.styledrop-alert__icon ~ .styledrop-alert__description {
+  padding-left: 1.75rem;
+}
+
+/* ─── Title (mb-1 font-medium leading-none tracking-tight) ──────────────────── */
+.styledrop-alert__title {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-size: 15px;
+}
+
+/* ─── Description (text-sm [&_p]:leading-relaxed) ──────────────────────────── */
+.styledrop-alert__description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: inherit;
+}
+
+.styledrop-alert__description p {
+  line-height: 1.625;
+}

@@ -1,41 +1,47 @@
 {% comment %}
   StyleDrop Category Grid Section
   Converted from: src/sections/CategoryGridSection.tsx
-  
+
   Features:
   - Masonry-style category grid
   - Section heading with badge
   - Configurable categories via blocks
   - Integrated sale banner option
   - Responsive layout
-  
+
   Settings:
   - Section heading
   - Badge text
   - Category blocks (up to 6)
+  - Sale banner (optional)
+
+  Note on grid_span schema values:
+  - Changed from Tailwind class strings ("col-span-1 row-span-2") to semantic
+    values ("small", "tall", "wide") which are translated to BEM modifiers in
+    category-card.liquid and styledrop-category-card.css.
 {% endcomment %}
 
-<section class="bg-background py-14">
-  <div class="container px-4 md:px-8">
+{{ 'styledrop-category-grid.css' | asset_url | stylesheet_tag }}
+
+<section class="styledrop-category-grid">
+  <div class="container styledrop-category-grid__inner">
+
     {%- comment -%} Section Header {%- endcomment -%}
-    <div class="text-center mb-12">
-      {%- comment -%} Badge {%- endcomment -%}
+    <div class="styledrop-category-grid__header">
       {%- if section.settings.badge_text != blank -%}
-        <span class="inline-block mb-4 px-3 py-1.5 bg-[#F5C800] rounded font-condensed text-[14px] font-extrabold uppercase tracking-[1.54px] text-[#0D0D0D]">
+        <span class="styledrop-category-grid__badge">
           {{ section.settings.badge_text }}
         </span>
       {%- endif -%}
-
-      {%- comment -%} Heading {%- endcomment -%}
-      <h2 class="font-display text-[64px] leading-[60.8px] tracking-[1.92px] font-normal">
+      <h2 class="styledrop-category-grid__heading">
         {{ section.settings.heading_line_1 | default: "CLOTHES THAT FIT" }}
         <br />
-        <span class="text-accent">{{ section.settings.heading_line_2 | default: "YOUR LIFE" }}</span>
+        <span class="styledrop-category-grid__heading-line--accent">{{ section.settings.heading_line_2 | default: "YOUR LIFE" }}</span>
       </h2>
     </div>
 
-    {%- comment -%} Category Grid - Masonry Layout {%- endcomment -%}
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6 auto-rows-[240px] md:auto-rows-[280px]">
+    {%- comment -%} Category Grid – Masonry Layout {%- endcomment -%}
+    <div class="styledrop-category-grid__grid">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'category' -%}
@@ -51,37 +57,32 @@
 
     {%- comment -%} Integrated Sale Banner (optional) {%- endcomment -%}
     {%- if section.settings.show_sale_banner -%}
-      <a href="{{ section.settings.sale_banner_link | default: '/collections/sale' }}" class="block">
-        <div class="relative overflow-hidden rounded-2xl h-[200px] md:h-[240px] group cursor-pointer">
-          {%- comment -%} Background Image {%- endcomment -%}
+      <a href="{{ section.settings.sale_banner_link | default: '/collections/sale' }}" class="styledrop-category-grid__sale-banner-link">
+        <div class="styledrop-category-grid__sale-banner">
           {%- if section.settings.sale_banner_image != blank -%}
             <img
               src="{{ section.settings.sale_banner_image | image_url: width: 1600 }}"
               alt="{{ section.settings.sale_banner_title }}"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              class="styledrop-category-grid__sale-banner-img"
+              width="1600"
+              height="240"
               loading="lazy"
             />
           {%- else -%}
-            <div class="w-full h-full bg-gray-300"></div>
+            <div class="styledrop-category-grid__sale-banner-placeholder"></div>
           {%- endif -%}
 
-          {%- comment -%} Overlay {%- endcomment -%}
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-center justify-center">
-            <div class="text-center px-4">
-              {%- comment -%} Title {%- endcomment -%}
-              <h3 class="font-display text-4xl md:text-6xl font-normal text-white mb-2" style="letter-spacing: 0.05em;">
+          <div class="styledrop-category-grid__sale-overlay">
+            <div class="styledrop-category-grid__sale-content">
+              <h3 class="styledrop-category-grid__sale-title">
                 {{ section.settings.sale_banner_title | default: "SALE — UP TO 50% OFF" }}
               </h3>
-
-              {%- comment -%} Subtitle {%- endcomment -%}
               {%- if section.settings.sale_banner_subtitle != blank -%}
-                <p class="text-white/80 text-xs md:text-sm mb-6">
+                <p class="styledrop-category-grid__sale-subtitle">
                   {{ section.settings.sale_banner_subtitle }}
                 </p>
               {%- endif -%}
-
-              {%- comment -%} CTA Button {%- endcomment -%}
-              <span class="btn-accent px-8 py-3 text-xs font-bold hover:bg-accent/90 transition-colors inline-block">
+              <span class="styledrop-category-grid__sale-cta">
                 {{ section.settings.sale_banner_button | default: "SHOP SALE" }}
               </span>
             </div>
@@ -186,19 +187,19 @@
           "label": "Grid Size",
           "options": [
             {
-              "value": "col-span-1",
+              "value": "small",
               "label": "Small (1x1)"
             },
             {
-              "value": "col-span-1 row-span-2",
+              "value": "tall",
               "label": "Tall (1x2)"
             },
             {
-              "value": "col-span-2",
+              "value": "wide",
               "label": "Wide (2x1)"
             }
           ],
-          "default": "col-span-1"
+          "default": "small"
         }
       ]
     }
@@ -211,31 +212,35 @@
           "type": "category",
           "settings": {
             "category_name": "WOMEN",
-            "grid_span": "col-span-1 row-span-2"
+            "grid_span": "tall"
           }
         },
         {
           "type": "category",
           "settings": {
-            "category_name": "MEN"
+            "category_name": "MEN",
+            "grid_span": "small"
           }
         },
         {
           "type": "category",
           "settings": {
-            "category_name": "SHOES"
+            "category_name": "SHOES",
+            "grid_span": "small"
           }
         },
         {
           "type": "category",
           "settings": {
-            "category_name": "ACCESSORIES"
+            "category_name": "ACCESSORIES",
+            "grid_span": "small"
           }
         },
         {
           "type": "category",
           "settings": {
-            "category_name": "NEW IN"
+            "category_name": "NEW IN",
+            "grid_span": "small"
           }
         }
       ]
