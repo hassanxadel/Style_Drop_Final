@@ -10,7 +10,7 @@
         "headline_line_1": "WEAR WHAT",
         "headline_line_2": "DROPS",
         "headline_line_3": "TODAY.",
-        "description": "Multi-brand fashion delivered fast. Discover trending styles from the brands you love — with full transparency on pricing and returns.",
+        "description": "Multi-brand fashion delivered fast. Discover trending styles from the brands you love.",
         "cta_primary_text": "Shop What's Trending",
         "cta_primary_link": "/collections/all",
         "cta_secondary_text": "Explore New Arrivals",
@@ -24,7 +24,6 @@
         "badge_text": "FEATURED BRANDS",
         "heading_line_1": "200+ BRANDS",
         "heading_line_2": "ONE PLATFORM",
-        "collection": "all",
         "brand_limit": 12,
         "all_brands_text": "All brands",
         "all_brands_link": "/pages/brands"
@@ -48,35 +47,39 @@
           "settings": {
             "category_name": "WOMEN",
             "category_url": "/collections/women",
-            "grid_span": "col-span-1 row-span-2"
+            "grid_span": "tall"
           }
         },
         "category-2": {
           "type": "category",
           "settings": {
             "category_name": "MEN",
-            "category_url": "/collections/men"
+            "category_url": "/collections/men",
+            "grid_span": "normal"
           }
         },
         "category-3": {
           "type": "category",
           "settings": {
             "category_name": "SHOES",
-            "category_url": "/collections/shoes"
+            "category_url": "/collections/shoes",
+            "grid_span": "normal"
           }
         },
         "category-4": {
           "type": "category",
           "settings": {
             "category_name": "ACCESSORIES",
-            "category_url": "/collections/accessories"
+            "category_url": "/collections/accessories",
+            "grid_span": "normal"
           }
         },
         "category-5": {
           "type": "category",
           "settings": {
             "category_name": "NEW IN",
-            "category_url": "/collections/new-arrivals"
+            "category_url": "/collections/new-arrivals",
+            "grid_span": "normal"
           }
         }
       },
@@ -97,7 +100,6 @@
         "heading_line_3": "WEARING",
         "view_all_text": "View all",
         "view_all_link": "/collections/all",
-        "collection": "all",
         "product_limit": 4
       }
     },
@@ -106,15 +108,15 @@
       "settings": {
         "banner_1_badge": "NEW DROP",
         "banner_1_eyebrow": "MEN'S COLLECTION",
-        "banner_1_title": "EVERYDAY\nSTREETWEAR",
-        "banner_1_button_text": "SHOP MEN'S →",
+        "banner_1_title": "EVERYDAY STREETWEAR",
+        "banner_1_button_text": "SHOP MEN'S",
         "banner_1_link": "/collections/men",
         "banner_2_badge": "FIND YOUR FIT",
         "banner_2_eyebrow": "YOUR EVERYDAY FAVORITES",
         "banner_2_title_line1": "COMFORT",
         "banner_2_title_line2": "REDEFINED",
         "banner_2_description": "Fabrics that move with you. Styles that speak for you.",
-        "banner_2_button_text": "EXPLORE STYLES →",
+        "banner_2_button_text": "EXPLORE STYLES",
         "banner_2_link": "/collections/all"
       }
     },
@@ -125,13 +127,13 @@
         "heading_line_1": "FROM HAPPY",
         "heading_line_2": "SHOPPERS",
         "testimonial_1_name": "Katelyn Brooks",
-        "testimonial_1_text": "Impressive haul, loved the curation! Fast shipping too. Quality on everything was amazing - it's now my go-to for casual and seasonal picks.",
+        "testimonial_1_text": "Impressive haul, loved the curation! Fast shipping too.",
         "testimonial_1_rating": 5,
         "testimonial_2_name": "Ruby Cross",
-        "testimonial_2_text": "DROP changed the game. I no longer need to browse 10+ sites. The app makes everything easy and the selection is incredible.",
+        "testimonial_2_text": "DROP changed the game. I no longer need to browse 10+ sites.",
         "testimonial_2_rating": 5,
         "testimonial_3_name": "Jordan Miles",
-        "testimonial_3_text": "Finally a fashion site that curates for real people. Everything fits true to size and the returns process is seamless.",
+        "testimonial_3_text": "Finally a fashion site that curates for real people.",
         "testimonial_3_rating": 4
       }
     },
@@ -139,12 +141,11 @@
       "type": "newsletter",
       "settings": {
         "badge_text": "DROP INSIDER",
-        "heading": "BE FIRST TO KNOW<br>EVERY DROP.",
-        "description": "Join 50K+ shoppers who get early access to new drops, exclusive deals, and style inspo — before anyone else.",
+        "heading": "BE FIRST TO KNOW EVERY DROP.",
+        "description": "Join 50K+ shoppers who get early access to new drops, exclusive deals, and style inspo.",
         "input_placeholder": "your@email.com",
-        "button_text": "GET EARLY ACCESS →",
-        "success_message": "Thanks for subscribing! Check your email for a welcome offer.",
-        "privacy_text": "No spam, ever. Unsubscribe anytime. We respect your inbox."
+        "button_text": "GET EARLY ACCESS",
+        "privacy_text": "No spam, ever. Unsubscribe anytime."
       }
     }
   },

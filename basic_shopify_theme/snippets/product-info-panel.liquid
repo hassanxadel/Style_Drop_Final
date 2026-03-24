@@ -19,7 +19,7 @@
 
 <div class="styledrop-product-info-panel">
   {%- comment -%} Product Title & Rating {%- endcomment -%}
-  <div class="mb-4">
+  <div class="styledrop-product-info-panel__header">
     {%- comment -%} Brand/Vendor {%- endcomment -%}
     {%- if product.vendor != blank -%}
       <p class="styledrop-product-info-panel__vendor">
@@ -36,23 +36,23 @@
     {%- if product.metafields.reviews.rating != blank -%}
       <div class="styledrop-product-info-panel__rating-row styledrop-product-info-panel__rating-count">
         {%- comment -%} Star Rating Display {%- endcomment -%}
-        <div class="styledrop-product-info-panel__rating-stars flex items-center gap-1">
+        <div class="styledrop-product-info-panel__rating-stars">
           {%- assign rating = product.metafields.reviews.rating | times: 1.0 -%}
           {%- assign full_stars = rating | floor -%}
           {%- assign empty_stars = 5 | minus: full_stars -%}
           
           {%- comment -%} Full stars {%- endcomment -%}
           {%- for i in (1..full_stars) -%}
-            <span class="text-yellow-500">★</span>
+            <span class="styledrop-product-info-panel__star styledrop-product-info-panel__star--full">★</span>
           {%- endfor -%}
           
           {%- comment -%} Empty stars {%- endcomment -%}
           {%- for i in (1..empty_stars) -%}
-            <span class="text-gray-300">★</span>
+            <span class="styledrop-product-info-panel__star styledrop-product-info-panel__star--empty">★</span>
           {%- endfor -%}
           
           {%- comment -%} Rating number {%- endcomment -%}
-          <span class="ml-1 font-semibold">{{ rating | round: 1 }}</span>
+          <span class="styledrop-product-info-panel__rating-value">{{ rating | round: 1 }}</span>
         </div>
 
         {%- comment -%} Review count {%- endcomment -%}

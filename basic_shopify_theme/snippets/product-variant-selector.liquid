@@ -76,7 +76,7 @@
         {%- comment -%} Size Label with Links {%- endcomment -%}
         <div class="styledrop-product-variant-selector__size-header">
           <label class="styledrop-product-variant-selector__size-header-label">Size:</label>
-          <div class="flex items-center gap-2">
+          <div class="styledrop-product-variant-selector__size-links">
             <button 
               type="button"
               class="styledrop-product-variant-selector__link"
@@ -84,14 +84,14 @@
             >
               Size Guide
             </button>
-            <span class="text-xs text-muted-foreground">|</span>
+            <span class="styledrop-product-variant-selector__separator">|</span>
             <button
               type="button"
               class="styledrop-product-variant-selector__link"
               onclick="openSizePredictor()"
             >
               {%- comment -%} Zap Icon SVG {%- endcomment -%}
-              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+              <svg class="styledrop-product-variant-selector__icon" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
               </svg>
               Find Your Best Size

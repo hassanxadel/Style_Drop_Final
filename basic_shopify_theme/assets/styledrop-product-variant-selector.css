@@ -121,3 +121,9 @@
   border-color: var(--sd-black);
 }
 
+
+/* A5 variant-selector */
+.styledrop-product-variant-selector__size-links { display: flex; align-items: center; gap: 0.5rem; }
+.styledrop-product-variant-selector__separator { font-size: 0.75rem; color: #6B7280; user-select: none; }
+.styledrop-product-variant-selector__icon { width: 0.75rem; height: 0.75rem; flex-shrink: 0; }
+

@@ -66,3 +66,12 @@
   letter-spacing: 0.02em;
 }
 
+
+/* A2 badge-top-left and spacing fixes */
+.styledrop-lifestyle__badge-top-left { position: absolute; top: 2rem; left: 2rem; z-index: 2; }
+.styledrop-lifestyle__title-left { margin-bottom: 1rem; }
+.styledrop-lifestyle__title-right-main { margin-bottom: 0.5rem; }
+.styledrop-lifestyle__title-right-accent { margin-bottom: 1.5rem; }
+.styledrop-lifestyle__banner-description { color: rgba(255,255,255,0.80); font-size: 0.875rem; margin-bottom: 1.5rem; max-width: 20rem; margin-left: auto; margin-right: auto; }
+.styledrop-lifestyle__cta-btn { display: inline-block; padding: 0.75rem 2rem; background-color: #DC2626; color: #fff; border-radius: 9999px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; transition: opacity 0.2s; cursor: pointer; }
+.styledrop-lifestyle__cta-btn:hover { opacity: 0.90; }

@@ -81,3 +81,11 @@
   color: rgba(102, 102, 102, 0.85);
 }
 
+
+/* A4 product-info-panel */
+.styledrop-product-info-panel__header { margin-bottom: 1rem; }
+.styledrop-product-info-panel__rating-stars { display: flex; align-items: center; gap: 0.25rem; }
+.styledrop-product-info-panel__star--full { color: #EAB308; }
+.styledrop-product-info-panel__star--empty { color: #D1D5DB; }
+.styledrop-product-info-panel__rating-value { margin-left: 0.25rem; font-weight: 600; }
+

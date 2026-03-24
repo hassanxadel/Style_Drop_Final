@@ -1,57 +1,38 @@
 {% comment %}
   StyleDrop Header Section
   Converted from: src/components/Header.tsx
-
-  Features:
-  - Promotional banner with scrolling messages
-  - Logo (image-based)
-  - Desktop navigation
-  - Action icons: Search, Wishlist, Cart (with count), User, Mobile Menu
-  - Mobile: Hamburger menu (rightmost), hidden wishlist
-  - Cart count badge
-
-  Settings:
-  - Promo messages (configurable)
-  - Navigation links (uses Shopify menus)
-  - Logo image
+  Exact React mirror: promo bar + sticky nav + all icons
 {% endcomment %}
 
 {{ 'styledrop-header.css' | asset_url | stylesheet_tag }}
 
-<header class="styledrop-header" id="styledrop-header">
-  {%- comment -%} Promotional Banner {%- endcomment -%}
-  <div class="styledrop-header__promo">
-    <div class="styledrop-header__promo-text animate-marquee">
-      {%- if section.settings.promo_message_1 != blank -%}
-        <span>{{ section.settings.promo_message_1 }}</span>
-      {%- endif -%}
-      {%- if section.settings.promo_message_2 != blank -%}
-        <span>{{ section.settings.promo_message_2 }}</span>
-      {%- endif -%}
-      {%- if section.settings.promo_message_3 != blank -%}
-        <span>{{ section.settings.promo_message_3 }}</span>
-      {%- endif -%}
-      {%- comment -%} Repeat for scrolling effect {%- endcomment -%}
-      {%- if section.settings.promo_message_1 != blank -%}
-        <span>{{ section.settings.promo_message_1 }}</span>
-      {%- endif -%}
-      {%- if section.settings.promo_message_2 != blank -%}
-        <span>{{ section.settings.promo_message_2 }}</span>
-      {%- endif -%}
-      {%- if section.settings.promo_message_3 != blank -%}
-        <span>{{ section.settings.promo_message_3 }}</span>
-      {%- endif -%}
+{%- comment -%} Promo Marquee Bar {%- endcomment -%}
+<div class="styledrop-header__promo-bar">
+  <div class="styledrop-header__marquee">
+    <div class="styledrop-header__marquee-track">
+      {%- for i in (1..3) -%}
+        {%- assign msg_key = 'promo_message_' | append: i -%}
+        {%- if section.settings[msg_key] != blank -%}
+          <span class="styledrop-header__marquee-item">{{ section.settings[msg_key] }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- comment -%} Duplicate for seamless loop {%- endcomment -%}
+      {%- for i in (1..3) -%}
+        {%- assign msg_key = 'promo_message_' | append: i -%}
+        {%- if section.settings[msg_key] != blank -%}
+          <span class="styledrop-header__marquee-item">{{ section.settings[msg_key] }}</span>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
   </div>
+</div>
 
-  {%- comment -%} Main Navigation Bar {%- endcomment -%}
+{%- comment -%} Main Navigation {%- endcomment -%}
+<header class="styledrop-header">
   <nav class="container styledrop-header__nav">
+
     {%- comment -%} Logo {%- endcomment -%}
-    <a
-      href="{{ routes.root_url }}"
-      class="styledrop-header__logo"
-      aria-label="StyleDrop Home"
-    >
+    <a href="{{ routes.root_url }}" class="styledrop-header__logo-link">
       {%- if section.settings.logo != blank -%}
         <img
           src="{{ section.settings.logo | image_url: width: 200 }}"
@@ -62,184 +43,188 @@
           loading="eager"
         />
       {%- else -%}
-        <span class="styledrop-header__logo-text">
-          {{ shop.name }}
-        </span>
+        <span class="styledrop-header__logo-text">{{ shop.name }}</span>
       {%- endif -%}
     </a>
 
-    {%- comment -%} Desktop Navigation Links {%- endcomment -%}
-    {%- if section.settings.menu != blank -%}
-      <ul class="styledrop-header__nav-list">
-        {%- for link in linklists[section.settings.menu].links -%}
+    {%- comment -%} Desktop Nav Links {%- endcomment -%}
+    <ul class="styledrop-header__nav-links">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'nav_link' -%}
           <li>
             <a
-              href="{{ link.url }}"
-              class="styledrop-header__nav-link{% if link.active %} styledrop-header__nav-link--active{% endif %}"
+              href="{{ block.settings.link }}"
+              class="styledrop-header__nav-link{% if block.settings.highlight %} styledrop-header__nav-link--sale{% endif %}"
             >
-              {{ link.title }}
+              {{ block.settings.label }}
             </a>
           </li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
 
     {%- comment -%} Action Icons {%- endcomment -%}
     <div class="styledrop-header__actions">
-
-      {%- comment -%} Search Icon {%- endcomment -%}
-      <button
-        class="styledrop-header__action-btn"
-        aria-label="Search"
-        onclick="document.querySelector('.search-modal').classList.remove('hidden')"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.35-4.35"></path>
+      {%- comment -%} Search {%- endcomment -%}
+      <button class="styledrop-header__icon-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
       </button>
 
-      {%- comment -%} Wishlist Icon – Desktop only {%- endcomment -%}
-      <button
-        class="styledrop-header__action-btn styledrop-header__action-btn--desktop"
-        aria-label="Wishlist"
-        onclick="toggleWishlist()"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      {%- comment -%} Wishlist (desktop only) {%- endcomment -%}
+      <button class="styledrop-header__icon-btn styledrop-header__icon-btn--desktop-only" aria-label="Wishlist" id="sd-header-wishlist-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
         </svg>
       </button>
 
-      {%- comment -%} Cart Icon with Badge {%- endcomment -%}
-      <a
-        href="{{ routes.cart_url }}"
-        class="styledrop-header__action-btn styledrop-header__cart-wrap"
-        aria-label="Cart"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <path d="M16 10a4 4 0 0 1-8 0"></path>
+      {%- comment -%} Cart {%- endcomment -%}
+      <a href="{{ routes.cart_url }}" class="styledrop-header__icon-btn styledrop-header__icon-btn--cart" aria-label="Cart ({{ cart.item_count }} items)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
         {%- if cart.item_count > 0 -%}
-          <span class="styledrop-header__cart-badge">
-            {{ cart.item_count }}
-          </span>
+          <span class="styledrop-header__cart-badge" aria-hidden="true">{{ cart.item_count }}</span>
         {%- endif -%}
       </a>
 
-      {%- comment -%} User Account Icon – Desktop only {%- endcomment -%}
-      <a
-        href="{{ routes.account_url }}"
-        class="styledrop-header__action-btn styledrop-header__action-btn--desktop"
-        aria-label="Account"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
+      {%- comment -%} Account (desktop only) {%- endcomment -%}
+      <a href="{{ routes.account_url }}" class="styledrop-header__icon-btn styledrop-header__icon-btn--desktop-only" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
         </svg>
       </a>
 
-      {%- comment -%} Mobile Menu Button – Rightmost on mobile {%- endcomment -%}
-      <button
-        class="styledrop-header__action-btn styledrop-header__action-btn--mobile"
-        aria-label="Menu"
-        onclick="toggleMobileSidebar()"
-        id="mobile-menu-btn"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
+      {%- comment -%} Mobile Hamburger {%- endcomment -%}
+      <button class="styledrop-header__icon-btn styledrop-header__icon-btn--mobile-only" aria-label="Open menu" aria-expanded="false" aria-controls="sd-mobile-menu" id="sd-hamburger-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
         </svg>
       </button>
     </div>
   </nav>
-
-  {%- comment -%} Mobile Sidebar (rendered as part of header) {%- endcomment -%}
-  {% render 'mobile-sidebar', menu: section.settings.menu, logo: section.settings.logo %}
 </header>
 
-{%- comment -%} JavaScript for Header Interactions {%- endcomment -%}
+{%- comment -%} Mobile Slide-out Menu {%- endcomment -%}
+<div id="sd-mobile-menu" class="styledrop-mobile-menu" aria-hidden="true">
+  <div class="styledrop-mobile-menu__overlay" id="sd-menu-overlay"></div>
+  <div class="styledrop-mobile-menu__panel" role="dialog" aria-label="Navigation menu">
+    <div class="styledrop-mobile-menu__header">
+      <span class="styledrop-mobile-menu__title">{{ shop.name }}</span>
+      <button class="styledrop-mobile-menu__close" aria-label="Close menu" id="sd-menu-close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="styledrop-mobile-menu__nav">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'nav_link' -%}
+          <a href="{{ block.settings.link }}" class="styledrop-mobile-menu__link{% if block.settings.highlight %} styledrop-mobile-menu__link--sale{% endif %}">
+            {{ block.settings.label }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+    <div class="styledrop-mobile-menu__footer">
+      <a href="{{ routes.account_url }}" class="styledrop-mobile-menu__account-link">My Account</a>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Mobile Sidebar Toggle — Valgara-compliant: uses sd-sidebar--closed BEM modifier
-  function toggleMobileSidebar() {
-    const sidebar = document.getElementById('mobile-sidebar');
-    const backdrop = document.getElementById('mobile-sidebar-backdrop');
+(function() {
+  var btn = document.getElementById('sd-hamburger-btn');
+  var menu = document.getElementById('sd-mobile-menu');
+  var overlay = document.getElementById('sd-menu-overlay');
+  var closeBtn = document.getElementById('sd-menu-close');
 
-    if (sidebar && backdrop) {
-      sidebar.classList.toggle('sd-sidebar--closed');
-      backdrop.classList.toggle('sd-sidebar-backdrop--hidden');
-
-      // Prevent body scroll when sidebar is open
-      document.body.style.overflow = sidebar.classList.contains('sd-sidebar--closed')
-        ? 'unset'
-        : 'hidden';
-    }
+  function openMenu() {
+    menu.classList.add('styledrop-mobile-menu--open');
+    menu.setAttribute('aria-hidden', 'false');
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
   }
 
-  // Close sidebar when clicking backdrop
-  document.addEventListener('DOMContentLoaded', function() {
-    const backdrop = document.getElementById('mobile-sidebar-backdrop');
-    if (backdrop) {
-      backdrop.addEventListener('click', toggleMobileSidebar);
-    }
-  });
-
-  // Wishlist toggle (placeholder – implement with your wishlist app)
-  function toggleWishlist() {
-    console.log('Wishlist clicked');
+  function closeMenu() {
+    menu.classList.remove('styledrop-mobile-menu--open');
+    menu.setAttribute('aria-hidden', 'true');
+    btn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
   }
+
+  if (btn) btn.addEventListener('click', openMenu);
+  if (overlay) overlay.addEventListener('click', closeMenu);
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+})();
 </script>
 
 {% schema %}
 {
-  "name": "Header",
-  "tag": "section",
-  "class": "section-header",
+  "name": "StyleDrop Header",
+  "class": "styledrop-header-section",
   "settings": [
-    {
-      "type": "header",
-      "content": "Logo"
-    },
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo Image",
-      "info": "Upload your logo (recommended: 200x96px)"
-    },
-    {
-      "type": "header",
-      "content": "Navigation"
-    },
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Main Menu",
-      "default": "main-menu",
-      "info": "Select the menu to display in the header navigation"
-    },
-    {
-      "type": "header",
-      "content": "Promotional Banner"
+      "label": "Logo image"
     },
     {
       "type": "text",
       "id": "promo_message_1",
-      "label": "Promo Message 1",
+      "label": "Promo message 1",
       "default": "🚚 Free delivery on orders over EGP 975"
     },
     {
       "type": "text",
       "id": "promo_message_2",
-      "label": "Promo Message 2",
+      "label": "Promo message 2",
       "default": "💖 New drops every Friday - don't miss out"
     },
     {
       "type": "text",
       "id": "promo_message_3",
-      "label": "Promo Message 3",
+      "label": "Promo message 3",
       "default": "🔥 Up to 40% off Sale items · Limited time"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Nav link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "New In"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight in red (Sale)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "StyleDrop Header",
+      "blocks": [
+        { "type": "nav_link", "settings": { "label": "New In", "link": "/collections/new-arrivals", "highlight": false } },
+        { "type": "nav_link", "settings": { "label": "Women", "link": "/collections/women", "highlight": false } },
+        { "type": "nav_link", "settings": { "label": "Men", "link": "/collections/men", "highlight": false } },
+        { "type": "nav_link", "settings": { "label": "Shoes", "link": "/collections/shoes", "highlight": false } },
+        { "type": "nav_link", "settings": { "label": "Accessories", "link": "/collections/accessories", "highlight": false } },
+        { "type": "nav_link", "settings": { "label": "Sale", "link": "/collections/sale", "highlight": true } }
+      ]
     }
   ]
 }

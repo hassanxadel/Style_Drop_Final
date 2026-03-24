@@ -30,12 +30,12 @@
             <img 
               src="{{ section.settings.footer_logo | image_url: width: 150 }}" 
               alt="{{ shop.name }}" 
-              class="h-16 w-auto object-contain"
+              class="styledrop-footer__logo-img"
               width="150"
               height="64"
             />
           {%- else -%}
-            <span class="font-display text-xl tracking-tight">
+            <span class="styledrop-footer__logo-text">
               {{ shop.name }}
             </span>
           {%- endif -%}
@@ -128,7 +128,7 @@
 
 {% schema %}
 {
-  "name": "Footer",
+  "name": "StyleDrop - Footer",
   "tag": "section",
   "class": "section-footer",
   "settings": [

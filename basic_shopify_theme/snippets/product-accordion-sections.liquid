@@ -49,7 +49,7 @@
         {{ product.metafields.custom.size_guide }}
       {%- else -%}
         <p>Size guide content will be displayed here. Measurements for each size available.</p>
-        <p class="mt-2">Please refer to our size chart for accurate measurements.</p>
+        <p class="styledrop-accordion-content__p">Please refer to our size chart for accurate measurements.</p>
       {%- endif -%}
     </div>
   </div>
@@ -81,8 +81,8 @@
         {{ product.metafields.custom.shipping_info }}
       {%- else -%}
         <p>Free shipping on orders over EGP 975.</p>
-        <p class="mt-2">Same-day delivery available in select areas.</p>
-        <p class="mt-2">Standard shipping takes 2-5 business days.</p>
+        <p class="styledrop-accordion-content__p">Same-day delivery available in select areas.</p>
+        <p class="styledrop-accordion-content__p">Standard shipping takes 2-5 business days.</p>
       {%- endif -%}
     </div>
   </div>
@@ -115,8 +115,8 @@
       {%- else -%}
         {%- comment -%} Default content or from product type/tags {%- endcomment -%}
         <p><strong>Material:</strong> {{ product.metafields.custom.material | default: '100% premium faux leather' }}</p>
-        <p class="mt-2"><strong>Care Instructions:</strong></p>
-        <ul class="list-disc list-inside mt-1 space-y-1">
+        <p class="styledrop-accordion-content__p"><strong>Care Instructions:</strong></p>
+        <ul class="styledrop-accordion-content__list">
           <li>Wipe clean with a damp cloth</li>
           <li>Avoid direct sunlight</li>
           <li>Store in a cool, dry place</li>
@@ -151,14 +151,14 @@
       {%- if product.metafields.custom.faq != blank -%}
         {{ product.metafields.custom.faq }}
       {%- else -%}
-        <div class="space-y-3">
+        <div class="styledrop-accordion-content__faq">
           <div>
-            <p class="font-semibold text-foreground">Is this item true to size?</p>
-            <p class="mt-1">Yes, this item fits true to size. Please refer to our size guide for measurements.</p>
+            <p class="styledrop-accordion-content__question">Is this item true to size?</p>
+            <p class="styledrop-accordion-content__p styledrop-accordion-content__p--sm">Yes, this item fits true to size. Please refer to our size guide for measurements.</p>
           </div>
           <div>
-            <p class="font-semibold text-foreground">How do I track my order?</p>
-            <p class="mt-1">You'll receive a tracking number via email once your order ships.</p>
+            <p class="styledrop-accordion-content__question">How do I track my order?</p>
+            <p class="styledrop-accordion-content__p styledrop-accordion-content__p--sm">You'll receive a tracking number via email once your order ships.</p>
           </div>
         </div>
       {%- endif -%}
@@ -192,13 +192,13 @@
         {{ product.metafields.custom.return_policy }}
       {%- else -%}
         <p>Free 30-day returns on all items.</p>
-        <p class="mt-2"><strong>Items must be:</strong></p>
-        <ul class="list-disc list-inside mt-1 space-y-1">
+        <p class="styledrop-accordion-content__p"><strong>Items must be:</strong></p>
+        <ul class="styledrop-accordion-content__list">
           <li>Unworn and unwashed</li>
           <li>In original packaging with tags attached</li>
           <li>Returned within 30 days of delivery</li>
         </ul>
-        <p class="mt-2">Refunds will be processed within 5-7 business days of receiving your return.</p>
+        <p class="styledrop-accordion-content__p">Refunds will be processed within 5-7 business days of receiving your return.</p>
       {%- endif -%}
     </div>
   </div>

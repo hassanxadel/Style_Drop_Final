@@ -59,7 +59,7 @@
         {%- endif -%}
 
         {%- comment -%} Title {%- endcomment -%}
-        <h3 class="styledrop-lifestyle__title-left mb-4">
+        <h3 class="styledrop-lifestyle__title-left">
           {{ section.settings.banner_1_title | newline_to_br }}
         </h3>
 
@@ -98,7 +98,7 @@
       <div class="styledrop-lifestyle__content styledrop-lifestyle__content--center">
         {%- comment -%} Badge - Top Left {%- endcomment -%}
         {%- if section.settings.banner_2_badge != blank -%}
-          <div class="absolute top-8 left-8">
+          <div class="styledrop-lifestyle__badge-top-left">
             <span class="styledrop-lifestyle__badge-accent">
               {{ section.settings.banner_2_badge }}
             </span>
@@ -115,23 +115,23 @@
           {%- endif -%}
 
           {%- comment -%} Title {%- endcomment -%}
-          <h3 class="styledrop-lifestyle__title-right-main mb-2">
+          <h3 class="styledrop-lifestyle__title-right-main">
             {{ section.settings.banner_2_title_line1 | default: "COMFORT" }}
           </h3>
-          <h3 class="styledrop-lifestyle__title-right-accent mb-6">
+          <h3 class="styledrop-lifestyle__title-right-accent">
             {{ section.settings.banner_2_title_line2 | default: "REDEFINED" }}
           </h3>
 
           {%- comment -%} Description {%- endcomment -%}
           {%- if section.settings.banner_2_description != blank -%}
-            <div class="text-white/80 text-sm mb-6 max-w-xs mx-auto">
+            <div class="styledrop-lifestyle__banner-description">
               {{ section.settings.banner_2_description }}
             </div>
           {%- endif -%}
 
           {%- comment -%} CTA Button {%- endcomment -%}
           {%- if section.settings.banner_2_button_text != blank -%}
-            <span class="px-8 py-3 bg-accent text-white rounded-full font-condensed text-xs font-bold tracking-wider uppercase hover:bg-accent/90 transition-colors inline-block">
+            <span class="styledrop-lifestyle__cta-btn">
               {{ section.settings.banner_2_button_text }}
             </span>
           {%- endif -%}
@@ -144,7 +144,7 @@
 
 {% schema %}
 {
-  "name": "Lifestyle Banners",
+  "name": "StyleDrop - Lifestyle Banners",
   "tag": "section",
   "class": "section-lifestyle-banners",
   "settings": [
@@ -240,7 +240,7 @@
   ],
   "presets": [
     {
-      "name": "Lifestyle Banners"
+      "name": "StyleDrop - Lifestyle Banners"
     }
   ]
 }

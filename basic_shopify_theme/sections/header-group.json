@@ -5,12 +5,19 @@
     "header": {
       "type": "header",
       "settings": {
-        "logo": "",
-        "menu": "main-menu",
         "promo_message_1": "🚚 Free delivery on orders over EGP 975",
         "promo_message_2": "💖 New drops every Friday - don't miss out",
         "promo_message_3": "🔥 Up to 40% off Sale items · Limited time"
-      }
+      },
+      "blocks": {
+        "nav-1": { "type": "nav_link", "settings": { "label": "New In", "link": "/collections/new-arrivals", "highlight": false } },
+        "nav-2": { "type": "nav_link", "settings": { "label": "Women", "link": "/collections/women", "highlight": false } },
+        "nav-3": { "type": "nav_link", "settings": { "label": "Men", "link": "/collections/men", "highlight": false } },
+        "nav-4": { "type": "nav_link", "settings": { "label": "Shoes", "link": "/collections/shoes", "highlight": false } },
+        "nav-5": { "type": "nav_link", "settings": { "label": "Accessories", "link": "/collections/accessories", "highlight": false } },
+        "nav-6": { "type": "nav_link", "settings": { "label": "Sale", "link": "/collections/sale", "highlight": true } }
+      },
+      "block_order": ["nav-1", "nav-2", "nav-3", "nav-4", "nav-5", "nav-6"]
     }
   },
   "order": [

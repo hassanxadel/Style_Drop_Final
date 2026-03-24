@@ -40,3 +40,12 @@
   line-height: 1.6;
 }
 
+
+/* A6 accordion-content typography */
+.styledrop-accordion-content__p { margin-top: 0.5rem; line-height: 1.6; }
+.styledrop-accordion-content__p--sm { margin-top: 0.25rem; }
+.styledrop-accordion-content__list { list-style: disc; list-style-position: inside; margin-top: 0.25rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.styledrop-accordion-content__question { font-weight: 600; color: #0D0D0D; }
+.styledrop-accordion-content__faq { display: flex; flex-direction: column; gap: 0.75rem; }
+.styledrop-accordion-content__faq-item { display: flex; flex-direction: column; gap: 0.25rem; }
+

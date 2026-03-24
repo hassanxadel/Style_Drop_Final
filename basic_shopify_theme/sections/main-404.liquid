@@ -1,47 +1,42 @@
 {% comment %}
-  StyleDrop 404 Not Found Template
+  StyleDrop 404 Section
   Converted from: src/pages/NotFound.tsx
-  Valgara Pattern: All Tailwind stripped. styledrop-404__* BEM classes only.
 {% endcomment %}
 
 {{ 'styledrop-404.css' | asset_url | stylesheet_tag }}
 
 <div class="styledrop-404">
-  <h1 class="styledrop-404__number">404</h1>
-  <h2 class="styledrop-404__title">PAGE NOT FOUND</h2>
-  <p class="styledrop-404__message">
-    The page you're looking for doesn't exist or has been moved.
-  </p>
-  <a href="{{ routes.root_url }}" class="styledrop-404__cta">Back to Home</a>
+  <div class="container styledrop-404__container">
+    <h1 class="styledrop-404__number">404</h1>
+    <h2 class="styledrop-404__title">PAGE NOT FOUND</h2>
+    <p class="styledrop-404__message">
+      {{ section.settings.message | default: "The page you're looking for doesn't exist or has been moved." }}
+    </p>
+    <a href="{{ routes.root_url }}" class="styledrop-404__cta">
+      {{ section.settings.button_text | default: 'Back to Home' }}
+    </a>
+  </div>
 </div>
 
 {% schema %}
 {
-  "name": "404 Not Found",
+  "name": "StyleDrop - 404 Page",
   "tag": "section",
-  "class": "section-404"
+  "class": "section-main-404",
+  "settings": [
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Error message",
+      "default": "The page you're looking for doesn't exist or has been moved."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Back to Home"
+    }
+  ],
+  "presets": [{ "name": "StyleDrop - 404 Page" }]
 }
 {% endschema %}
-<style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
-  }
-
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
-    }
-  }
-</style>
-
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
-</div>
