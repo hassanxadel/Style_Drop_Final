@@ -77,7 +77,7 @@
         type="button"
         class="wishlist-button styledrop-product-purchase__wishlist"
         aria-label="Add to wishlist"
-        data-product-id="{{ product.id }}"
+        data-product-handle="{{ product.handle }}"
       >
         <svg class="styledrop-product-purchase__wishlist-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
@@ -156,31 +156,35 @@
   // Wishlist toggle — Valgara-compliant: uses BEM modifier, NOT Tailwind class
   const wishlistBtn = document.querySelector('.wishlist-button');
   if (wishlistBtn) {
-    const productId = wishlistBtn.dataset.productId;
-    // Restore saved state from localStorage
-    const saved = JSON.parse(localStorage.getItem('sdWishlist') || '[]');
-    if (saved.includes(productId)) {
+    const productHandle = wishlistBtn.dataset.productHandle;
+    function readHandles() {
+      try {
+        const w = JSON.parse(localStorage.getItem('sdWishlistHandles') || '[]');
+        return Array.isArray(w) ? w : [];
+      } catch (e) { return []; }
+    }
+    if (productHandle && readHandles().includes(productHandle)) {
       wishlistBtn.classList.add('styledrop-product-purchase__wishlist--active');
       wishlistBtn.querySelector('svg').setAttribute('fill', 'currentColor');
     }
 
     wishlistBtn.addEventListener('click', function() {
-      const wishlist = JSON.parse(localStorage.getItem('sdWishlist') || '[]');
+      const wishlist = readHandles();
       const isActive = this.classList.contains('styledrop-product-purchase__wishlist--active');
       const svg = this.querySelector('svg');
 
       if (isActive) {
         this.classList.remove('styledrop-product-purchase__wishlist--active');
         svg.setAttribute('fill', 'none');
-        const idx = wishlist.indexOf(productId);
+        const idx = wishlist.indexOf(productHandle);
         if (idx > -1) wishlist.splice(idx, 1);
       } else {
-        // Valgara-compliant: BEM modifier controls color, NOT classList.add('text-accent')
         this.classList.add('styledrop-product-purchase__wishlist--active');
         svg.setAttribute('fill', 'currentColor');
-        if (!wishlist.includes(productId)) wishlist.push(productId);
+        if (productHandle && !wishlist.includes(productHandle)) wishlist.push(productHandle);
       }
-      localStorage.setItem('sdWishlist', JSON.stringify(wishlist));
+      localStorage.setItem('sdWishlistHandles', JSON.stringify(wishlist));
+      document.dispatchEvent(new CustomEvent('sd-wishlist-updated'));
     });
   }
 })();

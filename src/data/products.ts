@@ -20,6 +20,7 @@ import productBomber from '@/assets/product-bomber.jpg';
 
 export const collectionProducts: Product[] = [
   {
+    handle: 'leather-biker-jacket',
     img: productBiker,
     brand: 'ARITZIA',
     name: 'Leather Biker Jacket',
@@ -30,6 +31,7 @@ export const collectionProducts: Product[] = [
     badgeType: 'sale',
   },
   {
+    handle: 'oversized-hoodie',
     img: productHoodie,
     brand: 'ESSENTIALS',
     name: 'Oversized Hoodie',
@@ -44,6 +46,7 @@ export const collectionProducts: Product[] = [
     colors: ['hsl(30 50% 60%)', 'hsl(0 0% 10%)', 'hsl(30 10% 80%)'],
   },
   {
+    handle: 'air-force-1-07',
     img: productAirforce,
     brand: 'NIKE',
     name: 'Air Force 1 \'07',
@@ -51,6 +54,7 @@ export const collectionProducts: Product[] = [
     colors: ['hsl(0 0% 95%)', 'hsl(0 0% 10%)', 'hsl(0 70% 50%)'],
   },
   {
+    handle: 'ribbed-turtleneck',
     img: productTurtleneck,
     brand: 'COS',
     name: 'Ribbed Turtleneck',
@@ -58,6 +62,7 @@ export const collectionProducts: Product[] = [
     colors: ['hsl(0 0% 90%)', 'hsl(0 0% 10%)'],
   },
   {
+    handle: 'down-puffer-jacket',
     img: productPuffer,
     brand: 'CANADA GOOSE',
     name: 'Down Puffer Jacket',
@@ -68,6 +73,7 @@ export const collectionProducts: Product[] = [
     badgeType: 'sale',
   },
   {
+    handle: 'wrap-midi-dress',
     img: productDress,
     brand: '& OTHER STORIES',
     name: 'Wrap Midi Dress',
@@ -77,6 +83,7 @@ export const collectionProducts: Product[] = [
     badgeType: 'new',
   },
   {
+    handle: 'relaxed-cargo-trousers',
     img: productCargo,
     brand: 'JACQUEMUS',
     name: 'Relaxed Cargo Trousers',
@@ -84,6 +91,7 @@ export const collectionProducts: Product[] = [
     colors: ['hsl(120 20% 35%)', 'hsl(0 0% 10%)', 'hsl(30 10% 70%)'],
   },
   {
+    handle: 'bomber-jacket',
     img: productBomber,
     brand: 'STRADIVARIUS',
     name: 'Bomber Jacket',

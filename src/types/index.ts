@@ -8,6 +8,8 @@
 
 export interface Product {
   id?: string;
+  /** Stable slug for wishlist + URLs (mirrors Shopify product handle) */
+  handle?: string;
   img: string;
   brand: string;
   name: string;

@@ -1,10 +1,16 @@
 {% comment %}
   StyleDrop Header Section
-  Converted from: src/components/Header.tsx
-  Exact React mirror: promo bar + sticky nav + all icons
+  Promo bar + sticky nav + full-screen mobile menu + theme editor typography / logo controls.
 {% endcomment %}
 
 {{ 'styledrop-header.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign wishlist_url = section.settings.wishlist_page
+  if wishlist_url == blank
+    assign wishlist_url = '/pages/wishlist'
+  endif
+-%}
 
 {%- comment -%} Promo Marquee Bar {%- endcomment -%}
 <div class="styledrop-header__promo-bar">
@@ -16,7 +22,6 @@
           <span class="styledrop-header__marquee-item">{{ section.settings[msg_key] }}</span>
         {%- endif -%}
       {%- endfor -%}
-      {%- comment -%} Duplicate for seamless loop {%- endcomment -%}
       {%- for i in (1..3) -%}
         {%- assign msg_key = 'promo_message_' | append: i -%}
         {%- if section.settings[msg_key] != blank -%}
@@ -27,34 +32,53 @@
   </div>
 </div>
 
-{%- comment -%} Main Navigation {%- endcomment -%}
-<header class="styledrop-header">
+<header
+  class="styledrop-header"
+  style="
+    --sd-nav-font-size: {{ section.settings.nav_font_size }}px;
+    --sd-nav-font-weight: {{ section.settings.nav_font_weight }};
+    --sd-logo-text-size: {{ section.settings.logo_text_size }}px;
+  "
+>
   <nav class="container styledrop-header__nav">
-
-    {%- comment -%} Logo {%- endcomment -%}
     <a href="{{ routes.root_url }}" class="styledrop-header__logo-link">
       {%- if section.settings.logo != blank -%}
         <img
-          src="{{ section.settings.logo | image_url: width: 200 }}"
+          src="{{ section.settings.logo | image_url: width: 400 }}"
           alt="{{ shop.name }}"
           class="styledrop-header__logo-img"
-          width="200"
-          height="96"
+          width="{{ section.settings.logo_max_height | times: 2 }}"
+          height="{{ section.settings.logo_max_height }}"
           loading="eager"
+          style="max-height: {{ section.settings.logo_max_height }}px; width: auto; height: auto;"
         />
       {%- else -%}
         <span class="styledrop-header__logo-text">{{ shop.name }}</span>
       {%- endif -%}
     </a>
 
-    {%- comment -%} Desktop Nav Links {%- endcomment -%}
+    {%- assign is_first_nav_link = true -%}
     <ul class="styledrop-header__nav-links">
       {%- for block in section.blocks -%}
         {%- if block.type == 'nav_link' -%}
-          <li>
+          {%- liquid
+            assign lh = block.settings.link | default: '' | strip
+            assign path_only = lh
+            if lh contains '://'
+              assign path_only = lh | remove: shop.secure_url | remove: shop.url
+            endif
+            assign nav_is_active = false
+            if path_only != blank and path_only == request.path
+              assign nav_is_active = true
+            elsif is_first_nav_link and template.name == 'index'
+              assign nav_is_active = true
+            endif
+            assign is_first_nav_link = false
+          -%}
+          <li {{ block.shopify_attributes }}>
             <a
               href="{{ block.settings.link }}"
-              class="styledrop-header__nav-link{% if block.settings.highlight %} styledrop-header__nav-link--sale{% endif %}"
+              class="styledrop-header__nav-link{% if block.settings.highlight %} styledrop-header__nav-link--sale{% endif %}{% if nav_is_active %} styledrop-header__nav-link--active{% endif %}"
             >
               {{ block.settings.label }}
             </a>
@@ -63,23 +87,19 @@
       {%- endfor -%}
     </ul>
 
-    {%- comment -%} Action Icons {%- endcomment -%}
     <div class="styledrop-header__actions">
-      {%- comment -%} Search {%- endcomment -%}
-      <button class="styledrop-header__icon-btn" aria-label="Search">
+      <button type="button" class="styledrop-header__icon-btn" aria-label="Search">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
       </button>
 
-      {%- comment -%} Wishlist (desktop only) {%- endcomment -%}
-      <button class="styledrop-header__icon-btn styledrop-header__icon-btn--desktop-only" aria-label="Wishlist" id="sd-header-wishlist-btn">
+      <a href="{{ wishlist_url }}" class="styledrop-header__icon-btn styledrop-header__icon-btn--desktop-only" aria-label="Wishlist">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
         </svg>
-      </button>
+      </a>
 
-      {%- comment -%} Cart {%- endcomment -%}
       <a href="{{ routes.cart_url }}" class="styledrop-header__icon-btn styledrop-header__icon-btn--cart" aria-label="Cart ({{ cart.item_count }} items)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
@@ -89,15 +109,13 @@
         {%- endif -%}
       </a>
 
-      {%- comment -%} Account (desktop only) {%- endcomment -%}
       <a href="{{ routes.account_url }}" class="styledrop-header__icon-btn styledrop-header__icon-btn--desktop-only" aria-label="Account">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
         </svg>
       </a>
 
-      {%- comment -%} Mobile Hamburger {%- endcomment -%}
-      <button class="styledrop-header__icon-btn styledrop-header__icon-btn--mobile-only" aria-label="Open menu" aria-expanded="false" aria-controls="sd-mobile-menu" id="sd-hamburger-btn">
+      <button type="button" class="styledrop-header__icon-btn styledrop-header__icon-btn--mobile-only" aria-label="Open menu" aria-expanded="false" aria-controls="sd-mobile-menu" id="sd-hamburger-btn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
         </svg>
@@ -106,29 +124,102 @@
   </nav>
 </header>
 
-{%- comment -%} Mobile Slide-out Menu {%- endcomment -%}
 <div id="sd-mobile-menu" class="styledrop-mobile-menu" aria-hidden="true">
-  <div class="styledrop-mobile-menu__overlay" id="sd-menu-overlay"></div>
-  <div class="styledrop-mobile-menu__panel" role="dialog" aria-label="Navigation menu">
-    <div class="styledrop-mobile-menu__header">
-      <span class="styledrop-mobile-menu__title">{{ shop.name }}</span>
-      <button class="styledrop-mobile-menu__close" aria-label="Close menu" id="sd-menu-close">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-    <nav class="styledrop-mobile-menu__nav">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'nav_link' -%}
-          <a href="{{ block.settings.link }}" class="styledrop-mobile-menu__link{% if block.settings.highlight %} styledrop-mobile-menu__link--sale{% endif %}">
-            {{ block.settings.label }}
-          </a>
+  <div class="styledrop-mobile-menu__sheet" role="dialog" aria-label="{{ section.settings.mobile_menu_aria_label }}">
+    <div class="styledrop-mobile-menu__topbar">
+      <a href="{{ routes.root_url }}" class="styledrop-mobile-menu__logo-link">
+        {%- if section.settings.logo != blank -%}
+          <img
+            src="{{ section.settings.logo | image_url: width: 280 }}"
+            alt="{{ shop.name }}"
+            class="styledrop-mobile-menu__logo-img"
+            width="140"
+            height="70"
+            loading="lazy"
+            style="max-height: {{ section.settings.logo_max_height | times: 0.65 | round }}px; width: auto;"
+          />
+        {%- else -%}
+          <span class="styledrop-mobile-menu__logo-text">{{ shop.name }}</span>
         {%- endif -%}
-      {%- endfor -%}
-    </nav>
-    <div class="styledrop-mobile-menu__footer">
-      <a href="{{ routes.account_url }}" class="styledrop-mobile-menu__account-link">My Account</a>
+      </a>
+      <div class="styledrop-mobile-menu__top-actions">
+        <button type="button" class="styledrop-mobile-menu__icon-btn" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <a href="{{ routes.cart_url }}" class="styledrop-mobile-menu__icon-btn styledrop-mobile-menu__icon-btn--cart" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          {%- if cart.item_count > 0 -%}
+            <span class="styledrop-mobile-menu__cart-badge">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </a>
+        <button type="button" class="styledrop-mobile-menu__icon-btn" id="sd-menu-close" aria-label="Close menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="styledrop-mobile-menu__scroll">
+      <div class="styledrop-mobile-menu__search-wrap">
+        <svg class="styledrop-mobile-menu__search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" class="styledrop-mobile-menu__search-input" placeholder="{{ section.settings.mobile_search_placeholder | escape }}" aria-label="Search" />
+      </div>
+
+      {%- assign is_first_nav_m = true -%}
+      <nav class="styledrop-mobile-menu__primary">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'nav_link' -%}
+            {%- liquid
+              assign lh = block.settings.link | default: '' | strip
+              assign path_only = lh
+              if lh contains '://'
+                assign path_only = lh | remove: shop.secure_url | remove: shop.url
+              endif
+              assign nav_m_active = false
+              if path_only != blank and path_only == request.path
+                assign nav_m_active = true
+              elsif is_first_nav_m and template.name == 'index'
+                assign nav_m_active = true
+              endif
+              assign is_first_nav_m = false
+            -%}
+            <a href="{{ block.settings.link }}" class="styledrop-mobile-menu__row{% if block.settings.highlight %} styledrop-mobile-menu__row--sale{% endif %}{% if nav_m_active %} styledrop-mobile-menu__row--active{% endif %}">
+              <span class="styledrop-mobile-menu__row-label">{{ block.settings.label }}</span>
+              <svg class="styledrop-mobile-menu__row-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+
+      <div class="styledrop-mobile-menu__divider"></div>
+
+      <div class="styledrop-mobile-menu__secondary">
+        <a href="{{ routes.account_url }}" class="styledrop-mobile-menu__secondary-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          {{ section.settings.mobile_account_label }}
+        </a>
+        <a href="{{ wishlist_url }}" class="styledrop-mobile-menu__secondary-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          {{ section.settings.mobile_wishlist_label }}
+        </a>
+      </div>
+
+      {%- if section.settings.show_mobile_profile_card -%}
+        <div class="styledrop-mobile-menu__profile">
+          <div class="styledrop-mobile-menu__profile-bg"></div>
+          <div class="styledrop-mobile-menu__profile-inner">
+            <div class="styledrop-mobile-menu__profile-avatar-wrap">
+              <div class="styledrop-mobile-menu__profile-avatar">{{ section.settings.mobile_profile_initials | escape }}</div>
+              <span class="styledrop-mobile-menu__profile-cam" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </span>
+            </div>
+            <div>
+              <p class="styledrop-mobile-menu__profile-name">{{ section.settings.mobile_profile_name | escape }}</p>
+              <p class="styledrop-mobile-menu__profile-email">{{ section.settings.mobile_profile_email | escape }}</p>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </div>
@@ -137,26 +228,26 @@
 (function() {
   var btn = document.getElementById('sd-hamburger-btn');
   var menu = document.getElementById('sd-mobile-menu');
-  var overlay = document.getElementById('sd-menu-overlay');
   var closeBtn = document.getElementById('sd-menu-close');
 
   function openMenu() {
     menu.classList.add('styledrop-mobile-menu--open');
     menu.setAttribute('aria-hidden', 'false');
-    btn.setAttribute('aria-expanded', 'true');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
-
   function closeMenu() {
     menu.classList.remove('styledrop-mobile-menu--open');
     menu.setAttribute('aria-hidden', 'true');
-    btn.setAttribute('aria-expanded', 'false');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   }
 
   if (btn) btn.addEventListener('click', openMenu);
-  if (overlay) overlay.addEventListener('click', closeMenu);
   if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  menu.querySelectorAll('.styledrop-mobile-menu__row, .styledrop-mobile-menu__secondary-link, .styledrop-mobile-menu__logo-link').forEach(function(el) {
+    el.addEventListener('click', function() { closeMenu(); });
+  });
 })();
 </script>
 
@@ -166,9 +257,125 @@
   "class": "styledrop-header-section",
   "settings": [
     {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
       "type": "image_picker",
       "id": "logo",
       "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_height",
+      "min": 32,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo max height (when image uploaded)",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "logo_text_size",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Logo text size (no image)",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Navigation (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "nav_font_size",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Nav text size",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "nav_font_weight",
+      "label": "Nav font weight",
+      "options": [
+        { "value": "400", "label": "400 — Regular" },
+        { "value": "500", "label": "500 — Medium" },
+        { "value": "600", "label": "600 — Semibold" },
+        { "value": "700", "label": "700 — Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "Wishlist"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_page",
+      "label": "Wishlist page",
+      "info": "Create a page with handle “wishlist”, assign template “wishlist”, then paste its URL here (or leave empty to use /pages/wishlist)."
+    },
+    {
+      "type": "header",
+      "content": "Mobile menu"
+    },
+    {
+      "type": "text",
+      "id": "mobile_menu_aria_label",
+      "label": "Mobile menu (screen reader title)",
+      "default": "Navigation menu"
+    },
+    {
+      "type": "text",
+      "id": "mobile_search_placeholder",
+      "label": "Search placeholder",
+      "default": "Search brands, styles..."
+    },
+    {
+      "type": "text",
+      "id": "mobile_account_label",
+      "label": "Account row label",
+      "default": "Account"
+    },
+    {
+      "type": "text",
+      "id": "mobile_wishlist_label",
+      "label": "Wishlist row label",
+      "default": "Wishlist"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_profile_card",
+      "label": "Show profile card (bottom of mobile menu)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mobile_profile_initials",
+      "label": "Profile initials",
+      "default": "AJ"
+    },
+    {
+      "type": "text",
+      "id": "mobile_profile_name",
+      "label": "Profile name",
+      "default": "Alex Johnson"
+    },
+    {
+      "type": "text",
+      "id": "mobile_profile_email",
+      "label": "Profile email",
+      "default": "alex@example.com"
+    },
+    {
+      "type": "header",
+      "content": "Promo bar"
     },
     {
       "type": "text",
@@ -208,7 +415,7 @@
         {
           "type": "checkbox",
           "id": "highlight",
-          "label": "Highlight in red (Sale)",
+          "label": "Highlight in accent (e.g. Sale)",
           "default": false
         }
       ]

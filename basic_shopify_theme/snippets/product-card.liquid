@@ -15,7 +15,7 @@
 {% endcomment %}
 
 <a
-  href="{{ product.url }}"
+  href="/products/{{ product.handle }}"
   class="styledrop-product-card"
 >
   {%- comment -%} Product Image Container {%- endcomment -%}
@@ -66,7 +66,7 @@
       class="styledrop-product-card__wishlist wishlist-toggle"
       aria-label="Add to wishlist"
       data-product-handle="{{ product.handle }}"
-      onclick="toggleWishlist('{{ product.handle }}'); event.preventDefault();"
+          onclick="toggleWishlistCard(this, '{{ product.handle }}'); event.preventDefault();"
     >
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="styledrop-product-card__wishlist-icon">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -195,19 +195,34 @@ function quickAddToCart(variantId) {
   });
 }
 
-// Wishlist toggle
-function toggleWishlist(productHandle) {
-  let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-  
-  if (wishlist.includes(productHandle)) {
-    wishlist = wishlist.filter(h => h !== productHandle);
-  } else {
-    wishlist.push(productHandle);
+function getSdWishlistHandles() {
+  try {
+    var w = JSON.parse(localStorage.getItem('sdWishlistHandles') || '[]');
+    if (Array.isArray(w)) return w.filter(function(h) { return typeof h === 'string'; });
+  } catch (e) {}
+  try {
+    var old = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    if (Array.isArray(old) && old.length) {
+      localStorage.removeItem('wishlist');
+      localStorage.setItem('sdWishlistHandles', JSON.stringify(old));
+      return old.filter(function(h) { return typeof h === 'string'; });
+    }
+  } catch (e) {}
+  return [];
+}
+
+function toggleWishlistCard(btn, productHandle) {
+  var wishlist = getSdWishlistHandles();
+  var i = wishlist.indexOf(productHandle);
+  var nextIn = i < 0;
+  if (nextIn) wishlist.push(productHandle);
+  else wishlist.splice(i, 1);
+  localStorage.setItem('sdWishlistHandles', JSON.stringify(wishlist));
+  if (btn) {
+    btn.classList.toggle('styledrop-product-card__wishlist--active', nextIn);
+    var svg = btn.querySelector('svg');
+    if (svg) svg.setAttribute('fill', nextIn ? 'currentColor' : 'none');
   }
-  
-  localStorage.setItem('wishlist', JSON.stringify(wishlist));
-  
-  // Update UI (optional)
-  console.log('Wishlist updated:', wishlist);
+  document.dispatchEvent(new CustomEvent('sd-wishlist-updated'));
 }
 </script>

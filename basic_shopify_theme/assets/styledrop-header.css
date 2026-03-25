@@ -73,14 +73,14 @@
 .styledrop-header__logo-link:hover { opacity: 0.90; }
 
 .styledrop-header__logo-img {
-  height: 6rem;
   width: auto;
   object-fit: contain;
+  display: block;
 }
 
 .styledrop-header__logo-text {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.5rem;
+  font-size: var(--sd-logo-text-size, 1.5rem);
   color: #0D0D0D;
   letter-spacing: 0.05em;
 }
@@ -94,8 +94,8 @@
   gap: 2rem;
   align-items: center;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-size: var(--sd-nav-font-size, 0.8125rem);
+  font-weight: var(--sd-nav-font-weight, 500);
   letter-spacing: 0.52px;
 }
 
@@ -116,6 +116,12 @@
 }
 .styledrop-header__nav-link--sale {
   color: #DC2626;
+  font-weight: 600;
+}
+
+.styledrop-header__nav-link--active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
   font-weight: 600;
 }
 
@@ -182,7 +188,7 @@
   pointer-events: none;
 }
 
-/* ─── Mobile Slide-out Menu ──────────────────────────────────────────────── */
+/* ─── Mobile full-screen menu (cream sheet) ─────────────────────────────── */
 .styledrop-mobile-menu {
   display: none;
   position: fixed;
@@ -201,107 +207,269 @@
   }
 }
 
-.styledrop-mobile-menu__overlay {
+.styledrop-mobile-menu__sheet {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-}
-
-.styledrop-mobile-menu__panel {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 85%;
-  max-width: 320px;
-  background-color: #0D0D0D;
-  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  background-color: #F5F0EB;
+  color: #0D0D0D;
   display: flex;
   flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  overflow: hidden;
 }
 
-.styledrop-mobile-menu--open .styledrop-mobile-menu__panel {
-  transform: translateX(0);
-}
-
-.styledrop-mobile-menu__header {
+.styledrop-mobile-menu__topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(13, 13, 13, 0.08);
+  flex-shrink: 0;
 }
 
-.styledrop-mobile-menu__title {
+.styledrop-mobile-menu__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.styledrop-mobile-menu__logo-img {
+  display: block;
+  object-fit: contain;
+}
+
+.styledrop-mobile-menu__logo-text {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.25rem;
-  letter-spacing: 0.1em;
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #ffffff;
 }
 
-.styledrop-mobile-menu__close {
-  background: transparent;
+.styledrop-mobile-menu__top-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.styledrop-mobile-menu__icon-btn {
+  width: 40px;
+  height: 40px;
   border: none;
-  color: #ffffff;
-  cursor: pointer;
-  padding: 0.25rem;
   border-radius: 9999px;
+  background: transparent;
+  color: #0D0D0D;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
   transition: background-color 0.15s;
 }
-.styledrop-mobile-menu__close:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.styledrop-mobile-menu__icon-btn:hover {
+  background-color: rgba(0, 0, 0, 0.06);
 }
 
-.styledrop-mobile-menu__nav {
-  flex: 1;
+.styledrop-mobile-menu__cart-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 9999px;
+  background: #EA580C;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
   display: flex;
-  flex-direction: column;
-  padding: 1rem 0;
-  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
 }
 
-.styledrop-mobile-menu__link {
-  display: block;
-  padding: 0.875rem 1.25rem;
+.styledrop-mobile-menu__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 1.25rem 2rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.styledrop-mobile-menu__search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+  padding: 0.875rem 1rem;
+  border-radius: 1rem;
+  background: #E8E4DF;
+  border: 1px solid rgba(13, 13, 13, 0.06);
+}
+
+.styledrop-mobile-menu__search-icon {
+  color: rgba(13, 13, 13, 0.45);
+  flex-shrink: 0;
+}
+
+.styledrop-mobile-menu__search-input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  outline: none;
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.875rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  color: #0D0D0D;
+}
+.styledrop-mobile-menu__search-input::placeholder {
+  color: rgba(13, 13, 13, 0.4);
+}
+
+.styledrop-mobile-menu__primary {
+  display: flex;
+  flex-direction: column;
+}
+
+.styledrop-mobile-menu__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(13, 13, 13, 0.1);
   text-decoration: none;
-  letter-spacing: 0.52px;
-  transition: color 0.15s, background-color 0.15s;
+  color: #0D0D0D;
+  font-family: 'Barlow Condensed', 'Bebas Neue', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background-color 0.15s;
 }
-.styledrop-mobile-menu__link:hover {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.05);
-}
-.styledrop-mobile-menu__link--sale {
-  color: #DC2626;
-}
-.styledrop-mobile-menu__link--sale:hover {
-  color: #EF4444;
+.styledrop-mobile-menu__row:active {
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
-.styledrop-mobile-menu__footer {
-  padding: 1rem 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+.styledrop-mobile-menu__row--sale {
+  color: #EA580C;
 }
 
-.styledrop-mobile-menu__account-link {
-  display: block;
+.styledrop-mobile-menu__row--active {
+  background-color: rgba(0, 0, 0, 0.04);
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.styledrop-mobile-menu__row-chevron {
+  color: rgba(13, 13, 13, 0.35);
+  flex-shrink: 0;
+}
+
+.styledrop-mobile-menu__row--sale .styledrop-mobile-menu__row-chevron {
+  color: rgba(234, 88, 12, 0.5);
+}
+
+.styledrop-mobile-menu__divider {
+  height: 1px;
+  background: rgba(13, 13, 13, 0.12);
+  margin: 1.5rem 0;
+}
+
+.styledrop-mobile-menu__secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.styledrop-mobile-menu__secondary-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #0D0D0D;
   text-decoration: none;
-  transition: color 0.15s;
 }
-.styledrop-mobile-menu__account-link:hover {
-  color: rgba(255, 255, 255, 0.8);
+.styledrop-mobile-menu__secondary-link svg {
+  color: rgba(13, 13, 13, 0.55);
+}
+
+.styledrop-mobile-menu__profile {
+  position: relative;
+  margin-top: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #1a1512;
+  color: #fff;
+  padding: 1.25rem;
+}
+
+.styledrop-mobile-menu__profile-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 20%, #3d2a1f 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, #2a1810 0%, transparent 45%);
+}
+
+.styledrop-mobile-menu__profile-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.styledrop-mobile-menu__profile-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.styledrop-mobile-menu__profile-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background: #EA580C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.styledrop-mobile-menu__profile-cam {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  background: #fff;
+  color: #0D0D0D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #1a1512;
+}
+
+.styledrop-mobile-menu__profile-name {
+  margin: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.styledrop-mobile-menu__profile-email {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
 }

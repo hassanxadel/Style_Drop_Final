@@ -14,107 +14,123 @@
 
 {{ 'styledrop-collection.css' | asset_url | stylesheet_tag }}
 
-<div class="bg-background min-h-screen py-8 styledrop-collection">
-  <div class="styledrop-collection__container container">
-    {%- comment -%} Breadcrumb Navigation {%- endcomment -%}
-    <nav class="flex items-center gap-2 text-sm mb-6 styledrop-collection__breadcrumb">
-      <a href="{{ routes.root_url }}" class="text-muted-foreground hover:text-foreground transition-colors">
-        Home
-      </a>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-muted-foreground">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-      <span class="text-foreground font-medium">{{ collection.title }}</span>
-    </nav>
+{%- comment -%}
+  Fallback to /collections/all when this section is rendered
+  outside a native collection context in the editor.
+{%- endcomment -%}
+{%- assign source_collection = collection -%}
+{%- if source_collection == blank or source_collection.products_count == blank -%}
+  {%- assign source_collection = collections['all'] -%}
+{%- endif -%}
 
-    {%- comment -%} Collection Header {%- endcomment -%}
-    <div class="mb-8 styledrop-collection__header">
-      <h1 class="styledrop-collection__title">
-        {{ collection.title }}
-      </h1>
-      {%- if collection.description != blank -%}
-        <p class="text-muted-foreground max-w-2xl">
-          {{ collection.description }}
-        </p>
-      {%- endif -%}
-    </div>
+<div class="styledrop-collection">
+  {%- comment -%} Top header bar (breadcrumb + title like React) {%- endcomment -%}
+  <div class="styledrop-collection__top">
+    <div class="container styledrop-collection__top-inner">
+      <div class="styledrop-collection__breadcrumb">
+        <svg class="styledrop-collection__breadcrumb-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <a href="{{ routes.root_url }}" class="styledrop-collection__breadcrumb-link">Home</a>
+        <span class="styledrop-collection__breadcrumb-sep">/</span>
+        <span class="styledrop-collection__breadcrumb-current">{{ source_collection.title | default: 'All Products' }}</span>
+      </div>
 
-    {%- comment -%} Main Content: Sidebar + Products {%- endcomment -%}
-    <div class="flex gap-8 styledrop-collection__layout">
-      {%- comment -%} Desktop Sidebar {%- endcomment -%}
-      <aside class="styledrop-collection__sidebar">
-        {% render 'filter-sidebar', collection: collection %}
-      </aside>
-
-      {%- comment -%} Products Section {%- endcomment -%}
-      <div class="flex-1 styledrop-collection__products">
-        {%- comment -%} Collection Filters Bar {%- endcomment -%}
-        {% render 'collection-filters', collection: collection, product_count: collection.products_count %}
-
-        {%- comment -%} Product Grid {%- endcomment -%}
-        <div class="product-grid-container styledrop-collection__product-grid">
-          {% render 'product-grid', products: collection.products, columns: 3 %}
+      <div class="styledrop-collection__header">
+        <div class="styledrop-collection__header-left">
+          <span class="styledrop-collection__badge">{{ section.settings.badge_text }}</span>
+          <h1 class="styledrop-collection__title">
+            {{ section.settings.title_line_1 }}
+            <span class="styledrop-collection__title-accent">{{ section.settings.title_line_2 }}</span>
+          </h1>
         </div>
 
-        {%- comment -%} Pagination {%- endcomment -%}
-        {%- if paginate.pages > 1 -%}
-          <div class="mt-12 flex items-center justify-center gap-2 styledrop-collection__pagination">
-            {%- if paginate.previous -%}
-              <a
-                href="{{ paginate.previous.url }}"
-                class="w-10 h-10 flex items-center justify-center border border-border rounded-lg hover:bg-muted transition-colors"
-                aria-label="Previous page"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-              </a>
-            {%- endif -%}
+        <div class="styledrop-collection__header-right">
+          {% render 'collection-filters', collection: source_collection, product_count: source_collection.products_count %}
+        </div>
+      </div>
+    </div>
+  </div>
 
-            {%- for part in paginate.parts -%}
-              {%- if part.is_link -%}
-                <a
-                  href="{{ part.url }}"
-                  class="w-10 h-10 flex items-center justify-center border border-border rounded-lg hover:bg-muted transition-colors text-sm font-medium"
-                >
-                  {{ part.title }}
-                </a>
-              {%- else -%}
-                <span class="w-10 h-10 flex items-center justify-center bg-primary text-primary-foreground rounded-lg text-sm font-medium">
-                  {{ part.title }}
-                </span>
-              {%- endif -%}
-            {%- endfor -%}
+  {%- comment -%} Main content area (sidebar + grid) {%- endcomment -%}
+  <div class="styledrop-collection__content">
+    <div class="container">
+      <div class="styledrop-collection__layout">
+        <aside class="styledrop-collection__sidebar">
+          {% render 'filter-sidebar', collection: source_collection %}
+        </aside>
 
-            {%- if paginate.next -%}
-              <a
-                href="{{ paginate.next.url }}"
-                class="w-10 h-10 flex items-center justify-center border border-border rounded-lg hover:bg-muted transition-colors"
-                aria-label="Next page"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </a>
-            {%- endif -%}
+        <div class="styledrop-collection__products">
+          <div class="product-grid-container styledrop-collection__product-grid sd-grid--grid">
+            {%- comment -%}
+              Avoid Shopify paginate errors in section context:
+              Render a safe slice of collection products (matches React "no pagination" layout).
+            {%- endcomment -%}
+            {%- assign products_limit = section.settings.products_per_page | default: 24 -%}
+            {%- assign products_to_render = source_collection.products | slice: 0, products_limit -%}
+            {% render 'product-grid', products: products_to_render, columns: section.settings.columns_desktop %}
           </div>
-        {%- endif -%}
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-{%- comment -%} Mobile Filter Sidebar (Overlay) {%- endcomment -%}
-<div class="styledrop-collection__mobile-overlay filter-sidebar-mobile" onclick="if(event.target === this) toggleMobileFilters()">
-  <div class="absolute right-0 top-0 h-full w-full max-w-sm bg-background overflow-y-auto p-6 styledrop-collection__mobile-panel">
-    {% render 'filter-sidebar', collection: collection %}
+{%- comment -%} Mobile Filter Sidebar container (toggled by snippets JS) {%- endcomment -%}
+<div class="styledrop-collection__mobile-overlay styledrop-filter-sidebar-mobile sd-sidebar--closed">
+  <div class="styledrop-collection__mobile-panel">
+    {% render 'filter-sidebar', collection: source_collection %}
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "Collection",
+  "name": "Main Collection",
   "tag": "section",
-  "class": "section-collection"
+  "class": "section-collection",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "TRENDING COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "title_line_1",
+      "label": "Title line 1",
+      "default": "SHOP WHAT'S "
+    },
+    {
+      "type": "text",
+      "id": "title_line_2",
+      "label": "Title line 2 (accent)",
+      "default": "TRENDING"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "presets": [
+    { "name": "Main Collection" }
+  ]
 }
 {% endschema %}

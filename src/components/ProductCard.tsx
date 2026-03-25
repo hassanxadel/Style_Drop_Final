@@ -16,9 +16,11 @@
  * - product: Product object with all product data
  */
 
+import { useState } from 'react';
 import { Heart, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/types';
+import { isInWishlist, productHandle, toggleWishlistHandle } from '@/lib/wishlist';
 
 interface ProductCardProps {
   product: Product;
@@ -36,9 +38,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
     badgeType,
   } = product;
 
+  const handle = productHandle(product);
+  const [saved, setSaved] = useState(() => isInWishlist(handle));
+
   return (
     <Link
-      to={`/product/${product.id || product.name.toLowerCase().replace(/\s+/g, '-')}`}
+      to={`/product/${handle}`}
       className="group cursor-pointer block bg-white rounded-2xl p-3 pb-4"
     >
       {/* Product Image Container */}
@@ -76,7 +81,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {/* Wishlist Button - Top Right */}
         <button
-          className="
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSaved(toggleWishlistHandle(handle));
+          }}
+          className={`
             absolute top-3 right-3 
             w-9 h-9 
             bg-white/90 backdrop-blur 
@@ -84,10 +95,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
             flex items-center justify-center 
             hover:bg-white 
             transition-colors
-          "
-          aria-label="Add to wishlist"
+            ${saved ? 'text-[#DC2626]' : 'text-[#0D0D0D]'}
+          `}
+          aria-label={saved ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart size={17} className="text-[#0D0D0D]" />
+          <Heart size={17} fill={saved ? 'currentColor' : 'none'} />
         </button>
 
         {/* Add to Cart Button - Bottom Right (icon) */}

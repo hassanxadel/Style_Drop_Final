@@ -83,6 +83,12 @@
   background-color: #ffffff;
 }
 
+.styledrop-product-card__wishlist--active,
+.styledrop-product-card__wishlist--active svg,
+.styledrop-product-card__wishlist--active .styledrop-product-card__wishlist-icon {
+  color: #DC2626;
+}
+
 .styledrop-product-card__quick-add {
   position: absolute;
   bottom: 0.75rem;

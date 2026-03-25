@@ -20,18 +20,18 @@
 .styledrop-product__panel {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem; /* ~gap-8 */
-  background: #FFFFFF;
-  border-radius: 1.5rem; /* ~rounded-3xl */
-  padding: 1.5rem; /* ~p-6 */
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  gap: 1.75rem;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 @media (min-width: 768px) {
   .styledrop-product__panel {
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem; /* ~md:gap-12 */
-    padding: 2.5rem; /* ~md:p-10 */
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: 2.25rem;
+    padding: 0;
   }
 }
 
@@ -48,8 +48,8 @@
 
 @media (max-width: 767.98px) {
   .styledrop-product__info {
-    align-items: center;
-    text-align: center;
+    align-items: stretch;
+    text-align: left;
   }
 }
 

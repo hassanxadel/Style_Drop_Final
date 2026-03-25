@@ -227,3 +227,72 @@
   opacity: 0.75;
   text-decoration: underline;
 }
+
+/* ─── StyleDrop dark filter card variant (matches React collection design) ─── */
+.styledrop-filter-sidebar {
+  background-color: #050505;
+  border-radius: 16px;
+  padding: 18px 14px;
+  color: #ffffff;
+}
+
+.styledrop-filter-sidebar__group-title {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.styledrop-filter-sidebar__chevron {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.styledrop-filter-sidebar__group--bordered {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.styledrop-filter-sidebar__label-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+}
+
+.styledrop-filter-sidebar__label:hover .styledrop-filter-sidebar__label-text {
+  color: #ffffff;
+}
+
+.styledrop-filter-sidebar__checkbox {
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+}
+
+.styledrop-filter-sidebar__checkbox:checked + .styledrop-filter-sidebar__label-text {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.styledrop-filter-sidebar__size-btn {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.styledrop-filter-sidebar__size-btn:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.styledrop-filter-sidebar__size-input:checked + .styledrop-filter-sidebar__size-btn {
+  background-color: #0D0D0D;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.styledrop-filter-sidebar__color-swatch {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.styledrop-filter-sidebar__clear-btn {
+  color: #ffffff;
+  opacity: 0.9;
+}

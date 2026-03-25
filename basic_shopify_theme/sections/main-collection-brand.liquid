@@ -11,8 +11,16 @@
   {%- comment -%} Brand Hero {%- endcomment -%}
   <div class="styledrop-collection-brand__hero">
     {%- if collection.image -%}
-      <img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.title }}"
-        class="styledrop-collection-brand__hero-img" loading="eager"/>
+      {%- assign hero_w = 1600 -%}
+      {%- assign hero_h = hero_w | divided_by: collection.image.aspect_ratio | round -%}
+      <img
+        src="{{ collection.image | image_url: width: hero_w, height: hero_h }}"
+        alt="{{ collection.title }}"
+        class="styledrop-collection-brand__hero-img"
+        width="{{ hero_w }}"
+        height="{{ hero_h }}"
+        loading="eager"
+      />
     {%- else -%}
       <div class="styledrop-collection-brand__hero-placeholder"></div>
     {%- endif -%}
@@ -92,7 +100,7 @@
 
 {% schema %}
 {
-  "name": "StyleDrop - Brand Products",
+  "name": "Brand Products",
   "tag": "section",
   "class": "section-brand-products",
   "settings": [
@@ -101,6 +109,6 @@
     { "type": "header", "content": "Products" },
     { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
   ],
-  "presets": [{ "name": "StyleDrop - Brand Products" }]
+  "presets": [{ "name": "Brand Products" }]
 }
 {% endschema %}
