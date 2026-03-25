@@ -9,9 +9,9 @@ import productAirforce from '@/assets/product-airforce.jpg';
 import productPuffer from '@/assets/product-puffer.jpg';
 
 export const profileUser = {
-  name: 'Alex Johnson',
-  email: 'alex@example.com',
-  initials: 'AJ',
+  name: 'Hassan Hassouna',
+  email: 'hassan.hassouna@example.com',
+  initials: 'HH',
 };
 
 export const accountStats = {
@@ -134,7 +134,7 @@ export const addresses: SavedAddress[] = [
     label: 'Home',
     isDefault: true,
     lines: [
-      'Alex Johnson',
+      'Hassan Hassouna',
       '123 Fashion Avenue',
       'New York, NY 10001',
       'United States',
@@ -146,7 +146,7 @@ export const addresses: SavedAddress[] = [
     label: 'Work',
     isDefault: false,
     lines: [
-      'Alex Johnson',
+      'Hassan Hassouna',
       '456 Style Street, Suite 200',
       'Los Angeles, CA 90210',
       'United States',

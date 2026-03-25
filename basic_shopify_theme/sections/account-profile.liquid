@@ -113,7 +113,9 @@
       </div>
     </div>
 
-    <nav class="sd-account__tabs" aria-label="{{ section.settings.tabs_aria_label | escape }}">
+    <div class="sd-account__layout">
+    <aside class="sd-account__sidebar" aria-label="{{ section.settings.tabs_aria_label | escape }}">
+    <nav class="sd-account__tabs">
       <a
         href="{{ u_overview }}"
         class="sd-account__tab{% if tab == 'overview' %} sd-account__tab--active{% endif %}"
@@ -127,7 +129,7 @@
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
         {{ section.settings.label_orders }}
-        <span class="sd-account__tab-badge">{{ section.settings.orders_badge_count }}</span>
+        <span class="sd-account__tab-badge{% if tab != 'orders' %} sd-account__tab-badge--muted{% endif %}">{{ section.settings.orders_badge_count }}</span>
       </a>
       <a
         href="{{ u_addresses }}"
@@ -145,12 +147,13 @@
       </a>
       <a
         href="{{ u_liked }}"
-        class="sd-account__tab{% if tab == 'liked' %} sd-account__tab--active{% endif %}"
+        class="sd-account__tab sd-account__tab--liked{% if tab == 'liked' %} sd-account__tab--active{% endif %}"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         {{ section.settings.label_liked }}
       </a>
     </nav>
+    </aside>
 
     <div class="sd-account__main">
       {%- if tab == 'overview' -%}
@@ -443,6 +446,7 @@
         %}
       {%- endif -%}
     </div>
+    </div>
   </div>
 </section>
 
@@ -554,19 +558,19 @@
       "type": "text",
       "id": "demo_name",
       "label": "Demo name",
-      "default": "Alex Johnson"
+      "default": "Hassan Hassouna"
     },
     {
       "type": "text",
       "id": "demo_email",
       "label": "Demo email",
-      "default": "alex@example.com"
+      "default": "hassan.hassouna@example.com"
     },
     {
       "type": "text",
       "id": "demo_initials",
       "label": "Demo initials",
-      "default": "AJ"
+      "default": "HH"
     },
     {
       "type": "header",
@@ -717,7 +721,7 @@
     {
       "type": "textarea",
       "id": "addr_home_body",
-      "default": "Alex Johnson\n123 Fashion Avenue\nNew York, NY 10001\nUnited States\n+1 (555) 012-3456"
+      "default": "Hassan Hassouna\n123 Fashion Avenue\nNew York, NY 10001\nUnited States\n+1 (555) 012-3456"
     },
     {
       "type": "text",
@@ -727,7 +731,7 @@
     {
       "type": "textarea",
       "id": "addr_work_body",
-      "default": "Alex Johnson\n456 Style Street, Suite 200\nLos Angeles, CA 90210\nUnited States\n+1 (555) 987-6543"
+      "default": "Hassan Hassouna\n456 Style Street, Suite 200\nLos Angeles, CA 90210\nUnited States\n+1 (555) 987-6543"
     },
     {
       "type": "text",
@@ -791,12 +795,12 @@
     {
       "type": "text",
       "id": "demo_first",
-      "default": "Alex"
+      "default": "Hassan"
     },
     {
       "type": "text",
       "id": "demo_last",
-      "default": "Johnson"
+      "default": "Hassouna"
     },
     {
       "type": "text",

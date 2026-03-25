@@ -13,7 +13,7 @@ const AccountSettings = () => {
   const [showPw, setShowPw] = useState({ cur: false, next: false, confirm: false });
 
   return (
-    <div className="space-y-5 md:space-y-6 max-w-3xl mx-auto">
+    <div className="space-y-5 md:space-y-6 max-w-3xl">
       <section className="rounded-[20px] bg-white border border-[#0D0D0D]/8 p-5 md:p-7 shadow-sm">
         <div className="flex items-center justify-between gap-3 mb-6">
           <h2 className="font-condensed font-bold text-sm md:text-base uppercase tracking-[0.12em] text-[#0D0D0D]">
@@ -30,11 +30,11 @@ const AccountSettings = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
           <div>
             <label className={labelClass}>First name</label>
-            <input className={inputClass} readOnly defaultValue="Alex" />
+            <input className={inputClass} readOnly defaultValue="Hassan" />
           </div>
           <div>
             <label className={labelClass}>Last name</label>
-            <input className={inputClass} readOnly defaultValue="Johnson" />
+            <input className={inputClass} readOnly defaultValue="Hassouna" />
           </div>
           <div className="md:col-span-2">
             <label className={labelClass}>Email address</label>

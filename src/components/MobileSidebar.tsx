@@ -134,15 +134,15 @@ const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
             <div className="relative flex items-center gap-4">
               <div className="relative">
                 <div className="w-16 h-16 rounded-full bg-[#DC2626] flex items-center justify-center text-lg font-bold tracking-tight">
-                  AJ
+                  HH
                 </div>
                 <span className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-white flex items-center justify-center border-2 border-[#1a1512] text-[#0D0D0D]">
                   <Camera size={12} strokeWidth={2} aria-hidden />
                 </span>
               </div>
               <div>
-                <p className="font-condensed font-bold text-sm uppercase tracking-[0.12em]">Alex Johnson</p>
-                <p className="text-xs text-white/55 mt-0.5">alex@example.com</p>
+                <p className="font-condensed font-bold text-sm uppercase tracking-[0.12em]">Hassan Hassouna</p>
+                <p className="text-xs text-white/55 mt-0.5">hassan.hassouna@example.com</p>
               </div>
             </div>
           </div>
