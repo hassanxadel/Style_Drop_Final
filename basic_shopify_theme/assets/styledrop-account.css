@@ -1,0 +1,766 @@
+/**
+ * StyleDrop — Customer account hub (Overview, Orders, Addresses, Settings, Liked)
+ * Accent: red #DC2626 (not orange)
+ */
+
+.sd-account {
+  --sd-account-accent: #dc2626;
+  --sd-account-bg: #f5f0eb;
+  --sd-account-dark: #0d0d0d;
+  background: var(--sd-account-bg);
+  padding-bottom: 4rem;
+}
+
+.sd-account__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+/* Banner */
+.sd-account__banner {
+  position: relative;
+  border-radius: 20px;
+  background: var(--sd-account-dark);
+  color: #fff;
+  overflow: hidden;
+  padding: 1.5rem 1.25rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .sd-account__banner {
+    border-radius: 24px;
+    padding: 2rem 2rem;
+    margin-top: 2.5rem;
+  }
+}
+
+.sd-account__banner-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+  background: radial-gradient(circle at 25% 25%, rgba(80, 50, 40, 0.5) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(50, 35, 28, 0.45) 0%, transparent 40%);
+}
+
+.sd-account__banner-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .sd-account__banner-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.sd-account__avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.sd-account__avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 9999px;
+  background: var(--sd-account-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .sd-account__avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 1.5rem;
+  }
+}
+
+.sd-account__avatar-cam {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background: #fff;
+  color: var(--sd-account-dark);
+  border: 2px solid var(--sd-account-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sd-account__banner-text {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .sd-account__banner-text {
+    text-align: left;
+  }
+}
+
+.sd-account__name {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 1.125rem;
+}
+
+@media (min-width: 768px) {
+  .sd-account__name {
+    font-size: 1.5rem;
+    letter-spacing: 0.14em;
+  }
+}
+
+.sd-account__email {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Tabs */
+.sd-account__tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .sd-account__tabs {
+    flex-wrap: wrap;
+    overflow: visible;
+    margin-top: 1.5rem;
+  }
+}
+
+.sd-account__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  padding: 0.625rem 1rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border: 1px solid rgba(13, 13, 13, 0.1);
+  background: #fff;
+  color: rgba(13, 13, 13, 0.65);
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.sd-account__tab:hover {
+  border-color: rgba(13, 13, 13, 0.25);
+}
+
+.sd-account__tab--active {
+  background: var(--sd-account-dark);
+  color: #fff;
+  border-color: var(--sd-account-dark);
+}
+
+.sd-account__tab-badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--sd-account-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sd-account__tab--active .sd-account__tab-badge {
+  background: #fff;
+  color: var(--sd-account-accent);
+}
+
+/* Content */
+.sd-account__main {
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .sd-account__main {
+    padding-top: 2rem;
+  }
+}
+
+.sd-account__panel {
+  display: none;
+}
+
+.sd-account__panel--active {
+  display: block;
+}
+
+/* Stats grid */
+.sd-account__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .sd-account__stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+.sd-account__stat-card {
+  border-radius: 1rem;
+  background: #fff;
+  border: 1px solid rgba(13, 13, 13, 0.08);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.sd-account__stat-icon {
+  color: var(--sd-account-accent);
+  margin-bottom: 0.5rem;
+}
+
+.sd-account__stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sd-account-dark);
+}
+
+@media (min-width: 768px) {
+  .sd-account__stat-value {
+    font-size: 1.875rem;
+  }
+}
+
+.sd-account__stat-label {
+  font-size: 0.75rem;
+  color: rgba(13, 13, 13, 0.5);
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .sd-account__stat-label {
+    font-size: 0.875rem;
+  }
+}
+
+/* Card */
+.sd-account__card {
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid rgba(13, 13, 13, 0.08);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+@media (min-width: 768px) {
+  .sd-account__card {
+    padding: 1.75rem;
+  }
+}
+
+.sd-account__card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.sd-account__card-title {
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sd-account-dark);
+}
+
+.sd-account__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sd-account-accent);
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .sd-account__link {
+    font-size: 0.875rem;
+  }
+}
+
+.sd-account__order-row {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(13, 13, 13, 0.1);
+}
+
+.sd-account__order-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.sd-account__thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(13, 13, 13, 0.08);
+  background: #eee;
+}
+
+@media (min-width: 768px) {
+  .sd-account__thumb {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+.sd-account__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sd-account__badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+}
+
+.sd-account__badge--delivered {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.sd-account__badge--shipped {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.sd-account__badge--returned {
+  background: #e5e5e5;
+  color: #404040;
+}
+
+/* Full order cards */
+.sd-account__order-card {
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid rgba(13, 13, 13, 0.08);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .sd-account__order-card {
+    padding: 1.5rem;
+  }
+}
+
+.sd-account__order-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(13, 13, 13, 0.08);
+}
+
+.sd-account__line {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.sd-account__line:last-of-type {
+  margin-bottom: 1.25rem;
+}
+
+.sd-account__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sd-account__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0.625rem 1rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.sd-account__btn--grey {
+  background: #f5f5f5;
+  color: rgba(13, 13, 13, 0.8);
+}
+
+.sd-account__btn--track {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.sd-account__btn--buy {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--sd-account-accent);
+}
+
+/* Addresses */
+.sd-account__addr-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .sd-account__addr-head {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.sd-account__addr-count {
+  font-size: 0.875rem;
+  color: rgba(13, 13, 13, 0.55);
+}
+
+.sd-account__btn-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0.625rem 1.25rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--sd-account-dark);
+  color: #fff;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.sd-account__addr-card {
+  border-radius: 20px;
+  background: #fff;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.sd-account__addr-card--default {
+  border: 2px solid var(--sd-account-dark);
+}
+
+.sd-account__addr-card:not(.sd-account__addr-card--default) {
+  border: 1px solid rgba(13, 13, 13, 0.08);
+}
+
+.sd-account__addr-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.sd-account__addr-label-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.sd-account__addr-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sd-account__addr-icon--dark {
+  background: var(--sd-account-dark);
+  color: #fff;
+}
+
+.sd-account__addr-icon--light {
+  background: #f5f5f5;
+  color: rgba(13, 13, 13, 0.45);
+}
+
+.sd-account__addr-title {
+  font-weight: 700;
+  color: var(--sd-account-dark);
+}
+
+.sd-account__addr-default {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--sd-account-dark);
+  color: #fff;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+}
+
+.sd-account__addr-lines {
+  font-size: 0.875rem;
+  color: rgba(13, 13, 13, 0.55);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.sd-account__addr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sd-account__btn-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #f5f5f5;
+  color: var(--sd-account-dark);
+  border: none;
+  cursor: pointer;
+}
+
+.sd-account__btn-del {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--sd-account-accent);
+  border: none;
+  cursor: pointer;
+}
+
+/* Settings */
+.sd-account__settings-stack {
+  max-width: 48rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sd-account__settings-card {
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid rgba(13, 13, 13, 0.08);
+  padding: 1.25rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .sd-account__settings-card {
+    padding: 1.75rem;
+  }
+}
+
+.sd-account__settings-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.sd-account__settings-title {
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.sd-account__btn-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #e8e4df;
+  color: var(--sd-account-dark);
+  border: none;
+  cursor: pointer;
+}
+
+.sd-account__form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .sd-account__form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.sd-account__field-full {
+  grid-column: 1 / -1;
+}
+
+.sd-account__label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(13, 13, 13, 0.45);
+  margin-bottom: 0.5rem;
+}
+
+.sd-account__input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: none;
+  background: #e8e4df;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--sd-account-dark);
+}
+
+.sd-account__input:focus {
+  outline: 2px solid rgba(13, 13, 13, 0.15);
+  outline-offset: 0;
+}
+
+.sd-account__textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.sd-account__pw-wrap {
+  position: relative;
+}
+
+.sd-account__pw-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  color: rgba(13, 13, 13, 0.4);
+  cursor: pointer;
+}
+
+.sd-account__btn-black {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--sd-account-dark);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.sd-account__danger-title {
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--sd-account-accent);
+  margin-bottom: 0.5rem;
+}
+
+.sd-account__danger-sub {
+  font-size: 0.875rem;
+  color: rgba(13, 13, 13, 0.5);
+  margin-bottom: 1.25rem;
+}
+
+.sd-account__danger-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Wishlist embed in account */
+.sd-account-wishlist-embed {
+  margin-top: 0.5rem;
+}
+
+.sd-account-wishlist-embed .styledrop-wishlist__head {
+  margin-bottom: 1.5rem;
+}
+
+.sd-account-wishlist-embed .styledrop-wishlist__title {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .sd-account-wishlist-embed .styledrop-wishlist__title {
+    font-size: 2rem;
+  }
+}

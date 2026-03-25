@@ -110,13 +110,14 @@ const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
 
           {/* Secondary */}
           <div className="flex flex-col gap-1">
-            <button
-              type="button"
+            <Link
+              to="/account/overview"
+              onClick={onClose}
               className="flex items-center gap-3 py-3 text-left text-[15px] font-medium text-[#0D0D0D]"
             >
               <User size={20} strokeWidth={1.5} className="text-[#0D0D0D]/70" />
               Account
-            </button>
+            </Link>
             <Link
               to="/wishlist"
               onClick={onClose}

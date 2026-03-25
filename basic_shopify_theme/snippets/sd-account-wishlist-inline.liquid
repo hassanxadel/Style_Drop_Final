@@ -1,0 +1,253 @@
+{% comment %}
+  Wishlist grid + script for account "Liked items" tab (IDs suffixed -acct).
+  Uses same localStorage key as main-page-wishlist.
+{% endcomment %}
+
+<section
+  class="styledrop-wishlist sd-account-wishlist-embed"
+  id="sd-wishlist-section-acct"
+  data-currency="{{ cart.currency.iso_code }}"
+  data-shop-more-url="{{ shop_more_url | default: routes.all_products_collection_url }}"
+  data-cart-url="{{ routes.cart_url }}"
+>
+  <div class="container styledrop-wishlist__inner">
+    <div class="styledrop-wishlist__head">
+      <div>
+        <p class="styledrop-wishlist__eyebrow">{{ eyebrow }}</p>
+        <h2 class="styledrop-wishlist__title">
+          {{ title_1 -}}
+          <span class="styledrop-wishlist__title-accent">{{ title_2 }}</span>
+        </h2>
+      </div>
+      <div class="styledrop-wishlist__meta">
+        <p class="styledrop-wishlist__count"><span id="sd-wishlist-count-acct">0</span> {{ items_label }}</p>
+        <a href="{{ shop_more_url | default: routes.all_products_collection_url }}" class="styledrop-wishlist__shop-more">
+          {{ shop_more_label }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div id="sd-wishlist-loading-acct" class="styledrop-wishlist__loading" style="display: none;">{{ loading_text }}</div>
+    <div id="sd-wishlist-error-acct" class="styledrop-wishlist__error" style="display: none;"></div>
+
+    <div id="sd-wishlist-empty-acct" class="styledrop-wishlist__empty" style="display: none;">
+      <p>{{ empty_text }}</p>
+      <a href="{{ shop_more_url | default: routes.all_products_collection_url }}">{{ empty_cta }}</a>
+    </div>
+
+    <div id="sd-wishlist-grid-acct" class="styledrop-wishlist__grid" hidden></div>
+  </div>
+
+  <div id="sd-wishlist-cta-acct" class="styledrop-wishlist__cta-bar" style="display: none;">
+    <div class="styledrop-wishlist__cta-inner">
+      <div>
+        <p class="styledrop-wishlist__cta-title">{{ cta_title }}</p>
+        <p class="styledrop-wishlist__cta-sub">{{ cta_subtitle }}</p>
+      </div>
+      <div class="styledrop-wishlist__cta-actions">
+        <button type="button" class="styledrop-wishlist__btn-primary" id="sd-wishlist-add-all-acct">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          {{ add_all_label }}
+        </button>
+        <a href="{{ routes.cart_url }}" class="styledrop-wishlist__btn-secondary">
+          {{ view_cart_label }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var STORAGE = 'sdWishlistHandles';
+  var LEGACY = 'sdWishlist';
+
+  function getHandles() {
+    try {
+      var raw = localStorage.getItem(STORAGE);
+      if (raw) {
+        var a = JSON.parse(raw);
+        if (Array.isArray(a)) return a.filter(function(h) { return typeof h === 'string'; });
+      }
+      var leg = localStorage.getItem(LEGACY);
+      if (leg) {
+        var ids = JSON.parse(leg);
+        if (Array.isArray(ids)) localStorage.removeItem(LEGACY);
+      }
+    } catch (e) {}
+    return [];
+  }
+
+  function setHandles(handles) {
+    localStorage.setItem(STORAGE, JSON.stringify(handles));
+  }
+
+  var sectionEl = document.getElementById('sd-wishlist-section-acct');
+  var currency = sectionEl && sectionEl.dataset.currency ? sectionEl.dataset.currency : 'USD';
+
+  function formatMoney(cents) {
+    try {
+      return new Intl.NumberFormat(undefined, { style: 'currency', currency: currency }).format(cents / 100);
+    } catch (e) {
+      return (cents / 100).toFixed(2);
+    }
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function firstAvailableVariant(p) {
+    var v = p.variants && p.variants[0];
+    if (!p.variants) return null;
+    for (var i = 0; i < p.variants.length; i++) {
+      if (p.variants[i].available) return p.variants[i];
+    }
+    return v;
+  }
+
+  function cardHtml(p, handle) {
+    var v = firstAvailableVariant(p);
+    var src = '';
+    if (p.featured_image) {
+      src = typeof p.featured_image === 'string' ? p.featured_image : (p.featured_image.src || '');
+    }
+    var img = src ? src.replace(/(\.[^.?]+)(\?.*)?$/, '_600x$1$2') : '';
+    var price = v ? formatMoney(v.price) : '';
+    var cmp = v && v.compare_at_price;
+    var compare = cmp && cmp > v.price ? formatMoney(cmp) : '';
+    var salePct = '';
+    if (v && v.compare_at_price && v.compare_at_price > v.price) {
+      salePct = Math.round((1 - v.price / v.compare_at_price) * 100) + '%';
+    }
+    var badges = '';
+    if (salePct) badges += '<span class="styledrop-wishlist-card__badge-sale">-' + salePct + ' OFF</span>';
+    badges += '<span class="styledrop-wishlist-card__badge-fast"><span style="color:#F5C800">&#9889;</span> FAST</span>';
+    var url = '/products/' + encodeURIComponent(handle);
+
+    return (
+      '<article class="styledrop-wishlist-card" data-handle="' + escapeHtml(handle) + '">' +
+        '<div class="styledrop-wishlist-card__top">' +
+        '<a href="' + url + '" class="styledrop-wishlist-card__media-wrap">' +
+          (img ? '<img class="styledrop-wishlist-card__img" src="' + escapeHtml(img) + '" alt="' + escapeHtml(p.title) + '" width="600" height="800" loading="lazy">' : '') +
+          '<div class="styledrop-wishlist-card__badges">' + badges + '</div>' +
+        '</a>' +
+        '<button type="button" class="styledrop-wishlist-card__remove sd-wishlist-remove-acct" data-handle="' + escapeHtml(handle) + '" aria-label="Remove">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+        '</div>' +
+        '<div class="styledrop-wishlist-card__body">' +
+          '<p class="styledrop-wishlist-card__brand">' + escapeHtml(p.vendor || '') + '</p>' +
+          '<p class="styledrop-wishlist-card__name">' + escapeHtml(p.title) + '</p>' +
+          '<div class="styledrop-wishlist-card__prices">' +
+            '<p class="styledrop-wishlist-card__price">' + escapeHtml(price) + '</p>' +
+            (compare ? '<p class="styledrop-wishlist-card__compare">' + escapeHtml(compare) + '</p>' : '') +
+          '</div>' +
+        '</div>' +
+      '</article>'
+    );
+  }
+
+  function render() {
+    var grid = document.getElementById('sd-wishlist-grid-acct');
+    var empty = document.getElementById('sd-wishlist-empty-acct');
+    var loading = document.getElementById('sd-wishlist-loading-acct');
+    var errEl = document.getElementById('sd-wishlist-error-acct');
+    var countEl = document.getElementById('sd-wishlist-count-acct');
+    var cta = document.getElementById('sd-wishlist-cta-acct');
+
+    if (!grid) return;
+
+    var handles = getHandles();
+    errEl.style.display = 'none';
+    errEl.textContent = '';
+
+    if (handles.length === 0) {
+      grid.hidden = true;
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      if (countEl) countEl.textContent = '0';
+      if (cta) cta.style.display = 'none';
+      return;
+    }
+
+    empty.style.display = 'none';
+    loading.style.display = 'block';
+    grid.innerHTML = '';
+
+    var products = [];
+    var done = 0;
+
+    handles.forEach(function(handle) {
+      fetch('/products/' + encodeURIComponent(handle) + '.js')
+        .then(function(r) {
+          if (!r.ok) throw new Error(handle);
+          return r.json();
+        })
+        .then(function(p) {
+          products.push({ handle: handle, product: p });
+        })
+        .catch(function() {})
+        .finally(function() {
+          done++;
+          if (done === handles.length) {
+            loading.style.display = 'none';
+            if (products.length === 0) {
+              grid.hidden = true;
+              empty.style.display = 'block';
+              if (countEl) countEl.textContent = '0';
+              if (cta) cta.style.display = 'none';
+              return;
+            }
+            grid.innerHTML = products.map(function(x) { return cardHtml(x.product, x.handle); }).join('');
+            grid.hidden = false;
+            if (countEl) countEl.textContent = String(products.length);
+            if (cta) cta.style.display = 'block';
+
+            grid.querySelectorAll('.sd-wishlist-remove-acct').forEach(function(btn) {
+              btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                var h = btn.getAttribute('data-handle');
+                var next = getHandles().filter(function(x) { return x !== h; });
+                setHandles(next);
+                render();
+                document.dispatchEvent(new CustomEvent('sd-wishlist-updated'));
+              });
+            });
+          }
+        });
+    });
+  }
+
+  document.getElementById('sd-wishlist-add-all-acct')?.addEventListener('click', function() {
+    var handles = getHandles();
+    var cartUrl = sectionEl.dataset.cartUrl || '/cart';
+    if (!handles.length) return;
+    var seq = Promise.resolve();
+    handles.forEach(function(handle) {
+      seq = seq.then(function() {
+        return fetch('/products/' + encodeURIComponent(handle) + '.js')
+          .then(function(r) { return r.json(); })
+          .then(function(prod) {
+            var v = firstAvailableVariant(prod);
+            if (!v || !v.available) return;
+            return fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: v.id, quantity: 1 })
+            });
+          })
+          .catch(function() {});
+      });
+    });
+    seq.then(function() { window.location.href = cartUrl; });
+  });
+
+  document.addEventListener('DOMContentLoaded', render);
+  document.addEventListener('sd-wishlist-updated', render);
+})();
+</script>

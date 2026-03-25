@@ -1,0 +1,1045 @@
+{% comment %}
+  StyleDrop — Account hub (Overview, Orders, Addresses, Settings, Liked).
+  Create five pages with handles account-overview, account-orders, account-addresses, account-settings, account-liked
+  and assign the matching templates. Accent: #DC2626.
+{% endcomment %}
+
+{{ 'styledrop-account.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign tab = section.settings.active_tab
+  assign wishlist_url = section.settings.wishlist_page
+  if wishlist_url == blank
+    assign wishlist_url = '/pages/wishlist'
+  endif
+
+  assign u_overview = section.settings.url_overview
+  if u_overview == blank
+    if pages['account-overview'] != blank
+      assign u_overview = pages['account-overview'].url
+    else
+      assign u_overview = '/pages/account-overview'
+    endif
+  endif
+
+  assign u_orders = section.settings.url_orders
+  if u_orders == blank
+    if pages['account-orders'] != blank
+      assign u_orders = pages['account-orders'].url
+    else
+      assign u_orders = '/pages/account-orders'
+    endif
+  endif
+
+  assign u_addresses = section.settings.url_addresses
+  if u_addresses == blank
+    if pages['account-addresses'] != blank
+      assign u_addresses = pages['account-addresses'].url
+    else
+      assign u_addresses = '/pages/account-addresses'
+    endif
+  endif
+
+  assign u_settings = section.settings.url_settings
+  if u_settings == blank
+    if pages['account-settings'] != blank
+      assign u_settings = pages['account-settings'].url
+    else
+      assign u_settings = '/pages/account-settings'
+    endif
+  endif
+
+  assign u_liked = section.settings.url_liked
+  if u_liked == blank
+    if pages['account-liked'] != blank
+      assign u_liked = pages['account-liked'].url
+    else
+      assign u_liked = '/pages/account-liked'
+    endif
+  endif
+
+  if customer
+    assign display_name = customer.name
+    assign display_email = customer.email
+    assign fn = customer.first_name | default: '' | slice: 0, 1
+    assign ln = customer.last_name | default: '' | slice: 0, 1
+    assign initials = fn | append: ln | upcase
+    if initials == blank
+      assign initials = section.settings.demo_initials
+    endif
+  else
+    assign display_name = section.settings.demo_name
+    assign display_email = section.settings.demo_email
+    assign initials = section.settings.demo_initials
+  endif
+
+  assign thumb_a = 'https://placehold.co/160x160/e8e4df/0d0d0d?text=SD'
+  assign thumb_b = thumb_a
+  if collections.all.products.size > 0
+    assign p0 = collections.all.products.first
+    if p0.featured_image
+      assign thumb_a = p0.featured_image | image_url: width: 200
+    endif
+  endif
+  if collections.all.products.size > 1
+    assign p1 = collections.all.products[1]
+    if p1.featured_image
+      assign thumb_b = p1.featured_image | image_url: width: 200
+    endif
+  endif
+-%}
+
+{%- if tab == 'liked' -%}
+  {{ 'styledrop-wishlist.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+<section class="sd-account" data-account-tab="{{ tab }}">
+  <div class="sd-account__container">
+    <div class="sd-account__banner">
+      <div class="sd-account__banner-bg" aria-hidden="true"></div>
+      <div class="sd-account__banner-inner">
+        <div class="sd-account__avatar-wrap">
+          <div class="sd-account__avatar">{{ initials | escape }}</div>
+          <span class="sd-account__avatar-cam" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+            </svg>
+          </span>
+        </div>
+        <div class="sd-account__banner-text">
+          <p class="sd-account__name">{{ display_name | escape }}</p>
+          <p class="sd-account__email">{{ display_email | escape }}</p>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sd-account__tabs" aria-label="{{ section.settings.tabs_aria_label | escape }}">
+      <a
+        href="{{ u_overview }}"
+        class="sd-account__tab{% if tab == 'overview' %} sd-account__tab--active{% endif %}"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        {{ section.settings.label_overview }}
+      </a>
+      <a
+        href="{{ u_orders }}"
+        class="sd-account__tab{% if tab == 'orders' %} sd-account__tab--active{% endif %}"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        {{ section.settings.label_orders }}
+        <span class="sd-account__tab-badge">{{ section.settings.orders_badge_count }}</span>
+      </a>
+      <a
+        href="{{ u_addresses }}"
+        class="sd-account__tab{% if tab == 'addresses' %} sd-account__tab--active{% endif %}"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        {{ section.settings.label_addresses }}
+      </a>
+      <a
+        href="{{ u_settings }}"
+        class="sd-account__tab{% if tab == 'settings' %} sd-account__tab--active{% endif %}"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        {{ section.settings.label_settings }}
+      </a>
+      <a
+        href="{{ u_liked }}"
+        class="sd-account__tab{% if tab == 'liked' %} sd-account__tab--active{% endif %}"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        {{ section.settings.label_liked }}
+      </a>
+    </nav>
+
+    <div class="sd-account__main">
+      {%- if tab == 'overview' -%}
+        <div class="sd-account__stats">
+          <div class="sd-account__stat-card">
+            <div class="sd-account__stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <p class="sd-account__stat-value">{{ section.settings.stat_orders }}</p>
+            <p class="sd-account__stat-label">{{ section.settings.stat_orders_label }}</p>
+          </div>
+          <div class="sd-account__stat-card">
+            <div class="sd-account__stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <p class="sd-account__stat-value">{{ section.settings.stat_liked }}</p>
+            <p class="sd-account__stat-label">{{ section.settings.stat_liked_label }}</p>
+          </div>
+          <div class="sd-account__stat-card">
+            <div class="sd-account__stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <p class="sd-account__stat-value">{{ section.settings.stat_addresses }}</p>
+            <p class="sd-account__stat-label">{{ section.settings.stat_addresses_label }}</p>
+          </div>
+          <div class="sd-account__stat-card">
+            <div class="sd-account__stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <p class="sd-account__stat-value">{{ cart.item_count | default: section.settings.stat_cart_fallback }}</p>
+            <p class="sd-account__stat-label">{{ section.settings.stat_cart_label }}</p>
+          </div>
+        </div>
+
+        <div class="sd-account__card" style="margin-top: 1.5rem;">
+          <div class="sd-account__card-head">
+            <h2 class="sd-account__card-title">{{ section.settings.recent_orders_title }}</h2>
+            <a href="{{ u_orders }}" class="sd-account__link">
+              {{ section.settings.view_all_label }}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <div>
+            <div class="sd-account__order-row">
+              <div class="sd-account__thumb">
+                <img src="{{ thumb_a }}" alt="" width="160" height="160" loading="lazy">
+              </div>
+              <div style="flex: 1; min-width: 0;">
+                <p style="font-weight: 700; color: #0d0d0d; font-size: 0.875rem;">#{{ section.settings.demo_order_1_id }}</p>
+                <p style="font-size: 0.75rem; color: rgba(13,13,13,0.5); margin-top: 0.125rem;">{{ section.settings.demo_order_1_meta }}</p>
+              </div>
+              <div style="text-align: right; flex-shrink: 0;">
+                <span class="sd-account__badge sd-account__badge--delivered">{{ section.settings.status_delivered }}</span>
+                <p style="font-weight: 700; margin-top: 0.35rem;">{{ section.settings.demo_order_1_price }}</p>
+              </div>
+            </div>
+            <div class="sd-account__order-row">
+              <div class="sd-account__thumb">
+                <img src="{{ thumb_b }}" alt="" width="160" height="160" loading="lazy">
+              </div>
+              <div style="flex: 1; min-width: 0;">
+                <p style="font-weight: 700; color: #0d0d0d; font-size: 0.875rem;">#{{ section.settings.demo_order_2_id }}</p>
+                <p style="font-size: 0.75rem; color: rgba(13,13,13,0.5); margin-top: 0.125rem;">{{ section.settings.demo_order_2_meta }}</p>
+              </div>
+              <div style="text-align: right; flex-shrink: 0;">
+                <span class="sd-account__badge sd-account__badge--shipped">{{ section.settings.status_shipped }}</span>
+                <p style="font-weight: 700; margin-top: 0.35rem;">{{ section.settings.demo_order_2_price }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if tab == 'orders' -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'order_card' -%}
+            <div class="sd-account__order-card" {{ block.shopify_attributes }}>
+              <div class="sd-account__order-top">
+                <div>
+                  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+                    <span style="font-weight: 700; color: #0d0d0d;">#{{ block.settings.order_id }}</span>
+                    <span class="sd-account__badge sd-account__badge--{{ block.settings.status_class }}">{{ block.settings.status_label }}</span>
+                  </div>
+                  <p style="font-size: 0.75rem; color: rgba(13,13,13,0.5); margin-top: 0.25rem;">{{ block.settings.meta }}</p>
+                </div>
+                <div style="text-align: right;">
+                  <p style="font-weight: 700; font-size: 1.125rem;">{{ block.settings.total }}</p>
+                  <p style="font-size: 10px; color: rgba(13,13,13,0.45); text-transform: uppercase;">{{ block.settings.currency }}</p>
+                </div>
+              </div>
+              {%- if block.settings.line1_title != blank -%}
+                <div class="sd-account__line">
+                  <div class="sd-account__thumb">
+                    <img src="{{ block.settings.line1_image | image_url: width: 200 }}" alt="" width="160" height="160" loading="lazy">
+                  </div>
+                  <div style="flex: 1; display: flex; justify-content: space-between; gap: 0.75rem;">
+                    <div>
+                      <p style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(13,13,13,0.45);">{{ block.settings.line1_brand }}</p>
+                      <p style="font-weight: 600; color: #0d0d0d; font-size: 0.875rem;">{{ block.settings.line1_title }}</p>
+                      <p style="font-size: 0.75rem; color: rgba(13,13,13,0.5);">{{ block.settings.line1_spec }}</p>
+                    </div>
+                    <p style="font-weight: 700; font-size: 0.875rem;">{{ block.settings.line1_price }}</p>
+                  </div>
+                </div>
+              {%- endif -%}
+              {%- if block.settings.line2_title != blank -%}
+                <div class="sd-account__line">
+                  <div class="sd-account__thumb">
+                    {%- if block.settings.line2_image != blank -%}
+                      <img src="{{ block.settings.line2_image | image_url: width: 200 }}" alt="" width="160" height="160" loading="lazy">
+                    {%- else -%}
+                      <img src="{{ thumb_b }}" alt="" width="160" height="160" loading="lazy">
+                    {%- endif -%}
+                  </div>
+                  <div style="flex: 1; display: flex; justify-content: space-between; gap: 0.75rem;">
+                    <div>
+                      <p style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(13,13,13,0.45);">{{ block.settings.line2_brand }}</p>
+                      <p style="font-weight: 600; color: #0d0d0d; font-size: 0.875rem;">{{ block.settings.line2_title }}</p>
+                      <p style="font-size: 0.75rem; color: rgba(13,13,13,0.5);">{{ block.settings.line2_spec }}</p>
+                    </div>
+                    <p style="font-weight: 700; font-size: 0.875rem;">{{ block.settings.line2_price }}</p>
+                  </div>
+                </div>
+              {%- endif -%}
+              <div class="sd-account__actions">
+                {%- if block.settings.show_track -%}
+                  <button type="button" class="sd-account__btn sd-account__btn--track">{{ section.settings.btn_track }}</button>
+                {%- endif -%}
+                {%- if block.settings.show_buy_again -%}
+                  <button type="button" class="sd-account__btn sd-account__btn--buy">{{ section.settings.btn_buy_again }}</button>
+                {%- endif -%}
+                <button type="button" class="sd-account__btn sd-account__btn--grey">{{ section.settings.btn_view_details }}</button>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- if tab == 'addresses' -%}
+        <div class="sd-account__addr-head">
+          <p class="sd-account__addr-count">{{ section.settings.address_count_text }}</p>
+          <a href="{{ routes.account_addresses_url }}" class="sd-account__btn-add">{{ section.settings.add_address_label }}</a>
+        </div>
+        <div class="sd-account__addr-card sd-account__addr-card--default">
+          <div class="sd-account__addr-top">
+            <div class="sd-account__addr-label-row">
+              <div class="sd-account__addr-icon sd-account__addr-icon--dark">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <p class="sd-account__addr-title">{{ section.settings.addr_home_title }}</p>
+            </div>
+            <span class="sd-account__addr-default">{{ section.settings.addr_default_badge }}</span>
+          </div>
+          <div class="sd-account__addr-lines">{{ section.settings.addr_home_body | newline_to_br }}</div>
+          <div class="sd-account__addr-actions">
+            <button type="button" class="sd-account__btn-light">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              {{ section.settings.btn_edit }}
+            </button>
+            <button type="button" class="sd-account__btn-del">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              {{ section.settings.btn_delete }}
+            </button>
+          </div>
+        </div>
+        <div class="sd-account__addr-card">
+          <div class="sd-account__addr-top">
+            <div class="sd-account__addr-label-row">
+              <div class="sd-account__addr-icon sd-account__addr-icon--light">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <p class="sd-account__addr-title">{{ section.settings.addr_work_title }}</p>
+            </div>
+          </div>
+          <div class="sd-account__addr-lines">{{ section.settings.addr_work_body | newline_to_br }}</div>
+          <div class="sd-account__addr-actions">
+            <button type="button" class="sd-account__btn-light">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              {{ section.settings.btn_edit }}
+            </button>
+            <button type="button" class="sd-account__btn-light">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {{ section.settings.btn_set_default }}
+            </button>
+            <button type="button" class="sd-account__btn-del">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              {{ section.settings.btn_delete }}
+            </button>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if tab == 'settings' -%}
+        <div class="sd-account__settings-stack">
+          <div class="sd-account__settings-card">
+            <div class="sd-account__settings-head">
+              <h2 class="sd-account__settings-title">{{ section.settings.personal_title }}</h2>
+              <button type="button" class="sd-account__btn-edit">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                {{ section.settings.btn_edit_small }}
+              </button>
+            </div>
+            <div class="sd-account__form-grid">
+              <div>
+                <label class="sd-account__label">{{ section.settings.lbl_first }}</label>
+                <input class="sd-account__input" type="text" value="{{ section.settings.demo_first | escape }}" readonly>
+              </div>
+              <div>
+                <label class="sd-account__label">{{ section.settings.lbl_last }}</label>
+                <input class="sd-account__input" type="text" value="{{ section.settings.demo_last | escape }}" readonly>
+              </div>
+              <div class="sd-account__field-full">
+                <label class="sd-account__label">{{ section.settings.lbl_email }}</label>
+                <input class="sd-account__input" type="email" value="{{ display_email | escape }}" readonly>
+              </div>
+              <div class="sd-account__field-full">
+                <label class="sd-account__label">{{ section.settings.lbl_phone }}</label>
+                <input class="sd-account__input" type="text" value="{{ section.settings.demo_phone | escape }}" readonly>
+              </div>
+              <div class="sd-account__field-full">
+                <label class="sd-account__label">{{ section.settings.lbl_bio }}</label>
+                <textarea class="sd-account__input sd-account__textarea" placeholder="{{ section.settings.bio_placeholder | escape }}" rows="4" readonly></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="sd-account__settings-card">
+            <h2 class="sd-account__settings-title" style="margin-bottom: 1.5rem;">{{ section.settings.password_title }}</h2>
+            <div class="sd-account__form-grid" style="grid-template-columns: 1fr;">
+              <div>
+                <label class="sd-account__label">{{ section.settings.lbl_cur_pw }}</label>
+                <div class="sd-account__pw-wrap">
+                  <input class="sd-account__input" type="password" value="••••••••" readonly style="padding-right: 2.75rem;">
+                  <button type="button" class="sd-account__pw-toggle" aria-label="Toggle password" tabindex="-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="sd-account__label">{{ section.settings.lbl_new_pw }}</label>
+                <div class="sd-account__pw-wrap">
+                  <input class="sd-account__input" type="password" value="••••••••" readonly style="padding-right: 2.75rem;">
+                  <button type="button" class="sd-account__pw-toggle" aria-label="Toggle password" tabindex="-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="sd-account__label">{{ section.settings.lbl_confirm_pw }}</label>
+                <div class="sd-account__pw-wrap">
+                  <input class="sd-account__input" type="password" value="••••••••" readonly style="padding-right: 2.75rem;">
+                  <button type="button" class="sd-account__pw-toggle" aria-label="Toggle password" tabindex="-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="sd-account__btn-black">{{ section.settings.btn_update_password }}</button>
+          </div>
+
+          <div class="sd-account__settings-card">
+            <h2 class="sd-account__danger-title">{{ section.settings.danger_title }}</h2>
+            <p class="sd-account__danger-sub">{{ section.settings.danger_sub }}</p>
+            <div class="sd-account__danger-actions">
+              <button type="button" class="sd-account__btn-del">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                {{ section.settings.btn_delete_account }}
+              </button>
+              <a href="{{ routes.account_logout_url }}" class="sd-account__btn-light" style="text-decoration: none;">{{ section.settings.btn_sign_out }}</a>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if tab == 'liked' -%}
+        {% render 'sd-account-wishlist-inline',
+          shop_more_url: section.settings.wishlist_shop_more_url,
+          eyebrow: section.settings.wishlist_eyebrow,
+          title_1: section.settings.wishlist_title_1,
+          title_2: section.settings.wishlist_title_2,
+          items_label: section.settings.wishlist_items_label,
+          shop_more_label: section.settings.wishlist_shop_more_label,
+          loading_text: section.settings.wishlist_loading,
+          empty_text: section.settings.wishlist_empty,
+          empty_cta: section.settings.wishlist_empty_cta,
+          cta_title: section.settings.wishlist_cta_title,
+          cta_subtitle: section.settings.wishlist_cta_sub,
+          add_all_label: section.settings.wishlist_add_all,
+          view_cart_label: section.settings.wishlist_view_cart
+        %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Account profile",
+  "tag": "section",
+  "class": "section-account-profile",
+  "settings": [
+    {
+      "type": "select",
+      "id": "active_tab",
+      "label": "Active tab (set per page template)",
+      "options": [
+        { "value": "overview", "label": "Overview" },
+        { "value": "orders", "label": "My orders" },
+        { "value": "addresses", "label": "Addresses" },
+        { "value": "settings", "label": "Settings" },
+        { "value": "liked", "label": "Liked items" }
+      ],
+      "default": "overview"
+    },
+    {
+      "type": "header",
+      "content": "Tab URLs (optional)"
+    },
+    {
+      "type": "url",
+      "id": "url_overview",
+      "label": "Overview page URL"
+    },
+    {
+      "type": "url",
+      "id": "url_orders",
+      "label": "Orders page URL"
+    },
+    {
+      "type": "url",
+      "id": "url_addresses",
+      "label": "Addresses page URL"
+    },
+    {
+      "type": "url",
+      "id": "url_settings",
+      "label": "Settings page URL"
+    },
+    {
+      "type": "url",
+      "id": "url_liked",
+      "label": "Liked items page URL"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_page",
+      "label": "Standalone wishlist page (header)",
+      "info": "Used elsewhere; liked tab uses this theme section."
+    },
+    {
+      "type": "text",
+      "id": "tabs_aria_label",
+      "label": "Tabs (accessibility label)",
+      "default": "Account sections"
+    },
+    {
+      "type": "header",
+      "content": "Labels — navigation"
+    },
+    {
+      "type": "text",
+      "id": "label_overview",
+      "label": "Overview",
+      "default": "Overview"
+    },
+    {
+      "type": "text",
+      "id": "label_orders",
+      "label": "My orders",
+      "default": "My orders"
+    },
+    {
+      "type": "text",
+      "id": "label_addresses",
+      "label": "Addresses",
+      "default": "Addresses"
+    },
+    {
+      "type": "text",
+      "id": "label_settings",
+      "label": "Settings",
+      "default": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "label_liked",
+      "label": "Liked items",
+      "default": "Liked items"
+    },
+    {
+      "type": "text",
+      "id": "orders_badge_count",
+      "label": "Orders tab badge number",
+      "default": "4"
+    },
+    {
+      "type": "header",
+      "content": "Guest / demo profile (when not logged in)"
+    },
+    {
+      "type": "text",
+      "id": "demo_name",
+      "label": "Demo name",
+      "default": "Alex Johnson"
+    },
+    {
+      "type": "text",
+      "id": "demo_email",
+      "label": "Demo email",
+      "default": "alex@example.com"
+    },
+    {
+      "type": "text",
+      "id": "demo_initials",
+      "label": "Demo initials",
+      "default": "AJ"
+    },
+    {
+      "type": "header",
+      "content": "Overview — stats"
+    },
+    {
+      "type": "text",
+      "id": "stat_orders",
+      "label": "Total orders",
+      "default": "4"
+    },
+    {
+      "type": "text",
+      "id": "stat_orders_label",
+      "label": "Label",
+      "default": "Total orders"
+    },
+    {
+      "type": "text",
+      "id": "stat_liked",
+      "label": "Liked items count",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "stat_liked_label",
+      "label": "Label",
+      "default": "Liked items"
+    },
+    {
+      "type": "text",
+      "id": "stat_addresses",
+      "label": "Saved addresses",
+      "default": "2"
+    },
+    {
+      "type": "text",
+      "id": "stat_addresses_label",
+      "label": "Label",
+      "default": "Saved addresses"
+    },
+    {
+      "type": "text",
+      "id": "stat_cart_label",
+      "label": "Cart label",
+      "default": "Cart items"
+    },
+    {
+      "type": "text",
+      "id": "stat_cart_fallback",
+      "label": "Cart count fallback (if cart empty)",
+      "default": "4"
+    },
+    {
+      "type": "header",
+      "content": "Overview — recent orders"
+    },
+    {
+      "type": "text",
+      "id": "recent_orders_title",
+      "label": "Section title",
+      "default": "Recent orders"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all",
+      "default": "View all"
+    },
+    {
+      "type": "text",
+      "id": "demo_order_1_id",
+      "default": "DR-20482"
+    },
+    {
+      "type": "text",
+      "id": "demo_order_1_meta",
+      "default": "Mar 15, 2026 · 2 items"
+    },
+    {
+      "type": "text",
+      "id": "demo_order_1_price",
+      "default": "$324.00"
+    },
+    {
+      "type": "text",
+      "id": "demo_order_2_id",
+      "default": "DR-19947"
+    },
+    {
+      "type": "text",
+      "id": "demo_order_2_meta",
+      "default": "Mar 2, 2026 · 1 item"
+    },
+    {
+      "type": "text",
+      "id": "demo_order_2_price",
+      "default": "$110.00"
+    },
+    {
+      "type": "text",
+      "id": "status_delivered",
+      "default": "Delivered"
+    },
+    {
+      "type": "text",
+      "id": "status_shipped",
+      "default": "Shipped"
+    },
+    {
+      "type": "header",
+      "content": "Orders — buttons"
+    },
+    {
+      "type": "text",
+      "id": "btn_track",
+      "default": "Track order"
+    },
+    {
+      "type": "text",
+      "id": "btn_buy_again",
+      "default": "Buy again"
+    },
+    {
+      "type": "text",
+      "id": "btn_view_details",
+      "default": "View details"
+    },
+    {
+      "type": "header",
+      "content": "Addresses"
+    },
+    {
+      "type": "text",
+      "id": "address_count_text",
+      "default": "2 saved addresses"
+    },
+    {
+      "type": "text",
+      "id": "add_address_label",
+      "default": "+ Add address"
+    },
+    {
+      "type": "text",
+      "id": "addr_home_title",
+      "default": "Home"
+    },
+    {
+      "type": "textarea",
+      "id": "addr_home_body",
+      "default": "Alex Johnson\n123 Fashion Avenue\nNew York, NY 10001\nUnited States\n+1 (555) 012-3456"
+    },
+    {
+      "type": "text",
+      "id": "addr_work_title",
+      "default": "Work"
+    },
+    {
+      "type": "textarea",
+      "id": "addr_work_body",
+      "default": "Alex Johnson\n456 Style Street, Suite 200\nLos Angeles, CA 90210\nUnited States\n+1 (555) 987-6543"
+    },
+    {
+      "type": "text",
+      "id": "addr_default_badge",
+      "default": "Default"
+    },
+    {
+      "type": "text",
+      "id": "btn_edit",
+      "default": "Edit"
+    },
+    {
+      "type": "text",
+      "id": "btn_set_default",
+      "default": "Set default"
+    },
+    {
+      "type": "text",
+      "id": "btn_delete",
+      "default": "Delete"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "personal_title",
+      "default": "Personal info"
+    },
+    {
+      "type": "text",
+      "id": "btn_edit_small",
+      "default": "Edit"
+    },
+    {
+      "type": "text",
+      "id": "lbl_first",
+      "default": "First name"
+    },
+    {
+      "type": "text",
+      "id": "lbl_last",
+      "default": "Last name"
+    },
+    {
+      "type": "text",
+      "id": "lbl_email",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "lbl_phone",
+      "default": "Phone number"
+    },
+    {
+      "type": "text",
+      "id": "lbl_bio",
+      "default": "Bio"
+    },
+    {
+      "type": "text",
+      "id": "demo_first",
+      "default": "Alex"
+    },
+    {
+      "type": "text",
+      "id": "demo_last",
+      "default": "Johnson"
+    },
+    {
+      "type": "text",
+      "id": "demo_phone",
+      "default": "+1 (555) 012-3456"
+    },
+    {
+      "type": "text",
+      "id": "bio_placeholder",
+      "default": "Tell us about your style..."
+    },
+    {
+      "type": "text",
+      "id": "password_title",
+      "default": "Change password"
+    },
+    {
+      "type": "text",
+      "id": "lbl_cur_pw",
+      "default": "Current password"
+    },
+    {
+      "type": "text",
+      "id": "lbl_new_pw",
+      "default": "New password"
+    },
+    {
+      "type": "text",
+      "id": "lbl_confirm_pw",
+      "default": "Confirm new password"
+    },
+    {
+      "type": "text",
+      "id": "btn_update_password",
+      "default": "Update password"
+    },
+    {
+      "type": "text",
+      "id": "danger_title",
+      "default": "Danger zone"
+    },
+    {
+      "type": "text",
+      "id": "danger_sub",
+      "default": "These actions are permanent and cannot be undone."
+    },
+    {
+      "type": "text",
+      "id": "btn_delete_account",
+      "default": "Delete account"
+    },
+    {
+      "type": "text",
+      "id": "btn_sign_out",
+      "default": "Sign out"
+    },
+    {
+      "type": "header",
+      "content": "Liked (wishlist embed)"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_shop_more_url",
+      "label": "Shop more link"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_eyebrow",
+      "default": "YOUR COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_title_1",
+      "default": "LIKED "
+    },
+    {
+      "type": "text",
+      "id": "wishlist_title_2",
+      "default": "ITEMS"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_items_label",
+      "default": "items saved"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_shop_more_label",
+      "default": "SHOP MORE"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_loading",
+      "default": "Loading saved items…"
+    },
+    {
+      "type": "textarea",
+      "id": "wishlist_empty",
+      "default": "No saved items yet. Tap the heart on a product to save it here."
+    },
+    {
+      "type": "text",
+      "id": "wishlist_empty_cta",
+      "default": "Browse products"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_cta_title",
+      "default": "READY TO CHECK OUT?"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_cta_sub",
+      "default": "Add all to cart and complete your order."
+    },
+    {
+      "type": "text",
+      "id": "wishlist_add_all",
+      "default": "ADD ALL TO CART"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_view_cart",
+      "default": "VIEW CART"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "order_card",
+      "name": "Order",
+      "settings": [
+        { "type": "text", "id": "order_id", "label": "Order id", "default": "DR-20482" },
+        { "type": "text", "id": "status_label", "label": "Status label", "default": "Delivered" },
+        {
+          "type": "select",
+          "id": "status_class",
+          "label": "Status style",
+          "options": [
+            { "value": "delivered", "label": "Delivered (green)" },
+            { "value": "shipped", "label": "Shipped (blue)" },
+            { "value": "returned", "label": "Returned (grey)" }
+          ],
+          "default": "delivered"
+        },
+        { "type": "text", "id": "meta", "label": "Date · items", "default": "Mar 15, 2026 · 2 items" },
+        { "type": "text", "id": "total", "label": "Total", "default": "$324.00" },
+        { "type": "text", "id": "currency", "label": "Currency", "default": "USD" },
+        { "type": "checkbox", "id": "show_track", "label": "Show track order", "default": false },
+        { "type": "checkbox", "id": "show_buy_again", "label": "Show buy again", "default": true },
+        { "type": "text", "id": "line1_brand", "label": "Line 1 brand", "default": "ARITZIA" },
+        { "type": "text", "id": "line1_title", "label": "Line 1 title", "default": "Leather Biker Jacket" },
+        { "type": "text", "id": "line1_spec", "label": "Line 1 spec", "default": "Size M · Qty 1" },
+        { "type": "text", "id": "line1_price", "label": "Line 1 price", "default": "$148" },
+        { "type": "image_picker", "id": "line1_image", "label": "Line 1 image" },
+        { "type": "text", "id": "line2_brand", "label": "Line 2 brand", "default": "ESSENTIALS" },
+        { "type": "text", "id": "line2_title", "label": "Line 2 title", "default": "Oversized Hoodie" },
+        { "type": "text", "id": "line2_spec", "label": "Line 2 spec", "default": "Size L · Qty 1" },
+        { "type": "text", "id": "line2_price", "label": "Line 2 price", "default": "$88" },
+        { "type": "image_picker", "id": "line2_image", "label": "Line 2 image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Account profile",
+      "blocks": [
+        {
+          "type": "order_card",
+          "settings": {
+            "order_id": "DR-20482",
+            "status_label": "Delivered",
+            "status_class": "delivered",
+            "meta": "Mar 15, 2026 · 2 items",
+            "total": "$324.00",
+            "currency": "USD",
+            "show_track": false,
+            "show_buy_again": true,
+            "line1_brand": "ARITZIA",
+            "line1_title": "Leather Biker Jacket",
+            "line1_spec": "Size M · Qty 1",
+            "line1_price": "$148",
+            "line2_brand": "ESSENTIALS",
+            "line2_title": "Oversized Hoodie",
+            "line2_spec": "Size L · Qty 1",
+            "line2_price": "$88"
+          }
+        },
+        {
+          "type": "order_card",
+          "settings": {
+            "order_id": "DR-19947",
+            "status_label": "Shipped",
+            "status_class": "shipped",
+            "meta": "Mar 2, 2026 · 1 item",
+            "total": "$110.00",
+            "currency": "USD",
+            "show_track": true,
+            "show_buy_again": false,
+            "line1_brand": "NIKE",
+            "line1_title": "Air Force 1 '07",
+            "line1_spec": "Size 10 · Qty 1",
+            "line1_price": "$110",
+            "line2_title": ""
+          }
+        },
+        {
+          "type": "order_card",
+          "settings": {
+            "order_id": "DR-19201",
+            "status_label": "Delivered",
+            "status_class": "delivered",
+            "meta": "Feb 20, 2026 · 1 item",
+            "total": "$235.00",
+            "currency": "USD",
+            "show_track": false,
+            "show_buy_again": true,
+            "line1_brand": "CANADA GOOSE",
+            "line1_title": "Down Puffer Jacket",
+            "line1_spec": "Size M · Qty 1",
+            "line1_price": "$235",
+            "line2_title": ""
+          }
+        },
+        {
+          "type": "order_card",
+          "settings": {
+            "order_id": "DR-18756",
+            "status_label": "Returned",
+            "status_class": "returned",
+            "meta": "Feb 1, 2026 · 1 item",
+            "total": "$420.00",
+            "currency": "USD",
+            "show_track": false,
+            "show_buy_again": false,
+            "line1_brand": "ARCTERYX",
+            "line1_title": "Technical Parka",
+            "line1_spec": "Size L · Qty 1",
+            "line1_price": "$420",
+            "line2_title": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

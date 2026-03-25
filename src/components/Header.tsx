@@ -90,13 +90,13 @@ const Header = () => {
               )}
             </Link>
 
-            <button
-              type="button"
+            <Link
+              to="/account/overview"
               className="hidden md:flex w-[34px] h-[34px] items-center justify-center rounded-full hover:bg-black/5"
               aria-label="Account"
             >
               <User size={18} strokeWidth={1.5} />
-            </button>
+            </Link>
 
             <button
               type="button"

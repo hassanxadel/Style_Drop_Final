@@ -1,0 +1,89 @@
+{
+  "sections": {
+    "main": {
+      "type": "account-profile",
+      "settings": {
+        "active_tab": "orders"
+      },
+      "blocks": {
+        "order_1": {
+          "type": "order_card",
+          "settings": {
+            "order_id": "DR-20482",
+            "status_label": "Delivered",
+            "status_class": "delivered",
+            "meta": "Mar 15, 2026 · 2 items",
+            "total": "$324.00",
+            "currency": "USD",
+            "show_track": false,
+            "show_buy_again": true,
+            "line1_brand": "ARITZIA",
+            "line1_title": "Leather Biker Jacket",
+            "line1_spec": "Size M · Qty 1",
+            "line1_price": "$148",
+            "line2_brand": "ESSENTIALS",
+            "line2_title": "Oversized Hoodie",
+            "line2_spec": "Size L · Qty 1",
+            "line2_price": "$88"
+          }
+        },
+        "order_2": {
+          "type": "order_card",
+          "settings": {
+            "order_id": "DR-19947",
+            "status_label": "Shipped",
+            "status_class": "shipped",
+            "meta": "Mar 2, 2026 · 1 item",
+            "total": "$110.00",
+            "currency": "USD",
+            "show_track": true,
+            "show_buy_again": false,
+            "line1_brand": "NIKE",
+            "line1_title": "Air Force 1 '07",
+            "line1_spec": "Size 10 · Qty 1",
+            "line1_price": "$110",
+            "line2_title": ""
+          }
+        },
+        "order_3": {
+          "type": "order_card",
+          "settings": {
+            "order_id": "DR-19201",
+            "status_label": "Delivered",
+            "status_class": "delivered",
+            "meta": "Feb 20, 2026 · 1 item",
+            "total": "$235.00",
+            "currency": "USD",
+            "show_track": false,
+            "show_buy_again": true,
+            "line1_brand": "CANADA GOOSE",
+            "line1_title": "Down Puffer Jacket",
+            "line1_spec": "Size M · Qty 1",
+            "line1_price": "$235",
+            "line2_title": ""
+          }
+        },
+        "order_4": {
+          "type": "order_card",
+          "settings": {
+            "order_id": "DR-18756",
+            "status_label": "Returned",
+            "status_class": "returned",
+            "meta": "Feb 1, 2026 · 1 item",
+            "total": "$420.00",
+            "currency": "USD",
+            "show_track": false,
+            "show_buy_again": false,
+            "line1_brand": "ARCTERYX",
+            "line1_title": "Technical Parka",
+            "line1_spec": "Size L · Qty 1",
+            "line1_price": "$420",
+            "line2_title": ""
+          }
+        }
+      },
+      "block_order": ["order_1", "order_2", "order_3", "order_4"]
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "account-profile",
+      "settings": {
+        "active_tab": "overview"
+      }
+    }
+  },
+  "order": ["main"]
+}
