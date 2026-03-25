@@ -21,7 +21,30 @@
 
 <a
   href="{{ category_url | default: '/collections/all' }}"
-  class="styledrop-category-card styledrop-category-card--{{ grid_span | default: 'small' }}"
+  class="
+    styledrop-category-card
+    {%- liquid
+      assign desktop_span = grid_span_desktop | default: grid_span | default: 'small'
+      assign mobile_span = grid_span_mobile | default: grid_span | default: 'small'
+
+      if desktop_span == 'normal'
+        assign desktop_span = 'small'
+      endif
+      if mobile_span == 'normal'
+        assign mobile_span = 'small'
+      endif
+    -%}
+    {%- if desktop_span == 'tall' -%}
+      styledrop-category-card--tall-desktop
+    {%- elsif desktop_span == 'wide' -%}
+      styledrop-category-card--wide-desktop
+    {%- endif -%}
+    {%- if mobile_span == 'tall' -%}
+      styledrop-category-card--tall-mobile
+    {%- elsif mobile_span == 'wide' -%}
+      styledrop-category-card--wide-mobile
+    {%- endif -%}
+  "
 >
   {%- comment -%} Category Image {%- endcomment -%}
   {%- if category_image != blank -%}

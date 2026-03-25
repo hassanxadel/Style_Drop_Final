@@ -49,7 +49,8 @@
               category_name: block.settings.category_name,
               category_url: block.settings.category_url,
               category_image: block.settings.category_image,
-              grid_span: block.settings.grid_span
+              grid_span_desktop: block.settings.grid_span_desktop | default: block.settings.grid_span,
+              grid_span_mobile: block.settings.grid_span_mobile | default: block.settings.grid_span
             %}
         {%- endcase -%}
       {%- endfor -%}
@@ -183,8 +184,48 @@
         },
         {
           "type": "select",
+          "id": "grid_span_desktop",
+          "label": "Desktop Card Size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small (1x1)"
+            },
+            {
+              "value": "tall",
+              "label": "Tall (1x2)"
+            },
+            {
+              "value": "wide",
+              "label": "Wide (2x1)"
+            }
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select",
+          "id": "grid_span_mobile",
+          "label": "Mobile Card Size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small (1x1)"
+            },
+            {
+              "value": "tall",
+              "label": "Tall (1x2)"
+            },
+            {
+              "value": "wide",
+              "label": "Wide (2x1)"
+            }
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select",
           "id": "grid_span",
-          "label": "Grid Size",
+          "label": "Legacy Grid Size (fallback)",
           "options": [
             {
               "value": "small",
@@ -212,35 +253,40 @@
           "type": "category",
           "settings": {
             "category_name": "WOMEN",
-            "grid_span": "tall"
+            "grid_span_desktop": "tall",
+            "grid_span_mobile": "small"
           }
         },
         {
           "type": "category",
           "settings": {
             "category_name": "MEN",
-            "grid_span": "small"
+            "grid_span_desktop": "small",
+            "grid_span_mobile": "small"
           }
         },
         {
           "type": "category",
           "settings": {
             "category_name": "SHOES",
-            "grid_span": "small"
+            "grid_span_desktop": "small",
+            "grid_span_mobile": "small"
           }
         },
         {
           "type": "category",
           "settings": {
             "category_name": "ACCESSORIES",
-            "grid_span": "small"
+            "grid_span_desktop": "small",
+            "grid_span_mobile": "small"
           }
         },
         {
           "type": "category",
           "settings": {
             "category_name": "NEW IN",
-            "grid_span": "small"
+            "grid_span_desktop": "small",
+            "grid_span_mobile": "small"
           }
         }
       ]

@@ -20,7 +20,39 @@
 
 <section class="styledrop-newsletter">
   <div class="container">
-    <div class="styledrop-newsletter__card">
+    <div
+      class="styledrop-newsletter__card"
+      style="
+        --sd-nl-card-padding-mobile: {{ section.settings.card_padding_mobile }}px;
+        --sd-nl-card-padding-desktop: {{ section.settings.card_padding_desktop }}px;
+        --sd-nl-drop-size-mobile: {{ section.settings.drop_size_mobile }}px;
+        --sd-nl-drop-size-desktop: {{ section.settings.drop_size_desktop }}px;
+        --sd-nl-badge-icon-size-mobile: {{ section.settings.badge_icon_size_mobile }}px;
+        --sd-nl-badge-icon-size-desktop: {{ section.settings.badge_icon_size_desktop }}px;
+        --sd-nl-badge-text-size-mobile: {{ section.settings.badge_text_size_mobile }}px;
+        --sd-nl-badge-text-size-desktop: {{ section.settings.badge_text_size_desktop }}px;
+        --sd-nl-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+        --sd-nl-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
+        --sd-nl-description-size-mobile: {{ section.settings.description_size_mobile }}px;
+        --sd-nl-description-size-desktop: {{ section.settings.description_size_desktop }}px;
+        --sd-nl-input-font-size-mobile: {{ section.settings.input_font_size_mobile }}px;
+        --sd-nl-input-font-size-desktop: {{ section.settings.input_font_size_desktop }}px;
+        --sd-nl-input-px-mobile: {{ section.settings.input_padding_x_mobile }}px;
+        --sd-nl-input-px-desktop: {{ section.settings.input_padding_x_desktop }}px;
+        --sd-nl-input-py-mobile: {{ section.settings.input_padding_y_mobile }}px;
+        --sd-nl-input-py-desktop: {{ section.settings.input_padding_y_desktop }}px;
+        --sd-nl-button-font-size-mobile: {{ section.settings.button_font_size_mobile }}px;
+        --sd-nl-button-font-size-desktop: {{ section.settings.button_font_size_desktop }}px;
+        --sd-nl-button-px-mobile: {{ section.settings.button_padding_x_mobile }}px;
+        --sd-nl-button-px-desktop: {{ section.settings.button_padding_x_desktop }}px;
+        --sd-nl-button-py-mobile: {{ section.settings.button_padding_y_mobile }}px;
+        --sd-nl-button-py-desktop: {{ section.settings.button_padding_y_desktop }}px;
+        --sd-nl-privacy-size-mobile: {{ section.settings.privacy_size_mobile }}px;
+        --sd-nl-privacy-size-desktop: {{ section.settings.privacy_size_desktop }}px;
+        --sd-nl-message-size-mobile: {{ section.settings.message_size_mobile }}px;
+        --sd-nl-message-size-desktop: {{ section.settings.message_size_desktop }}px;
+      "
+    >
       {%- comment -%} Large "DROP" Background Text {%- endcomment -%}
       <div class="styledrop-newsletter__drop-word">
         <span class="styledrop-newsletter__drop-word-text">
@@ -170,6 +202,262 @@
       "id": "privacy_text",
       "label": "Privacy Notice",
       "default": "No spam, ever. Unsubscribe anytime. We respect your inbox."
+    },
+    {
+      "type": "header",
+      "content": "Size Controls (px)"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Card padding (mobile)",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Card padding (desktop)",
+      "min": 30,
+      "max": 120,
+      "step": 1,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "drop_size_mobile",
+      "label": "DROP background size (mobile)",
+      "min": 120,
+      "max": 280,
+      "step": 1,
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "drop_size_desktop",
+      "label": "DROP background size (desktop)",
+      "min": 180,
+      "max": 420,
+      "step": 1,
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "badge_icon_size_mobile",
+      "label": "Badge icon size (mobile)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "badge_icon_size_desktop",
+      "label": "Badge icon size (desktop)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "badge_text_size_mobile",
+      "label": "Badge text size (mobile)",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_text_size_desktop",
+      "label": "Badge text size (desktop)",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "min": 28,
+      "max": 80,
+      "step": 1,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size (desktop)",
+      "min": 40,
+      "max": 110,
+      "step": 1,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Description size (mobile)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "label": "Description size (desktop)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "input_font_size_mobile",
+      "label": "Email input font size (mobile)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "input_font_size_desktop",
+      "label": "Email input font size (desktop)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "input_padding_x_mobile",
+      "label": "Email input padding X (mobile)",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "input_padding_x_desktop",
+      "label": "Email input padding X (desktop)",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "input_padding_y_mobile",
+      "label": "Email input padding Y (mobile)",
+      "min": 8,
+      "max": 32,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "input_padding_y_desktop",
+      "label": "Email input padding Y (desktop)",
+      "min": 8,
+      "max": 38,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "label": "Button font size (mobile)",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_desktop",
+      "label": "Button font size (desktop)",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_x_mobile",
+      "label": "Button padding X (mobile)",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "button_padding_x_desktop",
+      "label": "Button padding X (desktop)",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "button_padding_y_mobile",
+      "label": "Button padding Y (mobile)",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_y_desktop",
+      "label": "Button padding Y (desktop)",
+      "min": 10,
+      "max": 34,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "privacy_size_mobile",
+      "label": "Privacy text size (mobile)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "privacy_size_desktop",
+      "label": "Privacy text size (desktop)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "message_size_mobile",
+      "label": "Success/Error message size (mobile)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "message_size_desktop",
+      "label": "Success/Error message size (desktop)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
     }
   ],
   "presets": [

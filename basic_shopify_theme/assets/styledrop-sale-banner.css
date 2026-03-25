@@ -30,6 +30,8 @@
   text-align: center;
   padding-left: 1rem;
   padding-right: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .styledrop-sale-banner__title {
@@ -58,5 +60,51 @@
   .styledrop-sale-banner__subtitle {
     font-size: 0.875rem;
   }
+}
+
+/* Image sizing (fixes damaged dimensions) */
+.styledrop-sale-banner__img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .styledrop-sale-banner__img {
+    height: 280px;
+  }
+}
+
+.styledrop-sale-banner__placeholder {
+  width: 100%;
+  height: 200px;
+  background-color: #d1d5db;
+}
+
+@media (min-width: 768px) {
+  .styledrop-sale-banner__placeholder {
+    height: 280px;
+  }
+}
+
+/* CTA button (matches React btn-accent) */
+.styledrop-sale-banner__cta {
+  display: inline-block;
+  padding: 0.75rem 2rem; /* px-8 py-3 */
+  background-color: var(--sd-accent, #DC2626);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.styledrop-sale-banner__cta:hover {
+  opacity: 0.9;
 }
 

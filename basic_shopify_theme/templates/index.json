@@ -47,7 +47,8 @@
           "settings": {
             "category_name": "WOMEN",
             "category_url": "/collections/women",
-            "grid_span": "tall"
+            "grid_span_desktop": "tall",
+            "grid_span_mobile": "small"
           }
         },
         "category-2": {
@@ -55,7 +56,8 @@
           "settings": {
             "category_name": "MEN",
             "category_url": "/collections/men",
-            "grid_span": "normal"
+            "grid_span_desktop": "small",
+            "grid_span_mobile": "small"
           }
         },
         "category-3": {
@@ -63,7 +65,8 @@
           "settings": {
             "category_name": "SHOES",
             "category_url": "/collections/shoes",
-            "grid_span": "normal"
+            "grid_span_desktop": "small",
+            "grid_span_mobile": "small"
           }
         },
         "category-4": {
@@ -71,7 +74,8 @@
           "settings": {
             "category_name": "ACCESSORIES",
             "category_url": "/collections/accessories",
-            "grid_span": "normal"
+            "grid_span_desktop": "small",
+            "grid_span_mobile": "small"
           }
         },
         "category-5": {
@@ -79,7 +83,8 @@
           "settings": {
             "category_name": "NEW IN",
             "category_url": "/collections/new-arrivals",
-            "grid_span": "normal"
+            "grid_span_desktop": "small",
+            "grid_span_mobile": "small"
           }
         }
       },

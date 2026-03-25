@@ -1,233 +1,229 @@
 {% comment %}
-  Hero Section
+  StyleDrop Hero Section
+  Section name: "style-drop-hero section"
   Converted from: src/sections/HeroSection.tsx
 
-  Features:
-  - Hero banner with headline and CTAs
-  - "Same-day delivery" badge
-  - Featured product card overlay (desktop only)
-  - Trust features bar (4 features)
-  - Fully responsive (mobile/desktop)
-  - Configurable via Theme Editor
+  Layout (mirrors React exactly):
+  - Outer section bg: #F5F0EB, min-height 702px
+  - Top row: MOVE FREELY | LIVE BOLDLY | FEEL ICONIC (h=82px, space-between, desktop only)
+  - Content row: Left col (text, max-w 480px) + Right col (image + overlays, h=620px)
+  - Left: Red pill badge → Bebas Neue 99px headline WEAR WHAT / DROPS(red) / TODAY. → 15px description → 2 CTAs
+  - Right: hero image (object-cover, rounded-t-20px) + FAST DROP badge (absolute -left-15px top-5) + product card (absolute left-340 top-367px)
+  - Trust bar: #0D0D0D bg, 4 features with icon circles
 
-  Usage:
-  Add to homepage template or use in Theme Editor
+  Valgara Protocol:
+  - Zero Tailwind. BEM: styledrop-hero__[element]--[modifier]
+  - CSS in assets/styledrop-hero-section.css
+  - Schema at bottom, presets defined
 {% endcomment %}
 
 {{ 'styledrop-hero-section.css' | asset_url | stylesheet_tag }}
 
-{%- comment -%} Hero Section Container {%- endcomment -%}
-<section class="hero-section">
-  {%- comment -%} Main Hero Banner {%- endcomment -%}
-  <div class="hero-section__main">
-    <div class="container sd-hero__content-wrap">
+<section class="styledrop-hero">
 
-      {%- comment -%} Top Row: MOVE FREELY | LIVE BOLDLY | FEEL ICONIC (Desktop only) {%- endcomment -%}
-      <div class="sd-hero__tagline-row">
-        <p class="sd-hero__tagline-text">
-          {{ section.settings.tagline_1 | default: 'MOVE FREELY' }}
-        </p>
-        <p class="sd-hero__tagline-text">
-          {{ section.settings.tagline_2 | default: 'LIVE BOLDLY' }}
-        </p>
-        <p class="sd-hero__tagline-text">
-          {{ section.settings.tagline_3 | default: 'FEEL ICONIC' }}
-        </p>
+  {%- comment -%} HERO MAIN — bg #F5F0EB {%- endcomment -%}
+  <div class="styledrop-hero__main">
+    <div class="container styledrop-hero__wrap">
+
+      {%- comment -%} Top tagline row — desktop only {%- endcomment -%}
+      <div class="styledrop-hero__tagline-row">
+        <p class="styledrop-hero__tagline">{{ section.settings.tagline_1 | default: 'MOVE FREELY' }}</p>
+        <p class="styledrop-hero__tagline">{{ section.settings.tagline_2 | default: 'LIVE BOLDLY' }}</p>
+        <p class="styledrop-hero__tagline">{{ section.settings.tagline_3 | default: 'FEEL ICONIC' }}</p>
       </div>
 
-      {%- comment -%} Content Row: Text + Image {%- endcomment -%}
-      <div class="sd-hero__content-row">
+      {%- comment -%} Main content row — text left, image right {%- endcomment -%}
+      <div class="styledrop-hero__content-row">
 
-        {%- comment -%} Left Column: Text Content {%- endcomment -%}
-        <div class="sd-hero__left-col">
+        {%- comment -%} LEFT COLUMN — text block {%- endcomment -%}
+        <div class="styledrop-hero__left-col">
 
-          {%- comment -%} SAME-DAY DELIVERY Badge {%- endcomment -%}
-          <span class="sd-hero__delivery-badge">
-            <svg class="sd-hero__delivery-badge-icon" viewBox="0 0 24 24" aria-hidden="true">
+          {%- comment -%} SAME-DAY DELIVERY red pill badge {%- endcomment -%}
+          <span class="styledrop-hero__delivery-badge">
+            <svg class="styledrop-hero__delivery-badge-icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
               <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
             </svg>
-            <span class="sd-hero__delivery-badge-text">
+            <span class="styledrop-hero__delivery-badge-text">
               {{ section.settings.badge_text | default: 'SAME-DAY DELIVERY' }}
             </span>
           </span>
 
-          {%- comment -%} Main Headline {%- endcomment -%}
-          <h1 class="hero-section__headline">
-            <span class="block">{{ section.settings.headline_line_1 | default: 'WEAR WHAT' }}</span>
-            <span class="block hero-section__headline-line--red">{{ section.settings.headline_line_2 | default: 'DROPS' }}</span>
-            <span class="block">{{ section.settings.headline_line_3 | default: 'TODAY.' }}</span>
+          {%- comment -%} Bebas Neue headline — 99px, line-height 87px, letter-spacing 3.6px {%- endcomment -%}
+          <h1 class="styledrop-hero__headline">
+            <span class="styledrop-hero__headline-line">{{ section.settings.headline_line_1 | default: 'WEAR WHAT' }}</span>
+            <span class="styledrop-hero__headline-line styledrop-hero__headline-line--accent">{{ section.settings.headline_line_2 | default: 'DROPS' }}</span>
+            <span class="styledrop-hero__headline-line">{{ section.settings.headline_line_3 | default: 'TODAY.' }}</span>
           </h1>
 
-          {%- comment -%} Description {%- endcomment -%}
-          <p class="hero-section__description">
+          {%- comment -%} Description — 15px/24px, opacity 0.55, max-width 320px {%- endcomment -%}
+          <p class="styledrop-hero__description">
             {{ section.settings.description | default: 'Multi-brand fashion delivered fast. Discover trending styles from the brands you love — with full transparency on pricing and returns.' }}
           </p>
 
-          {%- comment -%} CTA Buttons {%- endcomment -%}
-          <div class="sd-hero__cta-row">
-            <a href="{{ section.settings.cta_primary_link | default: '/collections/all' }}">
-              <button class="sd-hero__btn-primary">
-                {{ section.settings.cta_primary_text | default: "Shop What's Trending" }}
-              </button>
+          {%- comment -%} CTA row — red filled button + text link {%- endcomment -%}
+          <div class="styledrop-hero__cta-row">
+            <a href="{{ section.settings.cta_primary_link | default: '/collections/all' }}" class="styledrop-hero__btn-primary">
+              {{ section.settings.cta_primary_text | default: "SHOP WHAT'S TRENDING" }}
             </a>
-            <a href="{{ section.settings.cta_secondary_link | default: '/collections/new-arrivals' }}" class="sd-hero__btn-secondary">
+            <a href="{{ section.settings.cta_secondary_link | default: '/collections/new-arrivals' }}" class="styledrop-hero__btn-secondary">
               {{ section.settings.cta_secondary_text | default: 'Explore New Arrivals' }}
               <span aria-hidden="true">→</span>
             </a>
           </div>
+
         </div>
 
-        {%- comment -%} Right Column: Hero Image + Overlays {%- endcomment -%}
-        <div class="sd-hero__right-col">
+        {%- comment -%} RIGHT COLUMN — image + overlays {%- endcomment -%}
+        <div class="styledrop-hero__right-col">
 
-          {%- comment -%} Main Hero Image {%- endcomment -%}
-          {%- if section.settings.hero_image -%}
+          {%- comment -%} Hero image — object-cover, rounded-t-[20px] {%- endcomment -%}
+          {%- if section.settings.hero_image != blank -%}
             <img
-              src="{{ section.settings.hero_image | img_url: '800x' }}"
+              src="{{ section.settings.hero_image | image_url: width: 800 }}"
               alt="{{ section.settings.hero_image.alt | default: 'Fashion model' }}"
-              class="sd-hero__img"
+              class="styledrop-hero__image"
+              width="800"
+              height="1033"
               loading="eager"
             />
           {%- else -%}
-            <div class="sd-hero__img-placeholder">
-              <p>Upload hero image</p>
+            <div class="styledrop-hero__image-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+              </svg>
+              <p>Upload hero image in Theme Editor</p>
             </div>
           {%- endif -%}
 
-          {%- comment -%} FAST DROP Badge Overlay {%- endcomment -%}
-          {%- if section.settings.show_fast_drop_badge -%}
-            <div class="sd-hero__fast-drop-badge">
-              <div class="sd-hero__fast-drop-row">
-                <span class="sd-hero__fast-drop-icon">⚡</span>
-                <span class="sd-hero__fast-drop-label">FAST DROP</span>
-              </div>
-              <span class="sd-hero__fast-drop-sub">Delivered today</span>
+          {%- comment -%} FAST DROP badge — absolute -left-15px, top-20px, dark pill {%- endcomment -%}
+          <div class="styledrop-hero__fast-drop">
+            <div class="styledrop-hero__fast-drop-row">
+              <span class="styledrop-hero__fast-drop-lightning" aria-hidden="true">⚡</span>
+              <span class="styledrop-hero__fast-drop-label">FAST DROP</span>
             </div>
-          {%- endif -%}
+            <span class="styledrop-hero__fast-drop-sub">Delivered today</span>
+          </div>
 
-          {%- comment -%} Product Card Overlay (Desktop only) {%- endcomment -%}
-          {%- if section.settings.featured_product != blank -%}
-            {%- assign featured_product = all_products[section.settings.featured_product] -%}
-            {%- if featured_product -%}
-              <div class="sd-hero__product-card">
-                {%- if featured_product.featured_image -%}
+          {%- comment -%} Product card overlay — desktop only, absolute bottom-right {%- endcomment -%}
+          <div class="styledrop-hero__product-card">
+            {%- if section.settings.featured_product != blank -%}
+              {%- assign fp = all_products[section.settings.featured_product] -%}
+              {%- if fp != blank -%}
+                {%- if fp.featured_image -%}
                   <img
-                    src="{{ featured_product.featured_image | img_url: '200x' }}"
-                    alt="{{ featured_product.title }}"
-                    class="sd-hero__product-card-img"
-                    width="200"
-                    height="148"
+                    src="{{ fp.featured_image | image_url: width: 272 }}"
+                    alt="{{ fp.title }}"
+                    class="styledrop-hero__product-card-img"
+                    width="136"
+                    height="100"
                     loading="lazy"
                   />
                 {%- endif -%}
-                <p class="sd-hero__product-card-vendor">
-                  {{ featured_product.vendor | upcase }}
-                </p>
-                <p class="sd-hero__product-card-title">
-                  {{ featured_product.title | truncate: 20 }}
-                </p>
-                <div class="sd-hero__product-card-price-row">
-                  <span class="sd-hero__product-card-price">
-                    {{ featured_product.price | money }}
-                  </span>
-                  <span class="sd-hero__product-card-rtn">
-                    FREE RTN
-                  </span>
+                <p class="styledrop-hero__product-card-vendor">{{ fp.vendor | upcase }}</p>
+                <p class="styledrop-hero__product-card-title">{{ fp.title | truncate: 20 }}</p>
+                <div class="styledrop-hero__product-card-footer">
+                  <span class="styledrop-hero__product-card-price">{{ fp.price | money }}</span>
+                  <span class="styledrop-hero__product-card-rtn">FREE RTN</span>
                 </div>
+              {%- else -%}
+                {%- comment -%} Fallback card for preview / no product selected {%- endcomment -%}
+                <div class="styledrop-hero__product-card-placeholder-img"></div>
+                <p class="styledrop-hero__product-card-vendor">{{ section.settings.card_brand | default: 'ARITZIA' }}</p>
+                <p class="styledrop-hero__product-card-title">{{ section.settings.card_title | default: 'Trench Coat' }}</p>
+                <div class="styledrop-hero__product-card-footer">
+                  <span class="styledrop-hero__product-card-price">{{ section.settings.card_price | default: 'EGP 1,124.00' }}</span>
+                  <span class="styledrop-hero__product-card-rtn">FREE RTN</span>
+                </div>
+              {%- endif -%}
+            {%- else -%}
+              {%- comment -%} Static fallback card {%- endcomment -%}
+              <div class="styledrop-hero__product-card-placeholder-img"></div>
+              <p class="styledrop-hero__product-card-vendor">{{ section.settings.card_brand | default: 'ARITZIA' }}</p>
+              <p class="styledrop-hero__product-card-title">{{ section.settings.card_title | default: 'Trench Coat' }}</p>
+              <div class="styledrop-hero__product-card-footer">
+                <span class="styledrop-hero__product-card-price">{{ section.settings.card_price | default: 'EGP 1,124.00' }}</span>
+                <span class="styledrop-hero__product-card-rtn">FREE RTN</span>
               </div>
             {%- endif -%}
-          {%- endif -%}
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 
-  {%- comment -%} Trust Features Bar {%- endcomment -%}
-  <div class="hero-section__trust-bar">
-    <div class="container sd-hero__trust-inner">
-      <div class="sd-hero__trust-grid">
+  {%- comment -%} TRUST BAR — dark bg, 4 feature icons {%- endcomment -%}
+  <div class="styledrop-hero__trust-bar">
+    <div class="container styledrop-hero__trust-wrap">
+      <div class="styledrop-hero__trust-grid">
 
-        {%- comment -%} Feature 1: Fast Delivery {%- endcomment -%}
-        <div class="sd-hero__trust-item">
-          <div class="sd-hero__trust-icon" style="background-color: rgba(232, 76, 30, 0.12);">
-            <svg class="sd-hero__trust-icon-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        {%- comment -%} Feature 1 — Fast Delivery (Zap icon) {%- endcomment -%}
+        <div class="styledrop-hero__trust-item">
+          <div class="styledrop-hero__trust-icon-wrap">
+            <svg class="styledrop-hero__trust-icon-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
             </svg>
           </div>
           <div>
-            <p class="hero-section__trust-title">
-              {{ section.settings.feature_1_title | default: 'Fast Delivery' }}
-            </p>
-            <p class="hero-section__trust-text">
-              {{ section.settings.feature_1_desc | default: 'Same-day & next-day options' }}
-            </p>
+            <p class="styledrop-hero__trust-title">{{ section.settings.feature_1_title | default: 'Fast Delivery' }}</p>
+            <p class="styledrop-hero__trust-desc">{{ section.settings.feature_1_desc | default: 'Same-day & next-day options' }}</p>
           </div>
         </div>
 
-        {%- comment -%} Feature 2: Easy Returns {%- endcomment -%}
-        <div class="sd-hero__trust-item">
-          <div class="sd-hero__trust-icon" style="background-color: rgba(232, 76, 30, 0.12);">
-            <svg class="sd-hero__trust-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.67">
+        {%- comment -%} Feature 2 — Easy Returns (RotateCcw icon) {%- endcomment -%}
+        <div class="styledrop-hero__trust-item">
+          <div class="styledrop-hero__trust-icon-wrap">
+            <svg class="styledrop-hero__trust-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.67" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
             </svg>
           </div>
           <div>
-            <p class="hero-section__trust-title">
-              {{ section.settings.feature_2_title | default: 'Easy Returns' }}
-            </p>
-            <p class="hero-section__trust-text">
-              {{ section.settings.feature_2_desc | default: 'Free 30-day hassle-free returns' }}
-            </p>
+            <p class="styledrop-hero__trust-title">{{ section.settings.feature_2_title | default: 'Easy Returns' }}</p>
+            <p class="styledrop-hero__trust-desc">{{ section.settings.feature_2_desc | default: 'Free 30-day hassle-free returns' }}</p>
           </div>
         </div>
 
-        {%- comment -%} Feature 3: Secure Checkout {%- endcomment -%}
-        <div class="sd-hero__trust-item">
-          <div class="sd-hero__trust-icon" style="background-color: rgba(232, 76, 30, 0.12);">
-            <svg class="sd-hero__trust-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.67">
+        {%- comment -%} Feature 3 — Secure Checkout (ShieldCheck icon) {%- endcomment -%}
+        <div class="styledrop-hero__trust-item">
+          <div class="styledrop-hero__trust-icon-wrap">
+            <svg class="styledrop-hero__trust-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.67" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
             </svg>
           </div>
           <div>
-            <p class="hero-section__trust-title">
-              {{ section.settings.feature_3_title | default: 'Secure Checkout' }}
-            </p>
-            <p class="hero-section__trust-text">
-              {{ section.settings.feature_3_desc | default: '256-bit SSL encrypted payments' }}
-            </p>
+            <p class="styledrop-hero__trust-title">{{ section.settings.feature_3_title | default: 'Secure Checkout' }}</p>
+            <p class="styledrop-hero__trust-desc">{{ section.settings.feature_3_desc | default: '256-bit SSL encrypted payments' }}</p>
           </div>
         </div>
 
-        {%- comment -%} Feature 4: Trusted Brands {%- endcomment -%}
-        <div class="sd-hero__trust-item">
-          <div class="sd-hero__trust-icon" style="background-color: rgba(232, 76, 30, 0.12);">
-            <svg class="sd-hero__trust-icon-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        {%- comment -%} Feature 4 — Trusted Brands (Star icon) {%- endcomment -%}
+        <div class="styledrop-hero__trust-item">
+          <div class="styledrop-hero__trust-icon-wrap">
+            <svg class="styledrop-hero__trust-icon-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2l2.39 4.84 5.34.78-3.87 3.77.91 5.32L12 14.77l-4.77 2.51.91-5.32L4.27 7.62l5.34-.78L12 2z"/>
             </svg>
           </div>
           <div>
-            <p class="hero-section__trust-title">
-              {{ section.settings.feature_4_title | default: 'Trusted Brands' }}
-            </p>
-            <p class="hero-section__trust-text">
-              {{ section.settings.feature_4_desc | default: '200+ verified fashion brands' }}
-            </p>
+            <p class="styledrop-hero__trust-title">{{ section.settings.feature_4_title | default: 'Trusted Brands' }}</p>
+            <p class="styledrop-hero__trust-desc">{{ section.settings.feature_4_desc | default: '200+ verified fashion brands' }}</p>
           </div>
         </div>
+
       </div>
     </div>
   </div>
+
 </section>
 
 {% schema %}
 {
-  "name": "StyleDrop - Hero",
+  "name": "style-drop-hero section",
   "tag": "section",
-  "class": "section-hero",
+  "class": "styledrop-hero-wrapper",
   "settings": [
     {
       "type": "header",
-      "content": "Top Taglines (Desktop only)"
+      "content": "Tagline Row"
     },
     {
       "type": "text",
@@ -249,12 +245,12 @@
     },
     {
       "type": "header",
-      "content": "Hero Content"
+      "content": "Headline & Badge"
     },
     {
       "type": "text",
       "id": "badge_text",
-      "label": "Badge Text",
+      "label": "Delivery Badge",
       "default": "SAME-DAY DELIVERY"
     },
     {
@@ -266,7 +262,7 @@
     {
       "type": "text",
       "id": "headline_line_2",
-      "label": "Headline Line 2 (Red)",
+      "label": "Headline Line 2 (Red accent)",
       "default": "DROPS"
     },
     {
@@ -283,19 +279,18 @@
     },
     {
       "type": "header",
-      "content": "Call to Action Buttons"
+      "content": "CTA Buttons"
     },
     {
       "type": "text",
       "id": "cta_primary_text",
       "label": "Primary Button Text",
-      "default": "Shop What's Trending"
+      "default": "SHOP WHAT'S TRENDING"
     },
     {
       "type": "url",
       "id": "cta_primary_link",
-      "label": "Primary Button Link",
-      "default": "/collections/all"
+      "label": "Primary Button Link"
     },
     {
       "type": "text",
@@ -306,8 +301,7 @@
     {
       "type": "url",
       "id": "cta_secondary_link",
-      "label": "Secondary Link URL",
-      "default": "/collections/new-arrivals"
+      "label": "Secondary Link URL"
     },
     {
       "type": "header",
@@ -316,22 +310,40 @@
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero Image"
+      "label": "Hero Model Image",
+      "info": "Recommended: tall/portrait image, min 800×1030px"
     },
     {
-      "type": "checkbox",
-      "id": "show_fast_drop_badge",
-      "label": "Show 'Fast Drop' Badge",
-      "default": true
+      "type": "header",
+      "content": "Product Card (Floating overlay)"
     },
     {
       "type": "product",
       "id": "featured_product",
-      "label": "Featured Product Card (Desktop only)"
+      "label": "Featured Product",
+      "info": "Leave blank to use the static fallback card below"
+    },
+    {
+      "type": "text",
+      "id": "card_brand",
+      "label": "Fallback Brand Name",
+      "default": "ARITZIA"
+    },
+    {
+      "type": "text",
+      "id": "card_title",
+      "label": "Fallback Product Title",
+      "default": "Trench Coat"
+    },
+    {
+      "type": "text",
+      "id": "card_price",
+      "label": "Fallback Product Price",
+      "default": "EGP 1,124.00"
     },
     {
       "type": "header",
-      "content": "Trust Features"
+      "content": "Trust Bar Features"
     },
     {
       "type": "text",
@@ -384,7 +396,7 @@
   ],
   "presets": [
     {
-      "name": "StyleDrop - Hero"
+      "name": "style-drop-hero section"
     }
   ]
 }

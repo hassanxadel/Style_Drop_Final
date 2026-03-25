@@ -13,6 +13,7 @@
   cursor: pointer;
   display: block;
   text-decoration: none;
+  height: 100%;
 }
 
 /* ─── Grid span modifiers ────────────────────────────────────────────────── */
@@ -23,6 +24,28 @@
 
 .styledrop-category-card--wide {
   grid-column: span 2;
+}
+
+/* Desktop-only spans (Theme Editor controlled) */
+@media (min-width: 750px) {
+  .styledrop-category-card--tall-desktop {
+    grid-row: span 2;
+  }
+
+  .styledrop-category-card--wide-desktop {
+    grid-column: span 2;
+  }
+}
+
+/* Mobile-only spans (Theme Editor controlled) */
+@media (max-width: 749px) {
+  .styledrop-category-card--tall-mobile {
+    grid-row: span 2;
+  }
+
+  .styledrop-category-card--wide-mobile {
+    grid-column: span 2;
+  }
 }
 
 /* ─── Image ──────────────────────────────────────────────────────────────── */

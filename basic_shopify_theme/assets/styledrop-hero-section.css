@@ -1,44 +1,61 @@
-/* styledrop-hero-section.css
- * Valgara-isolated stylesheet for HeroSection
- * Converted from: src/sections/HeroSection.tsx
- * Every rule is scoped to .hero-section or .sd-hero__* BEM classes.
- * No Tailwind utilities. No Dawn defaults.
+/*
+ * StyleDrop Hero Section CSS
+ * Section: style-drop-hero section
+ * Converted from: src/sections/HeroSection.tsx (Figma specs)
+ *
+ * BEM: styledrop-hero__[element]--[modifier]
+ * All values derived directly from React Tailwind classes + Figma annotations
  */
 
-/* ─── Section shell ──────────────────────────────────────────────────────── */
-.hero-section {
-  background-color: #F5F0EB;
+/* =============================================
+   GOOGLE FONTS — Bebas Neue (display heading)
+   ============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+/* =============================================
+   WRAPPER
+   ============================================= */
+.styledrop-hero {
+  display: flex;
+  flex-direction: column;
 }
 
-.hero-section__main {
+/* =============================================
+   MAIN HERO AREA — bg #F5F0EB, min-h 702px
+   ============================================= */
+.styledrop-hero__main {
+  background-color: #F5F0EB;
   min-height: 702px;
   display: flex;
   flex-direction: column;
-  padding-top: 1.5rem;
+  padding-top: 24px;
 }
 
 @media (min-width: 768px) {
-  .hero-section__main {
+  .styledrop-hero__main {
     padding-top: 0;
   }
 }
 
-/* ─── Content wrap (px-8 equivalent) ────────────────────────────────────── */
-.sd-hero__content-wrap {
+/* Container wrap — flex column, flex-1 */
+.styledrop-hero__wrap {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex: 1;
   padding-left: 2rem;
   padding-right: 2rem;
 }
 
-/* ─── Tagline row (desktop only) ─────────────────────────────────────────── */
-.sd-hero__tagline-row {
+/* =============================================
+   TOP TAGLINE ROW — MOVE FREELY | LIVE BOLDLY | FEEL ICONIC
+   Figma: h=82px, justify-content: space-between, desktop only
+   ============================================= */
+.styledrop-hero__tagline-row {
   display: none;
 }
 
 @media (min-width: 768px) {
-  .sd-hero__tagline-row {
+  .styledrop-hero__tagline-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -48,28 +65,34 @@
   }
 }
 
-.sd-hero__tagline-text {
-  font-family: 'Barlow Condensed', system-ui, sans-serif;
+/* font-condensed 12px, bold, letter-spacing 2.4px, text-[#0D0D0D]/40, uppercase */
+.styledrop-hero__tagline {
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 12px;
   font-weight: 700;
   line-height: 18px;
   letter-spacing: 2.4px;
-  color: rgba(13, 13, 13, 0.4);
+  color: rgba(13, 13, 13, 0.40);
   text-transform: uppercase;
+  margin: 0;
 }
 
-/* ─── Content row (text + image) ─────────────────────────────────────────── */
-.sd-hero__content-row {
+/* =============================================
+   CONTENT ROW — text left + image right
+   Figma: 620px height, two columns
+   ============================================= */
+.styledrop-hero__content-row {
   display: flex;
-  flex: 1 1 auto;
   flex-direction: column;
+  flex: 1;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 2rem;
   padding-bottom: 3rem;
 }
 
 @media (min-width: 768px) {
-  .sd-hero__content-row {
+  .styledrop-hero__content-row {
     flex-direction: row;
     align-items: center;
     gap: 3rem;
@@ -77,35 +100,39 @@
   }
 }
 
-/* ─── Left column ────────────────────────────────────────────────────────── */
-.sd-hero__left-col {
+/* =============================================
+   LEFT COLUMN — text block, max-w 480px
+   ============================================= */
+.styledrop-hero__left-col {
   display: flex;
   flex-direction: column;
   max-width: 480px;
 }
 
-/* ─── Same-day delivery badge ────────────────────────────────────────────── */
-.sd-hero__delivery-badge {
+/* ---- SAME-DAY DELIVERY BADGE ---- */
+/* Figma: 28.5px height, red pill, gap 8px, px 12px */
+.styledrop-hero__delivery-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  border-radius: 9999px;
-  width: fit-content;
-  height: 22px;
-  padding: 0 0.5rem;
+  gap: 8px;
   background-color: #DC2626;
+  border-radius: 9999px;
+  height: 22px;
+  padding: 0 8px;
+  width: fit-content;
   margin-bottom: 0;
 }
 
 @media (min-width: 768px) {
-  .sd-hero__delivery-badge {
+  .styledrop-hero__delivery-badge {
     height: 28.5px;
+    padding: 0 12px;
     gap: 8px;
-    padding: 0 0.75rem;
   }
 }
 
-.sd-hero__delivery-badge-icon {
+/* Lightning bolt SVG — 9px mobile, 11px desktop, fill white */
+.styledrop-hero__delivery-badge-icon {
   width: 9px;
   height: 9px;
   fill: #ffffff;
@@ -113,150 +140,166 @@
 }
 
 @media (min-width: 768px) {
-  .sd-hero__delivery-badge-icon {
+  .styledrop-hero__delivery-badge-icon {
     width: 11px;
     height: 11px;
   }
 }
 
-.sd-hero__delivery-badge-text {
+/* Badge text — Inter 9px mobile / 11px desktop, 700, letter-spacing 0.88px, white, uppercase */
+.styledrop-hero__delivery-badge-text {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 9px;
   font-weight: 700;
-  line-height: 1rem;
+  line-height: 16px;
   letter-spacing: 0.72px;
   color: #ffffff;
   text-transform: uppercase;
 }
 
 @media (min-width: 768px) {
-  .sd-hero__delivery-badge-text {
+  .styledrop-hero__delivery-badge-text {
     font-size: 11px;
     letter-spacing: 0.88px;
   }
 }
 
-/* ─── Headline (existing rules kept, extended) ───────────────────────────── */
-.hero-section__headline {
-  font-family: 'Bebas Neue', sans-serif;
+/* ---- HEADLINE ---- */
+/* Figma: Bebas Neue 99px, line-height 87px, letter-spacing 3.6px, #0D0D0D */
+/* Mobile: 56px, line-height 50px, letter-spacing 2.8px */
+.styledrop-hero__headline {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
   font-weight: 400;
   font-size: 56px;
   line-height: 50px;
   letter-spacing: 2.8px;
   color: #0D0D0D;
-  margin-top: 1rem;
-  margin-bottom: 1.25rem;
+  margin: 16px 0 20px;
 }
 
 @media (min-width: 768px) {
-  .hero-section__headline {
+  .styledrop-hero__headline {
     font-size: 99px;
     line-height: 87px;
     letter-spacing: 3.6px;
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
+    margin: 24px 0 32px;
   }
 }
 
-.hero-section__headline-line--red {
+.styledrop-hero__headline-line {
+  display: block;
+}
+
+/* DROPS — red accent: #DC2626 */
+.styledrop-hero__headline-line--accent {
   color: #DC2626;
 }
 
-/* ─── Description ────────────────────────────────────────────────────────── */
-.hero-section__description {
+/* ---- DESCRIPTION ---- */
+/* Figma: Inter 15px / 24px, color #0D0D0D at 55% opacity, max-w 320px */
+.styledrop-hero__description {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 13px;
-  line-height: 1.25rem;
+  line-height: 20px;
   color: rgba(13, 13, 13, 0.55);
   max-width: 320px;
-  margin-bottom: 1.5rem;
+  margin: 0 0 24px;
 }
 
 @media (min-width: 768px) {
-  .hero-section__description {
+  .styledrop-hero__description {
     font-size: 15px;
-    line-height: 1.5rem;
-    margin-bottom: 2rem;
+    line-height: 24px;
+    margin-bottom: 32px;
   }
 }
 
-/* ─── CTA row ────────────────────────────────────────────────────────────── */
-.sd-hero__cta-row {
+/* ---- CTA ROW ---- */
+/* Figma: 52px height row, gap 24px, items-center */
+.styledrop-hero__cta-row {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
   align-items: flex-start;
-  margin-bottom: 2.5rem;
+  margin-bottom: 40px;
 }
 
 @media (min-width: 768px) {
-  .sd-hero__cta-row {
+  .styledrop-hero__cta-row {
     flex-direction: row;
-    gap: 1.5rem;
+    gap: 24px;
     align-items: center;
   }
 }
 
-/* ─── Primary button ─────────────────────────────────────────────────────── */
-.sd-hero__btn-primary {
+/* Primary button — red filled, rounded-full, 52px height, px 28px */
+/* Font: Barlow Condensed 14px desktop / 13px mobile, 700, tracking 1.92px */
+.styledrop-hero__btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Barlow Condensed', system-ui, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.68px;
-  height: 44px;
-  padding: 0 1.25rem;
-  border-radius: 9999px;
   background-color: #DC2626;
   color: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1.68px;
+  text-transform: uppercase;
+  text-decoration: none;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 9999px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
 }
 
-.sd-hero__btn-primary:hover {
+.styledrop-hero__btn-primary:hover {
   background-color: #b91c1c;
+  transform: translateY(-1px);
 }
 
 @media (min-width: 768px) {
-  .sd-hero__btn-primary {
-    font-size: 1rem;
+  .styledrop-hero__btn-primary {
+    font-size: 16px;
     letter-spacing: 1.92px;
     height: 52px;
-    padding: 0 1.75rem;
+    padding: 0 28px;
   }
 }
 
-/* ─── Secondary link ─────────────────────────────────────────────────────── */
-.sd-hero__btn-secondary {
+/* Secondary link — underlined, Inter 13px mobile / 14px desktop, 600, #0D0D0D */
+.styledrop-hero__btn-secondary {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
   color: #0D0D0D;
+  text-decoration: none;
   border-bottom: 1px solid #0D0D0D;
   padding-bottom: 2px;
-  text-decoration: none;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s ease;
 }
 
-.sd-hero__btn-secondary:hover {
-  opacity: 0.8;
+.styledrop-hero__btn-secondary:hover {
+  opacity: 0.7;
 }
 
 @media (min-width: 768px) {
-  .sd-hero__btn-secondary {
-    font-size: 0.875rem;
+  .styledrop-hero__btn-secondary {
+    font-size: 14px;
   }
 }
 
-/* ─── Right column ───────────────────────────────────────────────────────── */
-.sd-hero__right-col {
+/* =============================================
+   RIGHT COLUMN — image + overlays
+   Figma: w 570px max, h 620px desktop; aspect 480/620 mobile
+   ============================================= */
+.styledrop-hero__right-col {
   position: relative;
   width: 100%;
   max-width: 570px;
@@ -265,63 +308,82 @@
 }
 
 @media (min-width: 768px) {
-  .sd-hero__right-col {
+  .styledrop-hero__right-col {
     aspect-ratio: auto;
     height: 620px;
   }
 }
 
-/* ─── Hero image ─────────────────────────────────────────────────────────── */
-.sd-hero__img {
+/* ---- HERO IMAGE ---- */
+/* object-cover, rounded-t-[20px] (top corners only) */
+.styledrop-hero__image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 20px 20px 0 0;
+  display: block;
 }
 
-.sd-hero__img-placeholder {
+/* Image placeholder */
+.styledrop-hero__image-placeholder {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #e5e7eb;
-  border-radius: 20px 20px 0 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #6b7280;
+  gap: 12px;
+  background-color: #E8E3DE;
+  border-radius: 20px 20px 0 0;
+  color: rgba(13, 13, 13, 0.4);
 }
 
-/* ─── Fast Drop badge ────────────────────────────────────────────────────── */
-.sd-hero__fast-drop-badge {
+.styledrop-hero__image-placeholder svg {
+  width: 48px;
+  height: 48px;
+}
+
+.styledrop-hero__image-placeholder p {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ---- FAST DROP BADGE ---- */
+/* Figma: absolute -left-[15px] top-5, dark pill #0D0D0D, shadow */
+/* Shape: rounded-full, pl-14px pr-16px py-8px, flex-col gap 2px */
+.styledrop-hero__fast-drop {
   position: absolute;
   left: -15px;
-  top: 1.25rem;
-  padding: 0.5rem 1rem 0.5rem 14px;
+  top: 20px;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  border-radius: 9999px;
   background-color: #0D0D0D;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 9999px;
+  padding: 8px 16px 8px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20);
   z-index: 10;
 }
 
-.sd-hero__fast-drop-row {
+.styledrop-hero__fast-drop-row {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.sd-hero__fast-drop-icon {
-  color: #ffffff;
-  font-size: 1.125rem;
+/* Lightning emoji — 18px */
+.styledrop-hero__fast-drop-lightning {
+  font-size: 18px;
   line-height: 27px;
+  color: #ffffff;
 }
 
-.sd-hero__fast-drop-label {
+/* FAST DROP label — Inter 10px, 700, tracking 0.6px, white, uppercase */
+.styledrop-hero__fast-drop-label {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 10px;
   font-weight: 700;
@@ -331,20 +393,22 @@
   text-transform: uppercase;
 }
 
-.sd-hero__fast-drop-sub {
+/* "Delivered today" — Inter 9px, white/60 */
+.styledrop-hero__fast-drop-sub {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 9px;
   line-height: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
 }
 
-/* ─── Featured product card overlay (desktop only) ───────────────────────── */
-.sd-hero__product-card {
+/* ---- PRODUCT CARD ---- */
+/* Figma: 160×192px, left-340px top-367.5px, white, rounded-2xl, p-12px, shadow-lg */
+.styledrop-hero__product-card {
   display: none;
 }
 
 @media (min-width: 768px) {
-  .sd-hero__product-card {
+  .styledrop-hero__product-card {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -353,136 +417,163 @@
     width: 160px;
     min-height: 192px;
     background-color: #ffffff;
-    border-radius: 1rem;
-    padding: 0.75rem;
+    border-radius: 16px;
+    padding: 12px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     z-index: 10;
   }
 }
 
-.sd-hero__product-card-img {
+/* Product image — 136×100px, rounded-[10px], object-cover */
+.styledrop-hero__product-card-img {
   width: 136px;
   height: 100px;
   border-radius: 10px;
   object-fit: cover;
-  align-self: flex-start;
+  display: block;
+  flex-shrink: 0;
 }
 
-.sd-hero__product-card-vendor {
-  font-family: 'Barlow Condensed', system-ui, sans-serif;
+/* Placeholder image area when no image */
+.styledrop-hero__product-card-placeholder-img {
+  width: 136px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: #F5F0EB;
+  flex-shrink: 0;
+}
+
+/* Vendor — Inter/condensed 10px, 700, tracking 1px, #0D0D0D/50, uppercase, mt-8px */
+.styledrop-hero__product-card-vendor {
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 10px;
   font-weight: 700;
   line-height: 15px;
   letter-spacing: 1px;
-  color: rgba(13, 13, 13, 0.5);
+  color: rgba(13, 13, 13, 0.50);
   text-transform: uppercase;
-  margin-top: 0.5rem;
+  margin: 8px 0 0;
 }
 
-.sd-hero__product-card-title {
+/* Title — Inter 12px, 600, #0D0D0D, mt-4px */
+.styledrop-hero__product-card-title {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 12px;
   font-weight: 600;
   line-height: 18px;
   color: #0D0D0D;
-  margin-top: 0.25rem;
+  margin: 4px 0 0;
 }
 
-.sd-hero__product-card-price-row {
+/* Price row — flex row, space-between, items-center, mt-12px */
+.styledrop-hero__product-card-footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
+  gap: 8px;
+  margin-top: 12px;
 }
 
-.sd-hero__product-card-price {
+/* Price — Inter 13px, 700, #0D0D0D */
+.styledrop-hero__product-card-price {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 13px;
   font-weight: 700;
-  line-height: 1.25rem;
+  line-height: 20px;
   color: #0D0D0D;
 }
 
-.sd-hero__product-card-rtn {
+/* FREE RTN pill — Inter 9px, 700, tracking 0.45px, #0D0D0D, px-6px py-1.8px, rounded-full, bg #F5F0EB */
+.styledrop-hero__product-card-rtn {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 9px;
   font-weight: 700;
   line-height: 14px;
   letter-spacing: 0.45px;
   color: #0D0D0D;
-  padding: 1.8px 6px;
-  border-radius: 9999px;
-  background-color: #F5F0EB;
   text-transform: uppercase;
+  background-color: #F5F0EB;
+  border-radius: 9999px;
+  padding: 1.8px 6px;
+  white-space: nowrap;
 }
 
-/* ─── Trust bar ──────────────────────────────────────────────────────────── */
-.hero-section__trust-bar {
+/* =============================================
+   TRUST BAR — bg #0D0D0D, white text
+   ============================================= */
+.styledrop-hero__trust-bar {
   background-color: #0D0D0D;
   color: #ffffff;
 }
 
-.sd-hero__trust-inner {
+.styledrop-hero__trust-wrap {
   display: flex;
   justify-content: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 
-.sd-hero__trust-grid {
+/* 4-column grid; 2 cols mobile */
+.styledrop-hero__trust-grid {
   width: 100%;
   max-width: 1141px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
   align-items: center;
 }
 
 @media (min-width: 768px) {
-  .sd-hero__trust-grid {
+  .styledrop-hero__trust-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.sd-hero__trust-item {
+/* Each trust feature — flex row, items-center, gap 12px */
+.styledrop-hero__trust-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 12px;
 }
 
-.sd-hero__trust-icon {
+/* Icon circle — 40×40px, rounded-full, bg rgba(232,76,30,0.12) */
+.styledrop-hero__trust-icon-wrap {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  background-color: rgba(232, 76, 30, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.sd-hero__trust-icon-svg {
+/* Icon SVG — 20×20px, #DC2626 */
+.styledrop-hero__trust-icon-svg {
   width: 20px;
   height: 20px;
   color: #DC2626;
 }
 
-/* ─── Trust text (existing rules kept) ──────────────────────────────────── */
-.hero-section__trust-title {
-  font-family: 'Barlow Condensed', system-ui, sans-serif;
+/* Feature title — condensed/Barlow 15px, 700, tracking 0.9px, white, uppercase */
+.styledrop-hero__trust-title {
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 15px;
   font-weight: 700;
   line-height: 22px;
   letter-spacing: 0.9px;
-  text-transform: uppercase;
   color: #ffffff;
+  text-transform: uppercase;
+  margin: 0;
 }
 
-.hero-section__trust-text {
+/* Feature description — Inter 12px, 400, white/45, mt-2px */
+.styledrop-hero__trust-desc {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 12px;
+  font-weight: 400;
   line-height: 17px;
   color: rgba(255, 255, 255, 0.45);
-  margin-top: 2px;
+  margin: 2px 0 0;
 }
