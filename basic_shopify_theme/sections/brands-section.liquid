@@ -3,22 +3,74 @@
   Converted from: src/sections/BrandsSection.tsx
 
   Features:
-  - Featured brands horizontal scroll
-  - Brand cards (160x160px)
-  - "All brands" link to brands page
-  - Yellow "FEATURED BRANDS" badge
+  - Featured brands horizontal scroll + visible scrollbar
+  - Theme editor: heading, badge, cards, link sizes (mobile / desktop)
   - Dynamic brand loading from product vendors
-
-  Settings:
-  - Section heading
-  - Badge text
-  - Number of brands to show
-  - Link to brands page
 {% endcomment %}
 
 {{ 'styledrop-brands-section.css' | asset_url | stylesheet_tag }}
 
-<section class="styledrop-brands">
+{%- liquid
+  assign s = section.settings
+  assign hs_m = s.heading_size_mobile | default: 42
+  assign hs_d = s.heading_size_desktop | default: 56
+  assign hlh_m = s.heading_line_height_mobile | default: 38
+  assign hlh_d = s.heading_line_height_desktop | default: 50
+  assign hfw = s.heading_font_weight | default: 400
+  assign bf_m = s.badge_font_mobile | default: 11
+  assign bf_d = s.badge_font_desktop | default: 11
+  assign bpy = s.badge_pad_y | default: 3
+  assign bpx = s.badge_pad_x | default: 10
+  assign lf_m = s.link_font_mobile | default: 13
+  assign lf_d = s.link_font_desktop | default: 14
+  assign cw_m = s.card_width_mobile | default: 160
+  assign cw_d = s.card_width_desktop | default: 160
+  assign ch_m = s.card_height_mobile | default: 160
+  assign ch_d = s.card_height_desktop | default: 160
+  assign cpad = s.card_padding | default: 20
+  assign cgap = s.card_gap | default: 16
+  assign lb_m = s.logo_box_mobile | default: 64
+  assign lb_d = s.logo_box_desktop | default: 64
+  assign limg = s.logo_img_size | default: 40
+  assign llet = s.logo_letter_size | default: 22
+  assign nm_m = s.name_font_mobile | default: 14
+  assign nm_d = s.name_font_desktop | default: 14
+  assign sb_h = s.scrollbar_height | default: 8
+  assign show_sb = s.show_scrollbar
+  if show_sb == nil
+    assign show_sb = true
+  endif
+-%}
+
+<section
+  class="styledrop-brands{% unless show_sb %} styledrop-brands--hide-scrollbar{% endunless %}"
+  style="
+    --sb-heading-fs-mobile: {{ hs_m }}px;
+    --sb-heading-fs-desktop: {{ hs_d }}px;
+    --sb-heading-lh-mobile: {{ hlh_m }}px;
+    --sb-heading-lh-desktop: {{ hlh_d }}px;
+    --sb-heading-fw: {{ hfw }};
+    --sb-badge-fs-mobile: {{ bf_m }}px;
+    --sb-badge-fs-desktop: {{ bf_d }}px;
+    --sb-badge-py: {{ bpy }}px;
+    --sb-badge-px: {{ bpx }}px;
+    --sb-link-fs-mobile: {{ lf_m }}px;
+    --sb-link-fs-desktop: {{ lf_d }}px;
+    --sb-card-w-mobile: {{ cw_m }}px;
+    --sb-card-w-desktop: {{ cw_d }}px;
+    --sb-card-h-mobile: {{ ch_m }}px;
+    --sb-card-h-desktop: {{ ch_d }}px;
+    --sb-card-pad: {{ cpad }}px;
+    --sb-card-gap: {{ cgap }}px;
+    --sb-logo-box-mobile: {{ lb_m }}px;
+    --sb-logo-box-desktop: {{ lb_d }}px;
+    --sb-logo-img: {{ limg }}px;
+    --sb-logo-letter: {{ llet }}px;
+    --sb-name-fs-mobile: {{ nm_m }}px;
+    --sb-name-fs-desktop: {{ nm_d }}px;
+    --sb-scrollbar-h: {{ sb_h }}px;
+  "
+>
   <div class="styledrop-brands__container">
 
     {%- comment -%} Section Header {%- endcomment -%}
@@ -77,12 +129,14 @@
               <a href="/collections/{{ vendor_slug }}" class="styledrop-brands__card">
                 <div class="styledrop-brands__logo" style="background-color: {{ brand_color }};">
                   {%- if product.featured_image -%}
+                    {%- assign img_w = limg | times: 2 -%}
+                    {%- if img_w > 256 -%}{%- assign img_w = 256 -%}{%- endif -%}
                     <img
-                      src="{{ product.featured_image | image_url: width: 64 }}"
+                      src="{{ product.featured_image | image_url: width: img_w }}"
                       alt="{{ product.vendor }}"
                       class="styledrop-brands__logo-img"
-                      width="64"
-                      height="64"
+                      width="{{ limg }}"
+                      height="{{ limg }}"
                       loading="lazy"
                     />
                   {%- else -%}
@@ -199,6 +253,281 @@
       "id": "all_brands_link",
       "label": "Link URL",
       "info": "Link to your brands page"
+    },
+    {
+      "type": "header",
+      "content": "Typography — heading (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 28,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "min": 24,
+      "max": 88,
+      "step": 1,
+      "unit": "px",
+      "label": "Line height",
+      "default": 38
+    },
+    {
+      "type": "header",
+      "content": "Typography — heading (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 36,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_desktop",
+      "min": 32,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "label": "Line height",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading font weight",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Yellow badge"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_mobile",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_font_desktop",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_pad_y",
+      "min": 2,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "badge_pad_x",
+      "min": 6,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "All brands link"
+    },
+    {
+      "type": "range",
+      "id": "link_font_mobile",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "link_font_desktop",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Brand cards"
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "min": 120,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "label": "Card width (mobile)",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "card_width_desktop",
+      "min": 120,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "label": "Card width (desktop)",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "min": 120,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "label": "Card height (mobile)",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "card_height_desktop",
+      "min": 120,
+      "max": 260,
+      "step": 4,
+      "unit": "px",
+      "label": "Card height (desktop)",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Inner padding (top / sides)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between cards",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "logo_box_mobile",
+      "min": 48,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "label": "Logo square (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "logo_box_desktop",
+      "min": 48,
+      "max": 104,
+      "step": 4,
+      "unit": "px",
+      "label": "Logo square (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "logo_img_size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo image size (inside square)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "logo_letter_size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Initial letter size (no image)",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "name_font_mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Brand name (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "name_font_desktop",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Brand name (desktop)",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Scrollbar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scrollbar",
+      "label": "Show horizontal scrollbar",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "scrollbar_height",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "label": "Scrollbar thickness",
+      "default": 8
     }
   ],
   "presets": [

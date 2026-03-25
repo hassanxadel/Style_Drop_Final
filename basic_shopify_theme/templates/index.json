@@ -26,7 +26,8 @@
         "heading_line_2": "ONE PLATFORM",
         "brand_limit": 12,
         "all_brands_text": "All brands",
-        "all_brands_link": "/pages/brands"
+        "all_brands_link": "/pages/brands",
+        "show_scrollbar": true
       }
     },
     "category-grid": {
