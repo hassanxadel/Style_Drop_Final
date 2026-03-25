@@ -281,7 +281,7 @@
   height: 16px;
   padding: 0 4px;
   border-radius: 9999px;
-  background: #EA580C;
+  background: #DC2626;
   color: #fff;
   font-size: 9px;
   font-weight: 700;
@@ -352,7 +352,7 @@
 }
 
 .styledrop-mobile-menu__row--sale {
-  color: #EA580C;
+  color: #DC2626;
 }
 
 .styledrop-mobile-menu__row--active {
@@ -435,7 +435,7 @@
   width: 4rem;
   height: 4rem;
   border-radius: 9999px;
-  background: #EA580C;
+  background: #DC2626;
   display: flex;
   align-items: center;
   justify-content: center;

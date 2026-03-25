@@ -35,12 +35,12 @@ const Wishlist = () => {
         <div className="container px-5 pt-10 md:pt-14">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-8 md:mb-10">
             <div>
-              <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.2em] text-[#EA580C] mb-2">
+              <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.2em] text-[#DC2626] mb-2">
                 Your collection
               </p>
               <h1 className="font-display text-4xl md:text-6xl md:text-7xl leading-[0.95] tracking-tight text-[#0D0D0D] uppercase">
                 Liked{' '}
-                <span className="text-[#EA580C]">Items</span>
+                <span className="text-[#DC2626]">Items</span>
               </h1>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -94,7 +94,7 @@ const Wishlist = () => {
                   <button
                     type="button"
                     onClick={addAllToCart}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#EA580C] text-white px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] hover:opacity-95 transition-opacity"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#DC2626] text-white px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] hover:opacity-95 transition-opacity"
                   >
                     <ShoppingBag size={18} strokeWidth={2} />
                     Add all to cart
@@ -125,7 +125,7 @@ function WishlistCard({ product, onRemove }: { product: Product; onRemove: () =>
         <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className="absolute top-2 left-2 flex flex-col gap-1.5 items-start">
           {product.badge && product.badgeType === 'sale' && (
-            <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#EA580C] text-white">{product.badge}</span>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#DC2626] text-white">{product.badge}</span>
           )}
           {showFast && (
             <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#0D0D0D] text-white flex items-center gap-1">

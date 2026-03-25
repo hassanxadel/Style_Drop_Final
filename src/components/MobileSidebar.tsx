@@ -57,7 +57,7 @@ const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
               aria-label="Cart"
             >
               <ShoppingBag size={20} strokeWidth={1.5} />
-              <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#EA580C] text-white text-[9px] font-bold flex items-center justify-center">
+              <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#DC2626] text-white text-[9px] font-bold flex items-center justify-center">
                 4
               </span>
             </Link>
@@ -96,7 +96,7 @@ const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
                 onClick={onClose}
                 className={({ isActive }) =>
                   `flex items-center justify-between py-4 border-b border-[#0D0D0D]/10 font-condensed text-lg font-bold uppercase tracking-[0.08em] ${
-                    link.highlight ? 'text-[#EA580C]' : 'text-[#0D0D0D]'
+                    link.highlight ? 'text-[#DC2626]' : 'text-[#0D0D0D]'
                   } ${isActive ? 'text-[#0D0D0D] bg-black/[0.03] -mx-5 px-5' : ''}`
                 }
               >
@@ -132,7 +132,7 @@ const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
             <div className="absolute inset-0 opacity-30 pointer-events-none bg-[radial-gradient(circle_at_30%_20%,#3d2a1f_0%,transparent_50%),radial-gradient(circle_at_80%_80%,#2a1810_0%,transparent_45%)]" />
             <div className="relative flex items-center gap-4">
               <div className="relative">
-                <div className="w-16 h-16 rounded-full bg-[#EA580C] flex items-center justify-center text-lg font-bold tracking-tight">
+                <div className="w-16 h-16 rounded-full bg-[#DC2626] flex items-center justify-center text-lg font-bold tracking-tight">
                   AJ
                 </div>
                 <span className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-white flex items-center justify-center border-2 border-[#1a1512] text-[#0D0D0D]">
