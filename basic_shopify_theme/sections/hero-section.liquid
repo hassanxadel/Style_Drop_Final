@@ -19,7 +19,127 @@
 
 {{ 'styledrop-hero-section.css' | asset_url | stylesheet_tag }}
 
-<section class="styledrop-hero">
+{%- liquid
+  assign s = section.settings
+  assign tm = s.tagline_size_mobile | default: 12
+  assign td = s.tagline_size_desktop | default: 12
+  assign btm = s.badge_text_size_mobile | default: 9
+  assign btd = s.badge_text_size_desktop | default: 11
+  assign bim = s.badge_icon_size_mobile | default: 9
+  assign bid = s.badge_icon_size_desktop | default: 11
+  assign bhm = s.badge_height_mobile | default: 22
+  assign bhd = s.badge_height_desktop | default: 29
+  assign hdm = s.headline_size_mobile | default: 56
+  assign hdd = s.headline_size_desktop | default: 99
+  assign hlm = s.headline_line_height_mobile | default: 50
+  assign hld = s.headline_line_height_desktop | default: 87
+  assign dsm = s.description_size_mobile | default: 13
+  assign dsd = s.description_size_desktop | default: 15
+  assign pfm = s.cta_primary_font_mobile | default: 13
+  assign pfd = s.cta_primary_font_desktop | default: 16
+  assign phm = s.cta_primary_height_mobile | default: 44
+  assign phd = s.cta_primary_height_desktop | default: 52
+  assign sfm = s.cta_secondary_font_mobile | default: 12
+  assign sfd = s.cta_secondary_font_desktop | default: 14
+  assign cw = s.hero_col_max_width | default: 570
+  assign ch = s.hero_col_height_desktop | default: 620
+  assign aw = s.hero_aspect_w | default: 480
+  assign ah = s.hero_aspect_h | default: 620
+  assign flm = s.fast_drop_lightning_mobile | default: 16
+  assign fld = s.fast_drop_lightning_desktop | default: 18
+  assign ftm = s.fast_drop_label_mobile | default: 9
+  assign ftd = s.fast_drop_label_desktop | default: 10
+  assign fsm = s.fast_drop_sub_mobile | default: 8
+  assign fsd = s.fast_drop_sub_desktop | default: 9
+  assign pwm = s.card_width_mobile | default: 140
+  assign pwd = s.card_width_desktop | default: 160
+  assign chm = s.card_min_height_mobile | default: 170
+  assign chd = s.card_min_height_desktop | default: 192
+  assign cimw = s.card_img_width_mobile | default: 120
+  assign cimd = s.card_img_width_desktop | default: 136
+  assign cihm = s.card_img_height_mobile | default: 88
+  assign cihd = s.card_img_height_desktop | default: 100
+  assign cvm = s.card_vendor_font_mobile | default: 9
+  assign cvd = s.card_vendor_font_desktop | default: 10
+  assign ctm = s.card_title_font_mobile | default: 11
+  assign ctd = s.card_title_font_desktop | default: 12
+  assign cpm = s.card_price_font_mobile | default: 12
+  assign cpd = s.card_price_font_desktop | default: 13
+  assign crm = s.card_rtn_font_mobile | default: 8
+  assign crd = s.card_rtn_font_desktop | default: 9
+  assign cld = s.card_left_desktop | default: 340
+  assign ctdp = s.card_top_desktop | default: 368
+  assign ttm = s.trust_title_mobile | default: 13
+  assign ttd = s.trust_title_desktop | default: 15
+  assign tdm = s.trust_desc_mobile | default: 11
+  assign tdd = s.trust_desc_desktop | default: 12
+  assign tim = s.trust_icon_wrap_mobile | default: 36
+  assign tid = s.trust_icon_wrap_desktop | default: 40
+  assign tsm = s.trust_icon_svg_mobile | default: 18
+  assign tsd = s.trust_icon_svg_desktop | default: 20
+-%}
+
+<section
+  class="styledrop-hero"
+  style="
+    --sd-tagline-mobile: {{ tm }}px;
+    --sd-tagline-desktop: {{ td }}px;
+    --sd-badge-text-mobile: {{ btm }}px;
+    --sd-badge-text-desktop: {{ btd }}px;
+    --sd-badge-icon-mobile: {{ bim }}px;
+    --sd-badge-icon-desktop: {{ bid }}px;
+    --sd-badge-height-mobile: {{ bhm }}px;
+    --sd-badge-height-desktop: {{ bhd }}px;
+    --sd-headline-mobile: {{ hdm }}px;
+    --sd-headline-desktop: {{ hdd }}px;
+    --sd-headline-lh-mobile: {{ hlm }}px;
+    --sd-headline-lh-desktop: {{ hld }}px;
+    --sd-desc-mobile: {{ dsm }}px;
+    --sd-desc-desktop: {{ dsd }}px;
+    --sd-btn-p-fs-mobile: {{ pfm }}px;
+    --sd-btn-p-fs-desktop: {{ pfd }}px;
+    --sd-btn-p-h-mobile: {{ phm }}px;
+    --sd-btn-p-h-desktop: {{ phd }}px;
+    --sd-btn-s-fs-mobile: {{ sfm }}px;
+    --sd-btn-s-fs-desktop: {{ sfd }}px;
+    --sd-col-max-w: {{ cw }}px;
+    --sd-col-h-desktop: {{ ch }}px;
+    --sd-aspect-w: {{ aw }};
+    --sd-aspect-h: {{ ah }};
+    --sd-fast-light-mobile: {{ flm }}px;
+    --sd-fast-light-desktop: {{ fld }}px;
+    --sd-fast-label-mobile: {{ ftm }}px;
+    --sd-fast-label-desktop: {{ ftd }}px;
+    --sd-fast-sub-mobile: {{ fsm }}px;
+    --sd-fast-sub-desktop: {{ fsd }}px;
+    --sd-card-w-mobile: {{ pwm }}px;
+    --sd-card-w-desktop: {{ pwd }}px;
+    --sd-card-min-h-mobile: {{ chm }}px;
+    --sd-card-min-h-desktop: {{ chd }}px;
+    --sd-card-img-w-mobile: {{ cimw }}px;
+    --sd-card-img-w-desktop: {{ cimd }}px;
+    --sd-card-img-h-mobile: {{ cihm }}px;
+    --sd-card-img-h-desktop: {{ cihd }}px;
+    --sd-card-vendor-mobile: {{ cvm }}px;
+    --sd-card-vendor-desktop: {{ cvd }}px;
+    --sd-card-title-mobile: {{ ctm }}px;
+    --sd-card-title-desktop: {{ ctd }}px;
+    --sd-card-price-mobile: {{ cpm }}px;
+    --sd-card-price-desktop: {{ cpd }}px;
+    --sd-card-rtn-mobile: {{ crm }}px;
+    --sd-card-rtn-desktop: {{ crd }}px;
+    --sd-card-left: {{ cld }}px;
+    --sd-card-top: {{ ctdp }}px;
+    --sd-trust-title-mobile: {{ ttm }}px;
+    --sd-trust-title-desktop: {{ ttd }}px;
+    --sd-trust-desc-mobile: {{ tdm }}px;
+    --sd-trust-desc-desktop: {{ tdd }}px;
+    --sd-trust-icon-wrap-mobile: {{ tim }}px;
+    --sd-trust-icon-wrap-desktop: {{ tid }}px;
+    --sd-trust-icon-svg-mobile: {{ tsm }}px;
+    --sd-trust-icon-svg-desktop: {{ tsd }}px;
+  "
+>
 
   {%- comment -%} HERO MAIN — bg #F5F0EB {%- endcomment -%}
   <div class="styledrop-hero__main">
@@ -96,13 +216,15 @@
           {%- endif -%}
 
           {%- comment -%} FAST DROP badge — absolute -left-15px, top-20px, dark pill {%- endcomment -%}
+          {%- if section.settings.show_fast_drop_badge != false -%}
           <div class="styledrop-hero__fast-drop">
             <div class="styledrop-hero__fast-drop-row">
               <span class="styledrop-hero__fast-drop-lightning" aria-hidden="true">⚡</span>
-              <span class="styledrop-hero__fast-drop-label">FAST DROP</span>
+              <span class="styledrop-hero__fast-drop-label">{{ section.settings.fast_drop_label | default: 'FAST DROP' }}</span>
             </div>
-            <span class="styledrop-hero__fast-drop-sub">Delivered today</span>
+            <span class="styledrop-hero__fast-drop-sub">{{ section.settings.fast_drop_sub | default: 'Delivered today' }}</span>
           </div>
+          {%- endif -%}
 
           {%- comment -%} Product card overlay — desktop only, absolute bottom-right {%- endcomment -%}
           <div class="styledrop-hero__product-card">
@@ -223,7 +345,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Tagline Row"
+      "content": "Tagline row — text"
     },
     {
       "type": "text",
@@ -245,153 +367,745 @@
     },
     {
       "type": "header",
-      "content": "Headline & Badge"
+      "content": "Tagline row — font size"
+    },
+    {
+      "type": "range",
+      "id": "tagline_size_mobile",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Taglines (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tagline_size_desktop",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Taglines (desktop)",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Same-day delivery badge — size"
     },
     {
       "type": "text",
       "id": "badge_text",
-      "label": "Delivery Badge",
+      "label": "Badge text",
       "default": "SAME-DAY DELIVERY"
+    },
+    {
+      "type": "range",
+      "id": "badge_text_size_mobile",
+      "min": 7,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge text (mobile)",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "badge_text_size_desktop",
+      "min": 7,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge text (desktop)",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_icon_size_mobile",
+      "min": 6,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge icon (mobile)",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "badge_icon_size_desktop",
+      "min": 6,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge icon (desktop)",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_height_mobile",
+      "min": 18,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge min height (mobile)",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "badge_height_desktop",
+      "min": 18,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge min height (desktop)",
+      "default": 29
+    },
+    {
+      "type": "header",
+      "content": "Headline — WEAR WHAT / DROPS / TODAY"
     },
     {
       "type": "text",
       "id": "headline_line_1",
-      "label": "Headline Line 1",
+      "label": "Headline line 1",
       "default": "WEAR WHAT"
     },
     {
       "type": "text",
       "id": "headline_line_2",
-      "label": "Headline Line 2 (Red accent)",
+      "label": "Headline line 2 (red)",
       "default": "DROPS"
     },
     {
       "type": "text",
       "id": "headline_line_3",
-      "label": "Headline Line 3",
+      "label": "Headline line 3",
       "default": "TODAY."
+    },
+    {
+      "type": "range",
+      "id": "headline_size_mobile",
+      "min": 32,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "label": "Headline font size (mobile)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "headline_size_desktop",
+      "min": 48,
+      "max": 140,
+      "step": 1,
+      "unit": "px",
+      "label": "Headline font size (desktop)",
+      "default": 99
+    },
+    {
+      "type": "range",
+      "id": "headline_line_height_mobile",
+      "min": 28,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "label": "Headline line height (mobile)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "headline_line_height_desktop",
+      "min": 40,
+      "max": 130,
+      "step": 1,
+      "unit": "px",
+      "label": "Headline line height (desktop)",
+      "default": 87
+    },
+    {
+      "type": "header",
+      "content": "Description"
     },
     {
       "type": "textarea",
       "id": "description",
-      "label": "Description",
+      "label": "Description text",
       "default": "Multi-brand fashion delivered fast. Discover trending styles from the brands you love — with full transparency on pricing and returns."
     },
     {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 11,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Description font size (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description font size (desktop)",
+      "default": 15
+    },
+    {
       "type": "header",
-      "content": "CTA Buttons"
+      "content": "CTA buttons — text & height"
     },
     {
       "type": "text",
       "id": "cta_primary_text",
-      "label": "Primary Button Text",
+      "label": "Primary button text",
       "default": "SHOP WHAT'S TRENDING"
     },
     {
       "type": "url",
       "id": "cta_primary_link",
-      "label": "Primary Button Link"
+      "label": "Primary button link"
+    },
+    {
+      "type": "range",
+      "id": "cta_primary_font_mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Primary button font (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "cta_primary_font_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Primary button font (desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "cta_primary_height_mobile",
+      "min": 36,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Primary button height (mobile)",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "cta_primary_height_desktop",
+      "min": 40,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Primary button height (desktop)",
+      "default": 52
     },
     {
       "type": "text",
       "id": "cta_secondary_text",
-      "label": "Secondary Link Text",
+      "label": "Secondary link text",
       "default": "Explore New Arrivals"
     },
     {
       "type": "url",
       "id": "cta_secondary_link",
-      "label": "Secondary Link URL"
+      "label": "Secondary link URL"
+    },
+    {
+      "type": "range",
+      "id": "cta_secondary_font_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Secondary link font (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "cta_secondary_font_desktop",
+      "min": 11,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Secondary link font (desktop)",
+      "default": 14
     },
     {
       "type": "header",
-      "content": "Hero Image"
+      "content": "Hero image column — dimensions"
     },
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero Model Image",
-      "info": "Recommended: tall/portrait image, min 800×1030px"
+      "label": "Hero model image",
+      "info": "Tall portrait works best (e.g. min 800px wide)."
+    },
+    {
+      "type": "range",
+      "id": "hero_col_max_width",
+      "min": 320,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Column max width (desktop)",
+      "default": 570
+    },
+    {
+      "type": "range",
+      "id": "hero_col_height_desktop",
+      "min": 400,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "label": "Column height (desktop)",
+      "default": 620
+    },
+    {
+      "type": "range",
+      "id": "hero_aspect_w",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "label": "Aspect ratio width (mobile)",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "hero_aspect_h",
+      "min": 400,
+      "max": 900,
+      "step": 10,
+      "label": "Aspect ratio height (mobile)",
+      "default": 620
     },
     {
       "type": "header",
-      "content": "Product Card (Floating overlay)"
+      "content": "Fast drop badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_fast_drop_badge",
+      "label": "Show fast drop badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "fast_drop_label",
+      "label": "Fast drop title",
+      "default": "FAST DROP"
+    },
+    {
+      "type": "text",
+      "id": "fast_drop_sub",
+      "label": "Fast drop subtitle",
+      "default": "Delivered today"
+    },
+    {
+      "type": "range",
+      "id": "fast_drop_lightning_mobile",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Lightning icon size (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "fast_drop_lightning_desktop",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Lightning icon size (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "fast_drop_label_mobile",
+      "min": 7,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Fast drop label (mobile)",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "fast_drop_label_desktop",
+      "min": 7,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Fast drop label (desktop)",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "fast_drop_sub_mobile",
+      "min": 7,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Fast drop subtitle (mobile)",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "fast_drop_sub_desktop",
+      "min": 7,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Fast drop subtitle (desktop)",
+      "default": 9
+    },
+    {
+      "type": "header",
+      "content": "Floating product card"
     },
     {
       "type": "product",
       "id": "featured_product",
-      "label": "Featured Product",
-      "info": "Leave blank to use the static fallback card below"
+      "label": "Featured product",
+      "info": "Leave blank to use fallback text below."
     },
     {
       "type": "text",
       "id": "card_brand",
-      "label": "Fallback Brand Name",
+      "label": "Fallback brand",
       "default": "ARITZIA"
     },
     {
       "type": "text",
       "id": "card_title",
-      "label": "Fallback Product Title",
+      "label": "Fallback title",
       "default": "Trench Coat"
     },
     {
       "type": "text",
       "id": "card_price",
-      "label": "Fallback Product Price",
+      "label": "Fallback price",
       "default": "EGP 1,124.00"
     },
     {
+      "type": "range",
+      "id": "card_width_mobile",
+      "min": 120,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "label": "Card width (mobile, when visible)",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "card_width_desktop",
+      "min": 120,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "label": "Card width (desktop)",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "card_min_height_mobile",
+      "min": 140,
+      "max": 280,
+      "step": 4,
+      "unit": "px",
+      "label": "Card min height (mobile)",
+      "default": 170
+    },
+    {
+      "type": "range",
+      "id": "card_min_height_desktop",
+      "min": 140,
+      "max": 280,
+      "step": 4,
+      "unit": "px",
+      "label": "Card min height (desktop)",
+      "default": 192
+    },
+    {
+      "type": "range",
+      "id": "card_left_desktop",
+      "min": 200,
+      "max": 480,
+      "step": 4,
+      "unit": "px",
+      "label": "Card position left (desktop)",
+      "default": 340
+    },
+    {
+      "type": "range",
+      "id": "card_top_desktop",
+      "min": 200,
+      "max": 520,
+      "step": 4,
+      "unit": "px",
+      "label": "Card position top (desktop)",
+      "default": 368
+    },
+    {
+      "type": "range",
+      "id": "card_img_width_mobile",
+      "min": 80,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "label": "Card image width (mobile)",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "card_img_width_desktop",
+      "min": 80,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Card image width (desktop)",
+      "default": 136
+    },
+    {
+      "type": "range",
+      "id": "card_img_height_mobile",
+      "min": 60,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Card image height (mobile)",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "card_img_height_desktop",
+      "min": 60,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Card image height (desktop)",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "card_vendor_font_mobile",
+      "min": 7,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Vendor font (mobile)",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "card_vendor_font_desktop",
+      "min": 7,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Vendor font (desktop)",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_title_font_mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Product title font (mobile)",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "card_title_font_desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Product title font (desktop)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_price_font_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Price font (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_price_font_desktop",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Price font (desktop)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "card_rtn_font_mobile",
+      "min": 7,
+      "max": 13,
+      "step": 1,
+      "unit": "px",
+      "label": "FREE RTN font (mobile)",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_rtn_font_desktop",
+      "min": 7,
+      "max": 13,
+      "step": 1,
+      "unit": "px",
+      "label": "FREE RTN font (desktop)",
+      "default": 9
+    },
+    {
       "type": "header",
-      "content": "Trust Bar Features"
+      "content": "Trust bar — text & icons"
     },
     {
       "type": "text",
       "id": "feature_1_title",
-      "label": "Feature 1 Title",
+      "label": "Feature 1 title",
       "default": "Fast Delivery"
     },
     {
       "type": "text",
       "id": "feature_1_desc",
-      "label": "Feature 1 Description",
+      "label": "Feature 1 description",
       "default": "Same-day & next-day options"
     },
     {
       "type": "text",
       "id": "feature_2_title",
-      "label": "Feature 2 Title",
+      "label": "Feature 2 title",
       "default": "Easy Returns"
     },
     {
       "type": "text",
       "id": "feature_2_desc",
-      "label": "Feature 2 Description",
+      "label": "Feature 2 description",
       "default": "Free 30-day hassle-free returns"
     },
     {
       "type": "text",
       "id": "feature_3_title",
-      "label": "Feature 3 Title",
+      "label": "Feature 3 title",
       "default": "Secure Checkout"
     },
     {
       "type": "text",
       "id": "feature_3_desc",
-      "label": "Feature 3 Description",
+      "label": "Feature 3 description",
       "default": "256-bit SSL encrypted payments"
     },
     {
       "type": "text",
       "id": "feature_4_title",
-      "label": "Feature 4 Title",
+      "label": "Feature 4 title",
       "default": "Trusted Brands"
     },
     {
       "type": "text",
       "id": "feature_4_desc",
-      "label": "Feature 4 Description",
+      "label": "Feature 4 description",
       "default": "200+ verified fashion brands"
+    },
+    {
+      "type": "range",
+      "id": "trust_title_mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Feature titles (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "trust_title_desktop",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Feature titles (desktop)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "trust_desc_mobile",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Feature descriptions (mobile)",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "trust_desc_desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Feature descriptions (desktop)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "trust_icon_wrap_mobile",
+      "min": 28,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon circle size (mobile)",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "trust_icon_wrap_desktop",
+      "min": 32,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon circle size (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "trust_icon_svg_mobile",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Icon graphic size (mobile)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "trust_icon_svg_desktop",
+      "min": 16,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Icon graphic size (desktop)",
+      "default": 20
     }
   ],
   "presets": [
